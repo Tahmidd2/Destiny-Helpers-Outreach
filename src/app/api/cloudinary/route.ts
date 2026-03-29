@@ -7,6 +7,26 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Recursively get all folder paths under a root folder
+async function getAllFolderPaths(rootFolder: string): Promise<string[]> {
+  const paths: string[] = [rootFolder];
+  
+  async function recurse(folder: string) {
+    try {
+      const result = await cloudinary.api.sub_folders(folder);
+      for (const sub of result.folders || []) {
+        paths.push(sub.path);
+        await recurse(sub.path);
+      }
+    } catch {
+      // No subfolders or folder doesn't exist
+    }
+  }
+
+  await recurse(rootFolder);
+  return paths;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const folder = searchParams.get("folder");
@@ -16,23 +36,14 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const safeFolder = folder.replace(/'/g, "\\'");
+    // Get every folder path at every depth
+    const allFolders = await getAllFolderPaths(folder);
+    console.log("All folders found:", allFolders);
 
-    // First try direct folder
-    let expression = `folder:"${safeFolder}"`;
-
-    // Also get subfolders and include them
-    try {
-      const subfolders = await cloudinary.api.sub_folders(folder);
-      if (subfolders.folders?.length > 0) {
-        const subExpressions = subfolders.folders.map(
-          (sf: any) => `folder:"${sf.path.replace(/'/g, "\\'")}"`
-        );
-        expression = [expression, ...subExpressions].join(" OR ");
-      }
-    } catch {
-      // No subfolders, continue with direct folder search
-    }
+    // Build one big OR expression across all folders
+    const expression = allFolders
+      .map((f) => `folder="${f}"`)
+      .join(" OR ");
 
     const result = await cloudinary.search
       .expression(expression)
@@ -40,8 +51,6 @@ export async function GET(request: NextRequest) {
       .max_results(6)
       .execute();
 
-    console.log("Folder searched:", folder);
-    console.log("Expression:", expression);
     console.log("Results found:", result.resources.length);
 
     const images = result.resources.map((resource: any) => ({
