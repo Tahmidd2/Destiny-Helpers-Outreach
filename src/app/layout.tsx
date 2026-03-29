@@ -3,7 +3,7 @@ import Navbar from "@/lib/components/navbar"
 import Footer from "@/lib/components/footer"
 
 export const metadata = {
-  title: "Business Name",
+  title: "Destiny Helpers Outreach Inc",
   description: "Short description of the business."
 }
 
