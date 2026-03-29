@@ -7,7 +7,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Recursively get all folder paths under a root folder
 async function getAllFolderPaths(rootFolder: string): Promise<string[]> {
   const paths: string[] = [rootFolder];
   
@@ -36,11 +35,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Get every folder path at every depth
     const allFolders = await getAllFolderPaths(folder);
-    console.log("All folders found:", allFolders);
 
-    // Build one big OR expression across all folders
     const expression = allFolders
       .map((f) => `folder="${f}"`)
       .join(" OR ");
@@ -48,17 +44,23 @@ export async function GET(request: NextRequest) {
     const result = await cloudinary.search
       .expression(expression)
       .sort_by("created_at", "desc")
-      .max_results(6)
+      .max_results(30) // fetch more so we have enough after filtering
       .execute();
 
-    console.log("Results found:", result.resources.length);
+    // Only keep actual images, exclude .mov, .mp4, .avi etc.
+    const IMAGE_FORMATS = ["jpg", "jpeg", "png", "gif", "webp", "avif", "heic", "svg"];
+    
+    const images = result.resources
+      .filter((resource: any) => IMAGE_FORMATS.includes(resource.format?.toLowerCase()))
+      .slice(0, 6) // keep only 6 after filtering
+      .map((resource: any) => ({
+        public_id: resource.public_id,
+        secure_url: resource.secure_url,
+        width: resource.width,
+        height: resource.height,
+      }));
 
-    const images = result.resources.map((resource: any) => ({
-      public_id: resource.public_id,
-      secure_url: resource.secure_url,
-      width: resource.width,
-      height: resource.height,
-    }));
+    console.log("Results after filtering:", images.length);
 
     return NextResponse.json({ images });
   } catch (error) {
