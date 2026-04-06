@@ -29,6 +29,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false);
+  const [mobileProgramsOpen, setMobileProgramsOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -128,6 +129,41 @@ export default function Navbar() {
         .nav-link.donate:hover { background: rgba(30,58,138,0.08); }
         .nav-link.volunteer { color: #7C3AED; font-weight: 600; }
         .nav-link.volunteer:hover { background: rgba(124,58,237,0.08); }
+
+        /* Programs trigger: link + chevron side by side */
+        .programs-trigger {
+          display: flex;
+          align-items: center;
+          gap: 0;
+        }
+        .programs-link {
+          display: flex;
+          align-items: center;
+          padding: 8px 8px 8px 12px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #333;
+          text-decoration: none;
+          border-radius: 8px 0 0 8px;
+          transition: all 0.2s;
+          white-space: nowrap;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .programs-link:hover { color: #1E3A8A; background: rgba(30,58,138,0.06); }
+        .programs-chevron-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 8px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          border-radius: 0 8px 8px 0;
+          transition: all 0.2s;
+          color: #333;
+        }
+        .programs-chevron-btn:hover { color: #1E3A8A; background: rgba(30,58,138,0.06); }
+
         .nav-chevron {
           width: 14px;
           height: 14px;
@@ -225,6 +261,45 @@ export default function Navbar() {
           transition: all 0.15s;
         }
         .mobile-link:hover { background: rgba(30,58,138,0.06); color: #1E3A8A; }
+
+        /* Mobile Programs section with toggle */
+        .mobile-programs-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-radius: 10px;
+          transition: all 0.15s;
+        }
+        .mobile-programs-header:hover { background: rgba(30,58,138,0.06); }
+        .mobile-programs-link {
+          flex: 1;
+          padding: 12px 16px;
+          font-size: 15px;
+          font-weight: 500;
+          color: #333;
+          text-decoration: none;
+        }
+        .mobile-programs-toggle {
+          padding: 12px 16px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #666;
+          display: flex;
+          align-items: center;
+        }
+        .mobile-programs-toggle:hover { color: #1E3A8A; }
+        .mobile-programs-sub {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          overflow: hidden;
+          max-height: 0;
+          transition: max-height 0.3s ease;
+        }
+        .mobile-programs-sub.open {
+          max-height: 400px;
+        }
         .mobile-section-label {
           font-size: 11px;
           font-weight: 700;
@@ -284,21 +359,38 @@ export default function Navbar() {
               <Link href="/" className="nav-link">Home</Link>
             </li>
 
-            {/* Programs dropdown */}
+            {/* Programs: link is clickable, chevron toggles dropdown on hover */}
             <li
               className="nav-link-item"
               onMouseEnter={() => setProgramsOpen(true)}
               onMouseLeave={() => setProgramsOpen(false)}
             >
-              <button className="nav-link">
-                Programs
-                <svg className={`nav-chevron ${programsOpen ? "open" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
+              <div className="programs-trigger">
+                <Link href="/programs" className="programs-link">
+                  Programs
+                </Link>
+                <button
+                  className="programs-chevron-btn"
+                  aria-label="Toggle programs menu"
+                  onFocus={() => setProgramsOpen(true)}
+                  onBlur={() => setProgramsOpen(false)}
+                >
+                  <svg
+                    className={`nav-chevron ${programsOpen ? "open" : ""}`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
               <div className={`dropdown ${programsOpen ? "open" : ""}`}>
                 {programs?.dropdown?.map((item) => (
-                  <Link key={item.href} href={item.href} className="dropdown-link">{item.label}</Link>
+                  <Link key={item.href} href={item.href} className="dropdown-link">
+                    {item.label}
+                  </Link>
                 ))}
               </div>
             </li>
@@ -315,7 +407,11 @@ export default function Navbar() {
           </ul>
 
           {/* Hamburger */}
-          <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
+          <button
+            className="hamburger"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
             <span style={{ transform: mobileOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
             <span style={{ opacity: mobileOpen ? 0 : 1 }} />
             <span style={{ transform: mobileOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
@@ -324,18 +420,71 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         <div className={`mobile-menu ${mobileOpen ? "open" : ""}`}>
-          <Link href="/" className="mobile-link" onClick={() => setMobileOpen(false)}>Home</Link>
-          <div className="mobile-section-label">Programs</div>
-          {programs?.dropdown?.map((item) => (
-            <Link key={item.href} href={item.href} className="mobile-sub-link" onClick={() => setMobileOpen(false)}>{item.label}</Link>
-          ))}
+          <Link href="/" className="mobile-link" onClick={() => setMobileOpen(false)}>
+            Home
+          </Link>
+
+          {/* Mobile Programs with separate link + toggle */}
+          <div className="mobile-programs-header">
+            <Link
+              href="/programs"
+              className="mobile-programs-link"
+              onClick={() => setMobileOpen(false)}
+            >
+              Programs
+            </Link>
+            <button
+              className="mobile-programs-toggle"
+              onClick={() => setMobileProgramsOpen(!mobileProgramsOpen)}
+              aria-label="Toggle programs submenu"
+            >
+              <svg
+                className={`nav-chevron ${mobileProgramsOpen ? "open" : ""}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+          <div className={`mobile-programs-sub ${mobileProgramsOpen ? "open" : ""}`}>
+            {programs?.dropdown?.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="mobile-sub-link"
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
           <Link href="/events" className="mobile-link" onClick={() => setMobileOpen(false)}>Events</Link>
           <Link href="/about" className="mobile-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/blogs" className="mobile-link" onClick={() => setMobileOpen(false)}>Blogs</Link>
           <Link href="/help" className="mobile-link" onClick={() => setMobileOpen(false)}>Help</Link>
-          <Link href="/donate-now" className="mobile-link" onClick={() => setMobileOpen(false)} style={{ color: "#1E3A8A", fontWeight: 700 }}>Donate Now!</Link>
-          <Link href="/volunteer-with-us" className="mobile-link" onClick={() => setMobileOpen(false)} style={{ color: "#7C3AED", fontWeight: 600 }}>Volunteer With Us!</Link>
-          <Link href="/contact" className="mobile-cta" onClick={() => setMobileOpen(false)}>Contact Us</Link>
+          <Link
+            href="/donate-now"
+            className="mobile-link"
+            onClick={() => setMobileOpen(false)}
+            style={{ color: "#1E3A8A", fontWeight: 700 }}
+          >
+            Donate Now!
+          </Link>
+          <Link
+            href="/volunteer-with-us"
+            className="mobile-link"
+            onClick={() => setMobileOpen(false)}
+            style={{ color: "#7C3AED", fontWeight: 600 }}
+          >
+            Volunteer With Us!
+          </Link>
+          <Link href="/contact" className="mobile-cta" onClick={() => setMobileOpen(false)}>
+            Contact Us
+          </Link>
         </div>
       </nav>
 

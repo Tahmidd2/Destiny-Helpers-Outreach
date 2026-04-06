@@ -255,9 +255,10 @@ export default function HomePage() {
         <div className="orb orb-1" /><div className="orb orb-2" /><div className="hero-bar" />
         <div className="hero-content">
           <div>
+
             <div className={`hero-label ${heroVisible ? "visible" : ""}`}><span>✦</span> Destiny Helpers Outreach Inc.</div>
             <h1 className={`hero-headline ${heroVisible ? "visible" : ""}`}>Breaking Barriers.<span>Building Brighter Futures.</span></h1>
-            <p className={`hero-sub ${heroVisible ? "visible" : ""}`}>Empowering underserved youth and families through mentorship, education, and compassionate community support — one life at a time.</p>
+            <p className={`hero-sub ${heroVisible ? "visible" : ""}`}>Empowering underserved youth and their families to break barriers, discover purpose, and build brighter futures through mentorship, education, food security, and community-driven programs that transform lives.</p>
             <div className={`hero-buttons ${heroVisible ? "visible" : ""}`}>
               <a href="/programs" className="btn-gold">Explore Programs ↗</a>
               <a href="/donate-now" className="btn-ghost">Donate Now</a>
