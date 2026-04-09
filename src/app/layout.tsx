@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <Navbar />
         <main className="flex-1 max-w-6xl mx-auto px-6 py-12">
           {children}
