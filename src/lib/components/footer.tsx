@@ -252,7 +252,7 @@ export default function Footer() {
             </div>
             <div className="footer-mid-label">Every dollar helps us serve more youth and families in Brooklyn.</div>
           </div>
-          <a href="/donate-now" className="footer-donate-btn">Donate Now ↗</a>
+          <Link href="/donate-now" className="footer-donate-btn">Donate Now ↗</Link>
         </div>
 
         {/* Bottom bar */}

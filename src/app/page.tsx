@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -260,9 +261,9 @@ export default function HomePage() {
             <h1 className={`hero-headline ${heroVisible ? "visible" : ""}`}>Breaking Barriers.<span>Building Brighter Futures.</span></h1>
             <p className={`hero-sub ${heroVisible ? "visible" : ""}`}>Empowering underserved youth and their families to break barriers, discover purpose, and build brighter futures through mentorship, education, food security, and community-driven programs that transform lives.</p>
             <div className={`hero-buttons ${heroVisible ? "visible" : ""}`}>
-              <a href="/programs" className="btn-gold">Explore Programs ↗</a>
-              <a href="/donate-now" className="btn-ghost">Donate Now</a>
-              <a href="/volunteer-with-us" className="btn-ghost">Get Involved</a>
+              <Link href="/programs" className="btn-gold">Explore Programs ↗</Link>
+              <Link href="/donate-now" className="btn-ghost">Donate Now</Link>
+              <Link href="/volunteer-with-us" className="btn-ghost">Get Involved</Link>
             </div>
           </div>
           <div className={`hero-visual ${heroVisible ? "visible" : ""}`}>
@@ -301,7 +302,7 @@ export default function HomePage() {
         <div className="section-label">What We Do</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "20px" }}>
           <h2 className="section-title">Our Programs</h2>
-          <a href="/programs" className="btn-gold">View All Programs</a>
+          <Link href="/programs" className="btn-gold">View All Programs</Link>
         </div>
         <p className="section-subtitle" style={{ marginTop: "16px" }}>Each program is designed to meet youth where they are — and help them grow into who they&apos;re meant to be.</p>
         <div className="programs-grid">
@@ -311,7 +312,7 @@ export default function HomePage() {
               <span className="program-icon">{p.icon}</span>
               <div className="program-title">{p.title}</div>
               <p className="program-desc">{p.description}</p>
-              <a href="/programs" className="program-link" style={{ color: p.color }}>Learn More →</a>
+              <Link href="/programs" className="program-link" style={{ color: p.color }}>Learn More →</Link>
             </div>
           ))}
         </div>
@@ -360,7 +361,7 @@ export default function HomePage() {
         <div className="section-label">Community Events</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "20px" }}>
           <h2 className="section-title">Serving Our Community</h2>
-          <a href="/events" className="btn-gold">See All Events</a>
+          <Link href="/events" className="btn-gold">See All Events</Link>
         </div>
         <p className="section-subtitle" style={{ marginTop: "16px" }}>From holiday giveaways to resource fairs, we show up year-round with love and purpose.</p>
         <div className="events-grid">
@@ -413,7 +414,7 @@ export default function HomePage() {
                 <div className="involved-icon" style={{ background: item.bg }}>{item.icon}</div>
                 <div className="involved-title">{item.title}</div>
                 <p className="involved-desc">{item.desc}</p>
-                <a href={item.href} className="btn-involved" style={{ background: item.bg, color: item.accent }}>{item.label} →</a>
+                <Link href={item.href} className="btn-involved" style={{ background: item.bg, color: item.accent }}>{item.label} →</Link>
               </div>
             ))}
           </div>
@@ -427,8 +428,8 @@ export default function HomePage() {
           <h2 className="section-title">Be a Beacon of Hope for Future Generations</h2>
           <p className="section-subtitle">Join us and be part of shaping a future where every young person has the support, tools, and love they deserve.</p>
           <div className="cta-buttons">
-            <a href="/donate-now" className="btn-gold-solid">Donate Now</a>
-            <a href="/contact" className="btn-white-outline">Connect With Us</a>
+            <Link href="/donate-now" className="btn-gold-solid">Donate Now</Link>
+            <Link href="/contact" className="btn-white-outline">Connect With Us</Link>
           </div>
         </div>
       </section>

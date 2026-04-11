@@ -1,3 +1,5 @@
+@import "react-big-calendar/lib/css/react-big-calendar.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,4 +11,126 @@ html, body {
 
 * {
   box-sizing: border-box;
+}
+
+.rbc-calendar {
+  min-height: 720px;
+  border-radius: 1.5rem;
+  background: white;
+  color: #111827;
+}
+
+.rbc-toolbar {
+  display: none;
+}
+
+.rbc-header {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.rbc-month-view,
+.rbc-time-view,
+.rbc-month-row + .rbc-month-row,
+.rbc-day-bg + .rbc-day-bg,
+.rbc-header + .rbc-header {
+  border-color: #e5e7eb;
+}
+
+.rbc-month-row {
+  min-height: 7.5rem;
+}
+
+.rbc-date-cell {
+  padding: 0.35rem 0.45rem 0;
+  text-align: right;
+}
+
+.rbc-date-cell > a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.rbc-off-range-bg {
+  background: #f9fafb;
+}
+
+.rbc-off-range .rbc-button-link {
+  opacity: 0.45;
+}
+
+.rbc-today {
+  background: #eff6ff;
+}
+
+.rbc-today .rbc-date-cell > a {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #2563eb;
+  color: white;
+}
+
+.rbc-event,
+.rbc-day-slot .rbc-background-event {
+  border: 0;
+  border-radius: 9999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  box-shadow: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+}
+
+.rbc-event.rbc-selected {
+  background: #bfdbfe;
+}
+
+.rbc-show-more {
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.rbc-overlay {
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+}
+
+.rbc-overlay-header {
+  padding: 0.75rem 0.875rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+@media (max-width: 640px) {
+  .rbc-calendar {
+    min-height: 560px;
+  }
+
+  .rbc-month-row {
+    min-height: 5.75rem;
+  }
+
+  .rbc-date-cell > a {
+    font-size: 0.75rem;
+  }
+
+  .rbc-event {
+    padding: 0.1rem 0.35rem;
+    font-size: 0.625rem;
+  }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -433,8 +434,8 @@ export default function ProgramsPage() {
         <h2>Ready to Make a Difference?</h2>
         <p>Join us as a volunteer, donor, or partner and help us expand these programs to reach more youth.</p>
         <div className="prog-cta-btns">
-          <a href="/volunteer-with-us" className="prog-cta-btn-dark">Volunteer With Us</a>
-          <a href="/donate-now" className="prog-cta-btn-outline">Donate Now</a>
+          <Link href="/volunteer-with-us" className="prog-cta-btn-dark">Volunteer With Us</Link>
+          <Link href="/donate-now" className="prog-cta-btn-outline">Donate Now</Link>
         </div>
       </section>
     </>

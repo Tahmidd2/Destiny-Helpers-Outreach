@@ -149,6 +149,7 @@ export default function EventModal(props: EventModalProps) {
                 type="text"
                 required
                 autoFocus
+                aria-label="Event Name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -162,6 +163,7 @@ export default function EventModal(props: EventModalProps) {
               <input
                 id="event-time"
                 type="time"
+                aria-label="Time"
                 value={time}
                 onChange={(event) => setTime(event.target.value)}
                 className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -178,6 +180,7 @@ export default function EventModal(props: EventModalProps) {
               <textarea
                 id="event-description"
                 rows={3}
+                aria-label="Description"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -188,6 +191,7 @@ export default function EventModal(props: EventModalProps) {
               <button
                 type="button"
                 onClick={props.onClose}
+                aria-label="Cancel adding event"
                 className="rounded-md border border-gray-300 px-4 py-2 text-gray-700 transition hover:bg-gray-50"
               >
                 Cancel
@@ -195,6 +199,7 @@ export default function EventModal(props: EventModalProps) {
               <button
                 type="button"
                 disabled={!name.trim()}
+                aria-label="Save Event"
                 onClick={() => {
                   props.onSave({
                     date: props.date,
@@ -239,12 +244,14 @@ export default function EventModal(props: EventModalProps) {
               <button
                 type="button"
                 onClick={props.onClose}
+                aria-label="Close event details"
                 className="rounded-md border border-gray-300 px-4 py-2 text-gray-700 transition hover:bg-gray-50"
               >
                 Close
               </button>
               <button
                 type="button"
+                aria-label={`Delete Event ${props.event.name}`}
                 onClick={() => {
                   props.onDelete(props.event.id)
                   props.onClose()

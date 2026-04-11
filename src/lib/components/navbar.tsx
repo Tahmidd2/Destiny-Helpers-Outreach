@@ -345,7 +345,7 @@ export default function Navbar() {
           <a href="mailto:info@destinyhelpers.org">info@destinyhelpers.org</a>
           <span>|</span>
           <a href="tel:+1234567890">Brooklyn, NY</a>
-          <a href="/sign-in">Sign In</a>
+          <Link href="/sign-in">Sign In</Link>
         </div>
 
         {/* Main nav */}
