@@ -1,10 +1,12 @@
 import "./globals.css"
+import type { Metadata } from "next"
 import Navbar from "@/lib/components/navbar"
 import Footer from "@/lib/components/footer"
 
-export const metadata = {
-  title: "Destiny Helpers Outreach Inc",
-  description: "Short description of the business."
+export const metadata: Metadata = {
+  title: "Destiny Helpers Outreach",
+  description:
+    "Destiny Helpers Outreach empowers youth and families through mentorship, education, and compassionate community support.",
 }
 
 export default function RootLayout({
