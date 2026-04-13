@@ -1,24 +1,37 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function AboutPage() {
   const team = [
     {
       name: "TrudyAnn Williams",
-      title: "Executive Director & Founder",
-      image: "/team/trudyann.webp",
-      bio: "Founder and chief visionary, Trudy is the driving force behind the organization. A devoted mother and advocate for at-risk youth and families, she founded Destiny Helpers Outreach Inc. in 2019 while living in a homeless shelter — a testament to her unbreakable faith. She believes in creating model communities that are safe for individuals to live, work, and raise families.",
+      title: "CEO",
+      image: "/TrudyAnnWilliams.jpg",
+      bio: "TrudyAnn Williams is a visionary leader, devoted mother, and passionate community advocate. As the CEO of Destiny Helpers Outreach Inc., she is committed to uplifting individuals and families facing hardship, turning challenges into pathways for growth and restoration. With a professional background in Finance, TrudyAnn brings both compassion and strategic insight to her work, ensuring that outreach efforts are not only heartfelt, but sustainable and impactful. Her leadership is rooted in empathy, faith, and action, as she works hands-on to provide resources, mentorship, and hope to underserved communities. Above all, TrudyAnn believes in the power of purpose. Whether serving families through her organization or nurturing her own at home, she leads with integrity, resilience, and an unwavering commitment to helping others step fully into their destiny.",
     },
     {
-      name: "Kimesha Malcolm",
-      title: "Chief Financial Officer",
-      image: "/team/kimesha.webp",
-      bio: "With over 9 years of accounting experience, Kimesha ensures our financial documents are filed with precision and care. She loves serving and never misses an opportunity to volunteer, donate, and share in making someone else's life better.",
-    },
-    {
-      name: "Fay Simon-Blugh",
+      name: "Ariel Trent",
       title: "Secretary",
-      image: "/team/fay.webp",
-      bio: "An expert at research and documentation, Fay has worked extensively with people with disabilities. Her attention to detail is superb and her unwavering commitment to every event is commendable. She is always ready to hit the ground running.",
+      image: "/ArielTrent.jpg",
+      bio: "Ariel Trent, a Brooklyn-bred leader with roots in St. Vincent and the Grenadines, supports the team by maintaining accurate records, coordinating communications, and assisting with administrative needs. With a background in Finance, Mathematics, Africana Studies, Dance, and Visual Art, she helps keep the organization organized and efficient.",
+    },
+    {
+      name: "Gloria Seay",
+      title: "Community Outreach Coordinator",
+      image: "/GloriaSeay.jpeg",
+      bio: "Gloria connects DHOI with companies, organizations, and the community by building relationships, coordinating volunteer events, and ensuring programs reach those most in need. With a heart for service and experience in social work, she helps bring the mission to life.",
+    },
+    {
+      name: "DeVasha Lloyd",
+      title: "Board Chair",
+      image: "/DeVashaLloyd.jpg",
+      bio: "As Board Chair, DeVasha provides guidance, accountability, and leadership to ensure the organization stays aligned with its mission. With 25+ years of experience in business leadership, she brings strong governance and vision to the team.",
+    },
+    {
+      name: "Cameron Thomas",
+      title: "Chief Financial Officer",
+      image: "/CameronThomas.png",
+      bio: "Cameron manages all financial operations, budgeting, and compliance for DHOI. With a background in accounting, he ensures the organization's resources are managed responsibly to maximize impact.",
     },
   ];
 
@@ -443,11 +456,10 @@ export default function AboutPage() {
           transform: translateY(-8px);
           box-shadow: 0 24px 64px rgba(15,31,77,0.12);
         }
-        .team-card-img {
+        .team-card-img-wrap {
+          position: relative;
           width: 100%;
-          aspect-ratio: 3/4;
-          object-fit: cover;
-          display: block;
+          aspect-ratio: 3 / 4;
           background: linear-gradient(135deg, var(--navy), #1a3470);
         }
         .team-card-img-placeholder {
@@ -792,8 +804,14 @@ export default function AboutPage() {
             <div className="team-grid">
               {team.map((member) => (
                 <div key={member.name} className="team-card">
-                  <div className="team-card-img-placeholder">
-                    {member.name.split(" ").map(n => n[0]).join("")}
+                  <div className="team-card-img-wrap">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      sizes="(max-width: 900px) 100vw, 33vw"
+                      style={{ objectFit: "cover" }}
+                    />
                   </div>
                   <div className="team-card-body">
                     <div className="team-card-name">{member.name}</div>
