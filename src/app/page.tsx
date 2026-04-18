@@ -80,8 +80,8 @@ const galleryDescriptions: Record<string, string> = {
 
 function normalizeGalleryProgramName(eventName: string) {
   return eventName
-    .replace(/\s+\d{4}$/u, "")
-    .replace(/\s+'?\d{2}$/u, "")
+    .replace(/\s+\d{4}$/, "")
+    .replace(/\s+'?\d{2}$/, "")
     .trim();
 }
 
