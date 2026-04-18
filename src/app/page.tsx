@@ -131,30 +131,33 @@ function useProgramGalleryImages(galleryData: Record<string, GalleryProgramData>
     async function loadImages() {
       setLoading(true);
 
-      const entries = await Promise.all(
-        Object.entries(galleryData).map(async ([programName, programData]) => {
-          const folderResults = await Promise.all(
-            programData.folders.map(async (folder) => {
-              try {
-                const response = await fetch(`/api/cloudinary?folder=${encodeURIComponent(folder)}`);
-                const data = await response.json();
-                return data.images || [];
-              } catch {
-                return [];
-              }
-            })
+      const allFolders = Array.from(
+        new Set(Object.values(galleryData).flatMap((programData) => programData.folders))
+      );
+
+      const params = new URLSearchParams();
+      allFolders.forEach((folder) => params.append("folder", folder));
+
+      let imagesByFolder: Record<string, CloudinaryImage[]> = {};
+
+      try {
+        const response = await fetch(`/api/cloudinary?${params.toString()}`);
+        const data = await response.json();
+        imagesByFolder = data.imagesByFolder || {};
+      } catch {
+        imagesByFolder = {};
+      }
+
+      const entries = Object.entries(galleryData).map(([programName, programData]) => {
+        const combinedImages = programData.folders
+          .flatMap((folder) => imagesByFolder[folder] || [])
+          .filter(
+            (image, index, arr) =>
+              arr.findIndex((entry) => entry.public_id === image.public_id) === index
           );
 
-          const combinedImages = folderResults
-            .flat()
-            .filter(
-              (image, index, arr) =>
-                arr.findIndex((entry) => entry.public_id === image.public_id) === index
-            );
-
-          return [programName, combinedImages] as const;
-        })
-      );
+        return [programName, combinedImages] as const;
+      });
 
       if (!mounted) return;
 

@@ -28,13 +28,54 @@ async function getAllFolderPaths(rootFolder: string): Promise<string[]> {
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const folder = searchParams.get("folder");
+  const requestedFolders = searchParams.getAll("folder").filter(Boolean);
+  const folder = requestedFolders[0];
 
-  if (!folder) {
+  if (!folder || requestedFolders.length === 0) {
     return NextResponse.json({ error: "Folder is required" }, { status: 400 });
   }
 
   try {
+    if (requestedFolders.length > 1) {
+      const expression = requestedFolders
+        .map((currentFolder) => `folder="${currentFolder}"`)
+        .join(" OR ");
+
+      const result = await cloudinary.search
+        .expression(expression)
+        .sort_by("created_at", "desc")
+        .max_results(200)
+        .execute();
+
+      const IMAGE_FORMATS = ["jpg", "jpeg", "png", "gif", "webp", "avif", "heic", "svg"];
+
+      const imagesByFolder = requestedFolders.reduce<Record<string, any[]>>((accumulator, currentFolder) => {
+        accumulator[currentFolder] = [];
+        return accumulator;
+      }, {});
+
+      (result.resources || [])
+        .filter((resource: any) => IMAGE_FORMATS.includes(resource.format?.toLowerCase()))
+        .forEach((resource: any) => {
+          const matchedFolder = requestedFolders.find((currentFolder) =>
+            String(resource.folder || "").startsWith(currentFolder)
+          );
+
+          if (!matchedFolder) return;
+
+          if (imagesByFolder[matchedFolder].length >= 6) return;
+
+          imagesByFolder[matchedFolder].push({
+            public_id: resource.public_id,
+            secure_url: resource.secure_url,
+            width: resource.width,
+            height: resource.height,
+          });
+        });
+
+      return NextResponse.json({ imagesByFolder });
+    }
+
     const allFolders = await getAllFolderPaths(folder);
 
     const expression = allFolders
