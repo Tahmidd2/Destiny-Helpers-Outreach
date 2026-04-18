@@ -125,36 +125,6 @@ const testimonials = [
   },
 ]
 
-const socialLinks = [
-  {
-    label: "Instagram",
-    href: "https://instagram.com",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm8.9 1.35a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 6.25A5.75 5.75 0 1 1 6.25 12 5.76 5.76 0 0 1 12 6.25Zm0 1.5A4.25 4.25 0 1 0 16.25 12 4.25 4.25 0 0 0 12 7.75Z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Facebook",
-    href: "https://facebook.com",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.87.24-1.46 1.49-1.46H16.7V4.96A23.7 23.7 0 0 0 14.1 4.8c-2.57 0-4.35 1.57-4.35 4.45V11H7v3h2.75v8h3.75Z" />
-      </svg>
-    ),
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 1 0 5.3 6.94 1.97 1.97 0 0 0 5.25 3Zm15.19 9.88c0-3.28-1.75-4.81-4.1-4.81a3.56 3.56 0 0 0-3.2 1.76V8.5H9.76c.04.88 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92a1.86 1.86 0 0 1 1.74-1.24c1.23 0 1.72.93 1.72 2.3V20h3.38Z" />
-      </svg>
-    ),
-  },
-]
-
 function getImageUrl(images: CloudinaryImage[], index: number, fallback: string) {
   return images[index]?.secure_url || fallback
 }
@@ -451,8 +421,10 @@ export default function BeyondTheMaskPage() {
         }
 
         .navbar {
-          position: sticky;
+          position: fixed;
           top: 0;
+          left: 0;
+          right: 0;
           z-index: 50;
           transition: background 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
         }
@@ -562,6 +534,7 @@ export default function BeyondTheMaskPage() {
           color: white;
           background-size: cover;
           background-position: center;
+          padding-top: 88px;
         }
 
         .hero::before {
@@ -1037,96 +1010,6 @@ export default function BeyondTheMaskPage() {
           margin-top: 2rem;
         }
 
-        .footer {
-          background: #111111;
-          color: rgba(245, 241, 232, 0.82);
-          padding-top: 3.5rem;
-        }
-
-        .footer-grid {
-          display: grid;
-          grid-template-columns: 1.2fr 0.9fr 0.9fr 1fr;
-          gap: 1.8rem;
-          padding-bottom: 2.6rem;
-        }
-
-        .footer-logo {
-          font-size: 1.75rem;
-          color: var(--color-gold);
-          margin: 0 0 0.9rem;
-        }
-
-        .footer-tagline,
-        .footer-copy,
-        .footer-note,
-        .footer-contact a,
-        .footer-contact span {
-          font-size: 0.96rem;
-          line-height: 1.8;
-          color: rgba(245, 241, 232, 0.72);
-        }
-
-        .footer-heading {
-          margin: 0 0 1rem;
-          font-size: 0.86rem;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: var(--color-gold);
-          font-weight: 800;
-        }
-
-        .footer-list {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: grid;
-          gap: 0.75rem;
-        }
-
-        .footer-list a,
-        .footer-contact a {
-          text-decoration: none;
-          color: rgba(245, 241, 232, 0.78);
-        }
-
-        .social-row {
-          display: flex;
-          gap: 0.75rem;
-          margin-top: 1.15rem;
-        }
-
-        .social-link {
-          width: 44px;
-          height: 44px;
-          border-radius: 999px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid rgba(245, 241, 232, 0.16);
-          background: rgba(255, 255, 255, 0.05);
-          color: var(--color-cream);
-          transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .social-link:hover {
-          transform: translateY(-2px);
-          border-color: rgba(200, 169, 106, 0.72);
-        }
-
-        .social-link svg {
-          width: 18px;
-          height: 18px;
-          fill: currentColor;
-        }
-
-        .footer-bottom {
-          border-top: 1px solid rgba(245, 241, 232, 0.12);
-          padding: 1.2rem 0 1.5rem;
-          text-align: center;
-          font-size: 0.88rem;
-          color: rgba(245, 241, 232, 0.56);
-        }
-
         [data-reveal] {
           opacity: 0;
           transform: translateY(28px);
@@ -1156,8 +1039,7 @@ export default function BeyondTheMaskPage() {
 
         @media (max-width: 1024px) {
           .program-grid,
-          .testimonial-track,
-          .footer-grid {
+          .testimonial-track {
             grid-template-columns: 1fr 1fr;
           }
 
@@ -1198,6 +1080,10 @@ export default function BeyondTheMaskPage() {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.28s ease, padding-top 0.28s ease;
+            position: absolute;
+            top: 88px;
+            left: 0;
+            right: 0;
           }
 
           .mobile-drawer.is-open {
@@ -1216,8 +1102,7 @@ export default function BeyondTheMaskPage() {
 
           .program-grid,
           .steps,
-          .impact-stats,
-          .footer-grid {
+          .impact-stats {
             grid-template-columns: 1fr;
           }
 
@@ -1588,74 +1473,6 @@ export default function BeyondTheMaskPage() {
             </div>
           </section>
         </main>
-
-        <footer className="footer">
-          <div className="shell footer-grid">
-            <div>
-              <h2 className="footer-logo">Beyond the Mask™</h2>
-              <p className="footer-tagline">
-                A safe, grounded, and elevated emotional wellness experience rooted in
-                community, reflection, and transformation.
-              </p>
-              <div className="social-row">
-                {socialLinks.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="social-link"
-                    aria-label={item.label}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {item.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="footer-heading">Quick Links</h3>
-              <ul className="footer-list">
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-                <li>
-                  <Link href="/programs">Programs</Link>
-                </li>
-                <li>
-                  <Link href="/about">About</Link>
-                </li>
-                <li>
-                  <a href="#booking">Book Now</a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="footer-contact">
-              <h3 className="footer-heading">Contact</h3>
-              <div>
-                <a href="mailto:info@destinyhelpersoutreach.org">
-                  info@destinyhelpersoutreach.org
-                </a>
-              </div>
-              <div>
-                <a href="tel:+16313526615">631-352-6615</a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="footer-heading">About the Program</h3>
-              <p className="footer-note">
-                A program by Destiny Helpers Outreach Inc. created to support emotional
-                awareness, honest reflection, and deeper connection.
-              </p>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            © 2025 Beyond the Mask™ | All Rights Reserved
-          </div>
-        </footer>
       </div>
     </>
   )
