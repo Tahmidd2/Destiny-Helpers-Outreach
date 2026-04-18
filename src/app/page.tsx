@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, type KeyboardEvent as ReactKeyboardEvent } from "react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface CloudinaryImage {
@@ -24,6 +24,13 @@ interface ImpactStat {
   icon: string;
 }
 
+interface GalleryProgramData {
+  description: string;
+  heroImage: string;
+  photos: string[];
+  folders: string[];
+}
+
 // ─── Data ────────────────────────────────────────────────────────────────────
 const programs: Program[] = [
   { title: "Beyond The Mask", description: "Helping youth explore identity, emotional awareness, and self-expression in a safe and nurturing environment.", icon: "🎭", color: "#7C3AED" },
@@ -41,7 +48,7 @@ const impactStats: ImpactStat[] = [
   { number: "7+", label: "Years of Impact", icon: "📅" },
 ];
 
-const galleryYears = [
+const galleryArchive = [
   { year: "2026", events: ["Beyond The Mask", "Medgar Evers Social Work Conference", "The Confidence Lens Project"] },
   { year: "2025", events: ["Back to School Resource Fair", "Non Profit of the Game"] },
   { year: "2024", events: ["EmpowerHer Picnic"] },
@@ -52,6 +59,60 @@ const galleryYears = [
   { year: "2019", events: ["Miss Teen Brownsville 2019", "Shelter Holiday Giveback"] },
 ];
 
+const galleryDescriptions: Record<string, string> = {
+  "Beyond The Mask": "A transformative SEL & wellness experience.",
+  "Medgar Evers Social Work Conference": "Moments of advocacy, learning, and collective care.",
+  "The Confidence Lens Project": "Reflection, storytelling, and confidence captured in community.",
+  "Back to School Resource Fair": "Students and families supported with joy, supplies, and community resources.",
+  "Non Profit of the Game": "Celebrating impact, visibility, and service in the public eye.",
+  "EmpowerHer Picnic": "Gathering girls and women for connection, affirmation, and celebration.",
+  "Miss Teen Brownsville": "Leadership, confidence, and community pride on full display.",
+  "Crowned In Her Story": "Honoring womanhood, transformation, and the power of testimony.",
+  "Kingsborough 6th Walk Food Distribution Nov": "Serving families with dignity, nourishment, and practical support.",
+  "Nourish Your Community": "Community care in action through food access and compassion.",
+  "Winter Wonderland": "Seasonal joy, gifts, and moments of warmth for families.",
+  "Caribbean Outreach": "Culture, connection, and outreach rooted in shared heritage.",
+  "Community Engagement Events": "Bringing people together through fellowship, support, and belonging.",
+  "Power In Collaboration Brunch-Fundraiser": "Building momentum for impact through partnership and generosity.",
+  "Shelter Events": "Creating care-filled spaces for families navigating transition.",
+  "Shelter Holiday Giveback": "Holiday support offered with love, dignity, and hope.",
+};
+
+function normalizeGalleryProgramName(eventName: string) {
+  return eventName
+    .replace(/\s+\d{4}$/u, "")
+    .replace(/\s+'?\d{2}$/u, "")
+    .trim();
+}
+
+function gallerySlug(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+const GALLERY_DATA = galleryArchive.reduce<Record<string, GalleryProgramData>>((acc, yearBucket) => {
+  yearBucket.events.forEach((eventName) => {
+    const normalizedName = normalizeGalleryProgramName(eventName);
+    const folderPath = `Pics/Videos/${yearBucket.year}/${eventName}`;
+
+    if (!acc[normalizedName]) {
+      acc[normalizedName] = {
+        description:
+          galleryDescriptions[normalizedName] ||
+          "Years of service, celebration, and transformation captured in one story.",
+        heroImage: "",
+        photos: [],
+        folders: [],
+      };
+    }
+
+    if (!acc[normalizedName].folders.includes(folderPath)) {
+      acc[normalizedName].folders.push(folderPath);
+    }
+  });
+
+  return acc;
+}, {});
+
 const communityEventCards = [
   { title: "Crowned In Her Story", description: "Empowering women through storytelling and transformation experiences — celebrating every chapter of her journey.", icon: "👑", gradient: "#7C3AED, #1E3A8A" },
   { title: "Back to School Resource Fair", description: "Distributing backpacks filled with school supplies alongside food, music, activities, and resources for families.", icon: "🎒", gradient: "#1E3A8A, #D4A017" },
@@ -60,32 +121,73 @@ const communityEventCards = [
 ];
 
 // ─── Gallery Hook ─────────────────────────────────────────────────────────────
-function useGalleryImages(year: string, event: string) {
-  const [images, setImages] = useState<CloudinaryImage[]>([]);
-  const [loading, setLoading] = useState(false);
+function useProgramGalleryImages(galleryData: Record<string, GalleryProgramData>) {
+  const [imagesByProgram, setImagesByProgram] = useState<Record<string, CloudinaryImage[]>>({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!year || !event) return;
-    const folder = `Pics/Videos/${year}/${event}`;
-    setLoading(true);
-    setImages([]);
-    fetch(`/api/cloudinary?folder=${encodeURIComponent(folder)}`)
-      .then((res) => res.json())
-      .then((data) => { setImages(data.images || []); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, [year, event]);
+    let mounted = true;
 
-  return { images, loading };
+    async function loadImages() {
+      setLoading(true);
+
+      const entries = await Promise.all(
+        Object.entries(galleryData).map(async ([programName, programData]) => {
+          const folderResults = await Promise.all(
+            programData.folders.map(async (folder) => {
+              try {
+                const response = await fetch(`/api/cloudinary?folder=${encodeURIComponent(folder)}`);
+                const data = await response.json();
+                return data.images || [];
+              } catch {
+                return [];
+              }
+            })
+          );
+
+          const combinedImages = folderResults
+            .flat()
+            .filter(
+              (image, index, arr) =>
+                arr.findIndex((entry) => entry.public_id === image.public_id) === index
+            );
+
+          return [programName, combinedImages] as const;
+        })
+      );
+
+      if (!mounted) return;
+
+      setImagesByProgram(Object.fromEntries(entries));
+      setLoading(false);
+    }
+
+    loadImages();
+
+    return () => {
+      mounted = false;
+    };
+  }, [galleryData]);
+
+  return { imagesByProgram, loading };
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const [activeYear, setActiveYear] = useState("2026");
-  const [activeEvent, setActiveEvent] = useState(galleryYears[0].events[0]);
   const [heroVisible, setHeroVisible] = useState(false);
   const [countersVisible, setCountersVisible] = useState(false);
+  const [activeGalleryTab, setActiveGalleryTab] = useState("All Programs");
+  const [galleryPanelVisible, setGalleryPanelVisible] = useState(true);
+  const [lightboxProgram, setLightboxProgram] = useState<string | null>(null);
+  const [lightboxActiveIndex, setLightboxActiveIndex] = useState<number | null>(null);
   const countersRef = useRef<HTMLDivElement>(null);
-  const { images: galleryImages, loading: galleryLoading } = useGalleryImages(activeYear, activeEvent);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const galleryTransitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { imagesByProgram, loading: galleryLoading } = useProgramGalleryImages(GALLERY_DATA);
+  const galleryTabs = useMemo(() => ["All Programs", ...Object.keys(GALLERY_DATA)], []);
+  const activeGalleryImages =
+    activeGalleryTab === "All Programs" ? [] : imagesByProgram[activeGalleryTab] || [];
 
   useEffect(() => { setHeroVisible(true); }, []);
 
@@ -95,13 +197,147 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
-  const handleYearChange = (year: string) => {
-    setActiveYear(year);
-    const yearData = galleryYears.find((y) => y.year === year);
-    if (yearData?.events.length) setActiveEvent(yearData.events[0]);
+  useEffect(() => {
+    const galleryItems = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-gallery-item]")
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    galleryItems.forEach((item) => observer.observe(item));
+
+    return () => observer.disconnect();
+  }, [activeGalleryTab, galleryPanelVisible, imagesByProgram]);
+
+  useEffect(() => {
+    if (!lightboxProgram) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const dialog = lightboxRef.current;
+    const focusableElements = dialog
+      ? Array.from(
+          dialog.querySelectorAll<HTMLElement>(
+            'button, [href], [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((element) => !element.hasAttribute("disabled"))
+      : [];
+
+    focusableElements[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setLightboxProgram(null);
+        setLightboxActiveIndex(null);
+        return;
+      }
+
+      if (lightboxActiveIndex !== null && event.key === "ArrowRight") {
+        event.preventDefault();
+        const photoCount = (imagesByProgram[lightboxProgram] || []).length;
+        setLightboxActiveIndex((current) =>
+          current === null ? 0 : (current + 1) % photoCount
+        );
+        return;
+      }
+
+      if (lightboxActiveIndex !== null && event.key === "ArrowLeft") {
+        event.preventDefault();
+        const photoCount = (imagesByProgram[lightboxProgram] || []).length;
+        setLightboxActiveIndex((current) =>
+          current === null ? 0 : (current - 1 + photoCount) % photoCount
+        );
+        return;
+      }
+
+      if (event.key !== "Tab" || focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [imagesByProgram, lightboxActiveIndex, lightboxProgram]);
+
+  useEffect(() => {
+    return () => {
+      if (galleryTransitionTimeoutRef.current) {
+        clearTimeout(galleryTransitionTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const switchGalleryTab = (tab: string) => {
+    if (tab === activeGalleryTab) return;
+
+    setGalleryPanelVisible(false);
+
+    if (galleryTransitionTimeoutRef.current) {
+      clearTimeout(galleryTransitionTimeoutRef.current);
+    }
+
+    galleryTransitionTimeoutRef.current = setTimeout(() => {
+      setActiveGalleryTab(tab);
+      setGalleryPanelVisible(true);
+    }, 150);
   };
 
-  const activeYearData = galleryYears.find((y) => y.year === activeYear);
+  const handleGalleryTabKeyDown = (
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+
+    event.preventDefault();
+
+    let nextIndex = index;
+
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % galleryTabs.length;
+    if (event.key === "ArrowLeft") nextIndex = (index - 1 + galleryTabs.length) % galleryTabs.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = galleryTabs.length - 1;
+
+    tabRefs.current[nextIndex]?.focus();
+    switchGalleryTab(galleryTabs[nextIndex]);
+  };
+
+  const allProgramsCards = galleryTabs
+    .filter((tab) => tab !== "All Programs")
+    .map((programName) => ({
+      name: programName,
+      description: GALLERY_DATA[programName].description,
+      image: imagesByProgram[programName]?.[0],
+    }));
+
+  const activeLightboxImages = lightboxProgram ? imagesByProgram[lightboxProgram] || [] : [];
+  const bentoImages = activeGalleryImages.slice(0, 5);
+  const hiddenImageCount = Math.max(activeGalleryImages.length - 5, 0);
 
   return (
     <>
@@ -168,26 +404,66 @@ export default function HomePage() {
         .program-link{margin-top:24px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;text-decoration:none;transition:gap .2s;}
         .program-link:hover{gap:10px;}
 
-        .gallery-section{background:var(--dark);padding:100px 0;}
+        .gallery-section{background:var(--dark);padding:100px 0;position:relative;overflow:hidden;}
         .gallery-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
         .gallery-section .section-title{color:white;}
-        .gallery-section .section-subtitle{color:rgba(255,255,255,.6);}
-        .year-tabs{display:flex;gap:8px;margin-top:48px;flex-wrap:wrap;}
-        .year-tab{padding:10px 24px;border-radius:100px;border:2px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);font-weight:600;font-size:15px;cursor:pointer;transition:all .2s;background:transparent;}
-        .year-tab:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.8);}
-        .year-tab.active{background:var(--gold);border-color:var(--gold);color:var(--dark);}
-        .gallery-layout{display:grid;grid-template-columns:260px 1fr;gap:32px;margin-top:32px;min-height:500px;}
-        .event-list{display:flex;flex-direction:column;gap:8px;}
-        .event-item{padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;line-height:1.4;background:transparent;text-align:left;}
-        .event-item:hover{background:rgba(255,255,255,.06);color:white;}
-        .event-item.active{background:rgba(212,160,23,.15);border-color:rgba(212,160,23,.4);color:var(--gold-light);}
-        .gallery-images{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,220px);gap:12px;}
-        .gallery-img-wrap{border-radius:16px;overflow:hidden;background:rgba(255,255,255,.05);position:relative;}
-        .gallery-img-wrap:first-child{grid-column:1/3;}
-        .gallery-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
-        .gallery-img-wrap:hover img{transform:scale(1.04);}
-        .gallery-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,.25);font-size:13px;}
-        .gallery-loading{display:flex;align-items:center;justify-content:center;width:100%;height:460px;grid-column:1/-1;color:rgba(255,255,255,.4);font-size:15px;gap:12px;}
+        .gallery-section .section-subtitle{color:rgba(255,255,255,.68);}
+        .gallery-tabs-shell{position:relative;margin-top:44px;}
+        .gallery-tabs-shell::before,.gallery-tabs-shell::after{content:'';position:absolute;top:0;bottom:0;width:42px;pointer-events:none;opacity:0;transition:opacity .2s;}
+        .gallery-tabs-shell::before{left:0;background:linear-gradient(90deg,var(--dark),rgba(15,31,77,0));}
+        .gallery-tabs-shell::after{right:0;background:linear-gradient(270deg,var(--dark),rgba(15,31,77,0));}
+        .gallery-tabs{display:flex;gap:12px;justify-content:center;overflow-x:auto;scrollbar-width:none;padding-bottom:6px;}
+        .gallery-tabs::-webkit-scrollbar{display:none;}
+        .gallery-tab{flex:0 0 auto;padding:12px 22px;border-radius:999px;border:1px solid rgba(200,169,106,.65);background:transparent;color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s ease;}
+        .gallery-tab:hover{background:var(--gold);color:#1C1C1C;}
+        .gallery-tab.active{background:#C8A96A;color:#1C1C1C;border-color:#C8A96A;}
+        .gallery-panel{margin-top:34px;opacity:1;transform:translateY(0);transition:opacity .25s ease,transform .25s ease;min-height:420px;}
+        .gallery-panel.is-hidden{opacity:0;transform:translateY(10px);}
+        .gallery-all-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+        .program-mosaic-card{position:relative;border:none;border-radius:18px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;background:rgba(255,255,255,.05);box-shadow:0 4px 24px rgba(0,0,0,.4);text-align:left;}
+        .program-mosaic-card img,.bento-photo img,.lightbox-grid-item img,.lightbox-featured img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
+        .program-mosaic-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,28,28,.08) 0%,rgba(28,28,28,.8) 100%);transition:background .25s ease;}
+        .program-mosaic-card:hover::after{background:linear-gradient(180deg,rgba(28,28,28,.02) 0%,rgba(28,28,28,.68) 100%);}
+        .program-mosaic-card:hover img,.bento-photo:hover img,.lightbox-grid-item:hover img{transform:scale(1.05);}
+        .program-mosaic-copy{position:absolute;left:22px;right:22px;bottom:20px;z-index:2;padding-left:16px;border-left:4px solid #C8A96A;}
+        .program-mosaic-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);line-height:1.2;margin-bottom:6px;}
+        .program-mosaic-desc{font-size:14px;line-height:1.55;color:rgba(249,246,241,.88);}
+        .program-mosaic-cta{margin-top:10px;font-size:13px;font-weight:700;color:#F5F1E8;opacity:0;transform:translateY(8px);transition:all .2s ease;}
+        .program-mosaic-card:hover .program-mosaic-cta{opacity:1;transform:translateY(0);}
+        .gallery-empty{display:flex;align-items:center;justify-content:center;border-radius:18px;border:1px dashed rgba(200,169,106,.35);background:rgba(255,255,255,.04);min-height:260px;color:rgba(255,255,255,.56);font-size:15px;text-align:center;padding:24px;}
+        .bento-gallery{display:grid;grid-template-columns:1.35fr .82fr .82fr;grid-template-rows:repeat(3,190px);gap:14px;}
+        .bento-photo{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.4);background:rgba(255,255,255,.05);}
+        .bento-photo-1{grid-column:1/3;grid-row:1/3;}
+        .bento-photo-2{grid-column:3/4;grid-row:1/2;}
+        .bento-photo-3{grid-column:3/4;grid-row:2/3;}
+        .bento-photo-4{grid-column:1/2;grid-row:3/4;}
+        .bento-photo-5{grid-column:2/4;grid-row:3/4;}
+        .bento-meta{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px;flex-wrap:wrap;}
+        .bento-program-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold);}
+        .bento-program-desc{font-size:15px;line-height:1.7;color:rgba(249,246,241,.78);max-width:640px;margin-top:8px;}
+        .view-more-btn{padding:12px 20px;border-radius:999px;border:1px solid rgba(200,169,106,.65);background:transparent;color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s ease;}
+        .view-more-btn:hover{background:#C8A96A;color:#1C1C1C;}
+        .gallery-lightbox{position:fixed;inset:0;z-index:80;background:rgba(28,28,28,.95);display:flex;align-items:center;justify-content:center;padding:32px;}
+        .gallery-lightbox-inner{width:min(1180px,100%);max-height:100%;display:flex;flex-direction:column;gap:22px;outline:none;}
+        .lightbox-header{display:flex;align-items:center;justify-content:space-between;gap:16px;color:#F5F1E8;}
+        .lightbox-title{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold);}
+        .lightbox-close,.lightbox-nav{width:48px;height:48px;border-radius:999px;border:1px solid rgba(245,241,232,.24);background:rgba(255,255,255,.06);color:#F5F1E8;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s ease;}
+        .lightbox-close:hover,.lightbox-nav:hover{background:rgba(255,255,255,.14);}
+        .lightbox-grid{columns:3 240px;column-gap:14px;overflow:auto;padding-right:4px;}
+        .lightbox-grid-item{break-inside:avoid;margin-bottom:14px;border:none;padding:0;background:none;cursor:pointer;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.4);}
+        .lightbox-grid-item img{display:block;aspect-ratio:4/3;}
+        .lightbox-featured-wrap{display:flex;align-items:center;justify-content:center;gap:18px;}
+        .lightbox-featured{flex:1;max-width:900px;border-radius:16px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.45);background:#111;}
+        .lightbox-featured img{max-height:70vh;}
+        .lightbox-counter{color:rgba(245,241,232,.76);font-size:14px;}
+        @media (prefers-reduced-motion:no-preference){
+          .gallery-tab,.program-mosaic-card,.program-mosaic-card::after,.program-mosaic-card img,.program-mosaic-cta,.bento-photo img,.lightbox-grid-item img,.gallery-panel,[data-gallery-item]{transition-duration:.2s;}
+          [data-gallery-item]{opacity:0;transform:translateY(22px);transition:opacity .45s ease,transform .45s ease;}
+          [data-gallery-item].is-visible{opacity:1;transform:translateY(0);}
+        }
+        @media (prefers-reduced-motion:reduce){
+          .gallery-panel,[data-gallery-item]{transition:none !important;animation:none !important;opacity:1 !important;transform:none !important;}
+        }
 
         .events-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:60px;}
         .event-card{background:white;border-radius:24px;overflow:hidden;border:1px solid rgba(0,0,0,.06);transition:transform .3s,box-shadow .3s;}
@@ -236,8 +512,13 @@ export default function HomePage() {
           .hero-visual{display:none;}
           .mission-inner{grid-template-columns:1fr;gap:40px;}
           .programs-grid{grid-template-columns:repeat(2,1fr);}
-          .gallery-layout{grid-template-columns:1fr;}
-          .event-list{flex-direction:row;flex-wrap:wrap;}
+          .gallery-all-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+          .bento-gallery{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,180px);}
+          .bento-photo-1{grid-column:1/3;grid-row:1/3;}
+          .bento-photo-2{grid-column:1/2;grid-row:3/4;}
+          .bento-photo-3{grid-column:2/3;grid-row:3/4;}
+          .bento-photo-4{grid-column:1/2;grid-row:4/5;}
+          .bento-photo-5{grid-column:2/3;grid-row:4/5;}
           .events-grid{grid-template-columns:1fr;}
           .stats-grid{grid-template-columns:repeat(2,1fr);}
           .involved-grid{grid-template-columns:repeat(2,1fr);}
@@ -246,8 +527,14 @@ export default function HomePage() {
           .hero-content,.mission-section,.impact-section,.involved-section,.cta-banner{padding-left:24px;padding-right:24px;}
           .gallery-inner{padding:0 24px;}
           .programs-grid,.stats-grid,.involved-grid{grid-template-columns:1fr;}
-          .gallery-images{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
-          .gallery-img-wrap:first-child{grid-column:1/3;}
+          .gallery-tabs{justify-content:flex-start;padding-right:28px;}
+          .gallery-tabs-shell::before,.gallery-tabs-shell::after{opacity:1;}
+          .gallery-all-grid,.bento-gallery{grid-template-columns:1fr;}
+          .bento-gallery{grid-template-rows:none;}
+          .bento-photo-1,.bento-photo-2,.bento-photo-3,.bento-photo-4,.bento-photo-5{grid-column:auto;grid-row:auto;aspect-ratio:4/3;}
+          .lightbox-grid{columns:1 100%;}
+          .lightbox-featured-wrap{gap:10px;}
+          .lightbox-nav{width:42px;height:42px;}
         }
       `}</style>
 
@@ -324,37 +611,207 @@ export default function HomePage() {
           <div className="section-label">Our Journey</div>
           <h2 className="section-title">Community in Action</h2>
           <p className="section-subtitle">Years of impact, memories, and transformation — captured in moments that tell our story.</p>
-          <div className="year-tabs">
-            {galleryYears.map(({ year }) => (
-              <button key={year} className={`year-tab ${activeYear === year ? "active" : ""}`} onClick={() => handleYearChange(year)}>{year}</button>
-            ))}
-          </div>
-          <div className="gallery-layout">
-            <div className="event-list">
-              {activeYearData?.events.map((event) => (
-                <button key={event} className={`event-item ${activeEvent === event ? "active" : ""}`} onClick={() => setActiveEvent(event)}>{event}</button>
+          <div className="gallery-tabs-shell">
+            <div className="gallery-tabs" role="tablist" aria-label="Community in Action program tabs">
+              {galleryTabs.map((tab, index) => (
+                <button
+                  key={tab}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  role="tab"
+                  aria-selected={activeGalleryTab === tab}
+                  aria-controls={`gallery-panel-${gallerySlug(tab)}`}
+                  id={`gallery-tab-${gallerySlug(tab)}`}
+                  tabIndex={activeGalleryTab === tab ? 0 : -1}
+                  className={`gallery-tab ${activeGalleryTab === tab ? "active" : ""}`}
+                  onClick={() => switchGalleryTab(tab)}
+                  onKeyDown={(event) => handleGalleryTabKeyDown(event, index)}
+                >
+                  {tab}
+                </button>
               ))}
             </div>
-            <div className="gallery-images">
-              {galleryLoading ? (
-                <div className="gallery-loading">⏳ Loading photos...</div>
-              ) : galleryImages.length > 0 ? (
-                galleryImages.slice(0, 5).map((img, i) => (
-                  <div className="gallery-img-wrap" key={img.public_id}>
-                    <img src={img.secure_url} alt={`${activeEvent} ${i + 1}`} loading="lazy" />
-                  </div>
-                ))
+          </div>
+          <div
+            className={`gallery-panel ${galleryPanelVisible ? "" : "is-hidden"}`}
+            role="tabpanel"
+            id={`gallery-panel-${gallerySlug(activeGalleryTab)}`}
+            aria-labelledby={`gallery-tab-${gallerySlug(activeGalleryTab)}`}
+          >
+            {activeGalleryTab === "All Programs" ? (
+              galleryLoading && allProgramsCards.every((card) => !card.image) ? (
+                <div className="gallery-empty">Loading program collections...</div>
               ) : (
-                [0,1,2,3,4].map((i) => (
-                  <div className="gallery-img-wrap" key={i}>
-                    <div className="gallery-placeholder"><span style={{ fontSize: "28px", opacity: 0.4 }}>📸</span><span style={{ fontSize: "12px" }}>{activeEvent}</span></div>
+                <div className="gallery-all-grid">
+                  {allProgramsCards.map((programCard, index) => (
+                    <button
+                      key={programCard.name}
+                      type="button"
+                      className="program-mosaic-card"
+                      onClick={() => switchGalleryTab(programCard.name)}
+                      data-gallery-item
+                      style={{ transitionDelay: `${index * 60}ms` }}
+                    >
+                      {programCard.image ? (
+                        <img
+                          src={programCard.image.secure_url}
+                          alt={`${programCard.name} community gallery preview`}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="gallery-empty" style={{ minHeight: "100%", border: "none" }}>
+                          Photos coming soon
+                        </div>
+                      )}
+                      <div className="program-mosaic-copy">
+                        <div className="program-mosaic-name">{programCard.name}</div>
+                        <div className="program-mosaic-desc">{programCard.description}</div>
+                        <div className="program-mosaic-cta">View Program →</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )
+            ) : activeGalleryImages.length === 0 && !galleryLoading ? (
+              <div className="gallery-empty">Photos for {activeGalleryTab} are being gathered.</div>
+            ) : (
+              <>
+                <div className="bento-meta">
+                  <div>
+                    <div className="bento-program-title">{activeGalleryTab}</div>
+                    <div className="bento-program-desc">{GALLERY_DATA[activeGalleryTab].description}</div>
                   </div>
-                ))
-              )}
-            </div>
+                  {hiddenImageCount > 0 ? (
+                    <button
+                      type="button"
+                      className="view-more-btn"
+                      onClick={() => {
+                        setLightboxProgram(activeGalleryTab);
+                        setLightboxActiveIndex(null);
+                      }}
+                    >
+                      View More ({hiddenImageCount})
+                    </button>
+                  ) : null}
+                </div>
+                <div className="bento-gallery">
+                  {bentoImages.map((img, index) => (
+                    <button
+                      key={img.public_id}
+                      type="button"
+                      className={`bento-photo bento-photo-${index + 1}`}
+                      onClick={() => {
+                        setLightboxProgram(activeGalleryTab);
+                        setLightboxActiveIndex(index);
+                      }}
+                      data-gallery-item
+                      style={{ transitionDelay: `${index * 60}ms` }}
+                    >
+                      <img
+                        src={img.secure_url}
+                        alt={`${activeGalleryTab} community photo ${index + 1}`}
+                        loading="lazy"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
+      {lightboxProgram ? (
+        <div className="gallery-lightbox" role="presentation" onClick={() => {
+          setLightboxProgram(null);
+          setLightboxActiveIndex(null);
+        }}>
+          <div
+            className="gallery-lightbox-inner"
+            ref={lightboxRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Photo gallery"
+            tabIndex={-1}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="lightbox-header">
+              <div>
+                <div className="lightbox-title">{lightboxProgram}</div>
+                <div className="lightbox-counter">
+                  {lightboxActiveIndex === null
+                    ? `${activeLightboxImages.length} photos`
+                    : `${lightboxActiveIndex + 1} of ${activeLightboxImages.length}`}
+                </div>
+              </div>
+              <button
+                type="button"
+                className="lightbox-close"
+                aria-label="Close photo gallery"
+                onClick={() => {
+                  setLightboxProgram(null);
+                  setLightboxActiveIndex(null);
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {lightboxActiveIndex === null ? (
+              <div className="lightbox-grid">
+                {activeLightboxImages.map((img, index) => (
+                  <button
+                    key={img.public_id}
+                    type="button"
+                    className="lightbox-grid-item"
+                    onClick={() => setLightboxActiveIndex(index)}
+                  >
+                    <img
+                      src={img.secure_url}
+                      alt={`${lightboxProgram} gallery image ${index + 1}`}
+                      loading="lazy"
+                    />
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="lightbox-featured-wrap">
+                <button
+                  type="button"
+                  className="lightbox-nav"
+                  aria-label="Previous image"
+                  onClick={() =>
+                    setLightboxActiveIndex(
+                      (lightboxActiveIndex - 1 + activeLightboxImages.length) %
+                        activeLightboxImages.length
+                    )
+                  }
+                >
+                  ←
+                </button>
+                <div className="lightbox-featured">
+                  <img
+                    src={activeLightboxImages[lightboxActiveIndex].secure_url}
+                    alt={`${lightboxProgram} featured photo ${lightboxActiveIndex + 1}`}
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="lightbox-nav"
+                  aria-label="Next image"
+                  onClick={() =>
+                    setLightboxActiveIndex(
+                      (lightboxActiveIndex + 1) % activeLightboxImages.length
+                    )
+                  }
+                >
+                  →
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
 
       {/* COMMUNITY EVENTS */}
       <section style={{ padding: "100px 48px", maxWidth: "1200px", margin: "0 auto" }}>
