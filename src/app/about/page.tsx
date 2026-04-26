@@ -248,6 +248,7 @@ export default function AboutPage() {
         }
         .story-image-wrap {
           position: relative;
+          width: 100%;
         }
         .story-image-wrap::before {
           content: '';
@@ -264,25 +265,12 @@ export default function AboutPage() {
           position: relative;
           z-index: 1;
           width: 100%;
-          aspect-ratio: 4/5;
+          height: auto;
           object-fit: cover;
+          object-position: center;
           border-radius: 4px;
           display: block;
           background: linear-gradient(135deg, #e8e0d5, #d5ccbf);
-        }
-        .story-image-placeholder {
-          position: relative;
-          z-index: 1;
-          width: 100%;
-          aspect-ratio: 4/5;
-          background: linear-gradient(135deg, var(--navy) 0%, #1a3470 100%);
-          border-radius: 4px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: rgba(255,255,255,0.2);
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 80px;
         }
         .founded-badge {
           position: absolute;
@@ -714,6 +702,9 @@ export default function AboutPage() {
           .partners-section,
           .cta-section { padding-left: 24px; padding-right: 24px; }
           .hero-stat-row { gap: 28px; }
+          .story-image-wrap {
+            max-width: 760px;
+          }
         }
 
         @media (max-width: 600px) {
@@ -784,7 +775,13 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="story-image-wrap">
-              <div className="story-image-placeholder">✦</div>
+              <Image
+                src="/ourstoryimage.jpeg"
+                alt="Destiny Helpers Outreach community gathering"
+                width={1920}
+                height={1440}
+                className="story-image"
+              />
               <div className="founded-badge">
                 <div className="founded-badge-year">2019</div>
                 <div className="founded-badge-label">Founded</div>
