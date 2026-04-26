@@ -67,14 +67,14 @@ export default function AboutPage() {
   ];
 
   const partners = [
-    "/sponsor1.jpeg",
-    "/sponsor2.png",
-    "/sponsor3.jpeg",
-    "/sponsor4.png",
-    "/sponsor5.png",
-    "/sponsor6.jpeg",
-    "/sponsor6.png",
-    "/sponsor7.png",
+    { src: "/sponsor1.jpeg", scale: 1, height: 70, offsetY: 0 },
+    { src: "/sponsor2.png", scale: 1, height: 126, offsetY: 10 },
+    { src: "/sponsor3.jpeg", scale: 1, height: 70, offsetY: 0 },
+    { src: "/sponsor4.png", scale: 1.12, height: 70, offsetY: 0 },
+    { src: "/sponsor5.png", scale: 1.1, height: 70, offsetY: 0 },
+    { src: "/sponsor6.jpeg", scale: 1, height: 70, offsetY: 0 },
+    { src: "/sponsor6.png", scale: 1.18, height: 70, offsetY: 0 },
+    { src: "/sponsor7.png", scale: 1, height: 118, offsetY: 6 },
   ];
 
   return (
@@ -601,10 +601,16 @@ export default function AboutPage() {
           box-shadow: 0 24px 48px rgba(0,0,0,0.22);
         }
         .partner-logo {
-          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 100%;
           height: 100px;
+          overflow: hidden;
           filter: saturate(1.05);
+        }
+        .partner-logo img {
+          transform-origin: center;
         }
         .partner-pill::after {
           content: "";
@@ -877,15 +883,21 @@ export default function AboutPage() {
           <div className="partners-eyebrow">We Are In Good Company</div>
           <h2 className="partners-heading">Our Partners</h2>
           <div className="partners-row">
-            {partners.map((p) => (
-              <div key={p} className="partner-pill">
+            {partners.map((partner) => (
+              <div key={partner.src} className="partner-pill">
                 <div className="partner-logo">
                   <Image
-                    src={p}
-                    alt={`Sponsor logo ${p.replace("/sponsor", "").replace(/\.[^.]+$/, "")}`}
-                    fill
+                    src={partner.src}
+                    alt={`Sponsor logo ${partner.src.replace("/sponsor", "").replace(/\.[^.]+$/, "")}`}
+                    width={176}
+                    height={72}
                     sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
-                    style={{ objectFit: "contain" }}
+                    style={{
+                      height: `${partner.height}px`,
+                      width: "auto",
+                      objectFit: "contain",
+                      transform: `translateY(${partner.offsetY}px) scale(${partner.scale})`,
+                    }}
                   />
                 </div>
               </div>
