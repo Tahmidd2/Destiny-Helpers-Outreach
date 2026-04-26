@@ -67,12 +67,14 @@ export default function AboutPage() {
   ];
 
   const partners = [
-    "The Fashion Foundation",
-    "Gotham",
-    "MetroPlusHealth",
-    "The Home Depot",
-    "Lowe's",
-    "NY State Senate",
+    "/sponsor1.jpeg",
+    "/sponsor2.png",
+    "/sponsor3.jpeg",
+    "/sponsor4.png",
+    "/sponsor5.png",
+    "/sponsor6.jpeg",
+    "/sponsor6.png",
+    "/sponsor7.png",
   ];
 
   return (
@@ -575,28 +577,43 @@ export default function AboutPage() {
           margin: 0 0 56px;
         }
         .partners-row {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 16px;
-          max-width: 900px;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 22px;
+          max-width: 1100px;
           margin: 0 auto;
         }
         .partner-pill {
-          background: rgba(255,255,255,0.07);
-          border: 1px solid rgba(212,160,23,0.25);
-          color: rgba(255,255,255,0.7);
-          font-size: 13px;
-          font-weight: 500;
-          letter-spacing: 0.05em;
-          padding: 12px 24px;
-          border-radius: 100px;
-          transition: all 0.2s;
+          position: relative;
+          min-height: 150px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+          border: 1px solid rgba(212,160,23,0.18);
+          border-radius: 24px;
+          overflow: hidden;
+          padding: 24px;
+          box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
         }
         .partner-pill:hover {
-          background: rgba(212,160,23,0.12);
+          background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(212,160,23,0.08));
           border-color: var(--gold);
-          color: white;
+          transform: translateY(-4px);
+          box-shadow: 0 24px 48px rgba(0,0,0,0.22);
+        }
+        .partner-logo {
+          position: relative;
+          width: 100%;
+          height: 100px;
+          filter: saturate(1.05);
+        }
+        .partner-pill::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 4px;
+          background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
         /* ── CTA ── */
@@ -682,6 +699,7 @@ export default function AboutPage() {
           .values-grid { grid-template-columns: repeat(2, 1fr); }
           .team-grid { grid-template-columns: 1fr; }
           .testimonials-grid { grid-template-columns: 1fr; }
+          .partners-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .hero-content { padding: 0 24px; }
           .vision-band,
           .values-section,
@@ -694,6 +712,7 @@ export default function AboutPage() {
 
         @media (max-width: 600px) {
           .values-grid { grid-template-columns: 1fr; }
+          .partners-row { grid-template-columns: 1fr; }
           .hero-title { font-size: 42px; }
           .founded-badge { width: 90px; height: 90px; right: 0; bottom: -16px; }
           .founded-badge-year { font-size: 22px; }
@@ -859,7 +878,17 @@ export default function AboutPage() {
           <h2 className="partners-heading">Our Partners</h2>
           <div className="partners-row">
             {partners.map((p) => (
-              <div key={p} className="partner-pill">{p}</div>
+              <div key={p} className="partner-pill">
+                <div className="partner-logo">
+                  <Image
+                    src={p}
+                    alt={`Sponsor logo ${p.replace("/sponsor", "").replace(/\.[^.]+$/, "")}`}
+                    fill
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+              </div>
             ))}
           </div>
         </section>
