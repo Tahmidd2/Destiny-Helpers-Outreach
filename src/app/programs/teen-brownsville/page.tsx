@@ -39,6 +39,26 @@ const footerLinks = [
   { label: "LinkedIn", href: "https://linkedin.com" },
 ]
 
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "Our Story", href: "/about" },
+  { label: "Programs", href: "/programs" },
+  { label: "Events", href: "/events" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Help", href: "/help" },
+  { label: "Volunteer With Us", href: "/volunteer-with-us" },
+  { label: "Donate Now", href: "/donate-now" },
+]
+
+const programLinks = [
+  { label: "Beyond The Mask", href: "/programs/beyond-the-mask" },
+  { label: "The Confidence Lens Project", href: "/programs/confidence-lens" },
+  { label: "Project ICON", href: "/programs/project-icon" },
+  { label: "Mr & Ms Teen Destiny Changer NYC", href: "/programs/teen-destiny-changer" },
+  { label: "Miss Teen Brownsville", href: "/programs/teen-brownsville" },
+  { label: "Let's Get Artsy", href: "/programs/lets-get-artsy" },
+]
+
 export default function TeenBrownsvillePage() {
   return (
     <>
@@ -134,6 +154,19 @@ export default function TeenBrownsvillePage() {
           gap: 10px;
           flex-wrap: wrap;
           justify-content: flex-end;
+        }
+
+        .mtb-nav-group {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .mtb-nav-divider {
+          width: 1px;
+          height: 28px;
+          background: rgba(255,255,255,0.12);
         }
 
         .mtb-nav-links a {
@@ -542,7 +575,7 @@ export default function TeenBrownsvillePage() {
 
         .mtb-footer-grid {
           display: grid;
-          grid-template-columns: 1.15fr 0.85fr 1fr;
+          grid-template-columns: 1.1fr 0.9fr 1fr 1fr;
           gap: 26px;
         }
 
@@ -560,6 +593,36 @@ export default function TeenBrownsvillePage() {
           color: rgba(255,255,255,0.82);
           text-decoration: none;
           line-height: 1.85;
+        }
+
+        .mtb-footer-links {
+          display: grid;
+          gap: 2px;
+        }
+
+        .mtb-footer-links a {
+          width: fit-content;
+        }
+
+        .mtb-footer-contact {
+          display: grid;
+          gap: 12px;
+        }
+
+        .mtb-footer-contact-item {
+          display: grid;
+          grid-template-columns: 24px 1fr;
+          gap: 10px;
+          align-items: start;
+        }
+
+        .mtb-footer-contact-label {
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.16em;
+          color: rgba(242,223,186,0.72);
+          margin-bottom: 2px;
+          font-weight: 700;
         }
 
         .mtb-footer a:hover,
@@ -595,6 +658,31 @@ export default function TeenBrownsvillePage() {
           font-size: 0.92rem;
         }
 
+        .mtb-footer-mid {
+          margin-top: 28px;
+          padding: 22px 24px;
+          border-radius: 24px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.04);
+          display: flex;
+          justify-content: space-between;
+          gap: 18px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        .mtb-footer-mid-title {
+          margin: 0 0 4px;
+          color: white;
+          font-weight: 800;
+          font-size: 1.1rem;
+        }
+
+        .mtb-footer-mid-copy {
+          margin: 0;
+          color: rgba(255,255,255,0.78);
+        }
+
         @media (max-width: 980px) {
           .mtb-hero-grid,
           .mtb-two-col,
@@ -617,6 +705,10 @@ export default function TeenBrownsvillePage() {
             overflow-x: auto;
             flex-wrap: nowrap;
             padding-bottom: 4px;
+          }
+
+          .mtb-nav-group {
+            flex-wrap: nowrap;
           }
 
           .mtb-shell {
@@ -662,6 +754,10 @@ export default function TeenBrownsvillePage() {
           .mtb-button {
             width: 100%;
           }
+
+          .mtb-nav-divider {
+            display: none;
+          }
         }
       `}</style>
 
@@ -673,11 +769,18 @@ export default function TeenBrownsvillePage() {
               <span className="mtb-brand-title">Miss Teen Brownsville</span>
             </a>
             <nav className="mtb-nav-links" aria-label="Miss Teen Brownsville navigation">
-              <a href="#top">Home</a>
-              <a href="#about-program">About the Program</a>
-              <a href="#our-impact">Our Impact</a>
-              <a href="#apply">Apply / Get Involved</a>
-              <a href="#contact" className="mtb-nav-cta">Contact</a>
+              <div className="mtb-nav-group">
+                <Link href="/">DHOI Home</Link>
+                <Link href="/programs">All Programs</Link>
+                <Link href="/about">Our Story</Link>
+              </div>
+              <div className="mtb-nav-divider" aria-hidden="true" />
+              <div className="mtb-nav-group">
+                <a href="#about-program">About the Program</a>
+                <a href="#our-impact">Our Impact</a>
+                <a href="#apply">Apply / Get Involved</a>
+                <a href="#contact" className="mtb-nav-cta">Contact</a>
+              </div>
             </nav>
           </div>
         </header>
@@ -925,15 +1028,6 @@ export default function TeenBrownsvillePage() {
                   Beauty, Brains &amp; Philanthropy Meet. A bold, affirming experience for teen girls
                   ages 13–19 rooted in education, leadership, and self-worth.
                 </p>
-              </div>
-              <div>
-                <div className="mtb-footer-title">Contact</div>
-                <p>📞 (631) 352-6615</p>
-                <p>✉️ info@destinyhelpersoutreach.org</p>
-                <p>🌐 www.destinyhelpersoutreach.org</p>
-              </div>
-              <div>
-                <div className="mtb-footer-title">Follow Us</div>
                 <div className="mtb-socials">
                   {footerLinks.map((item) => (
                     <a key={item.label} href={item.href} target="_blank" rel="noreferrer">
@@ -942,13 +1036,81 @@ export default function TeenBrownsvillePage() {
                   ))}
                 </div>
               </div>
+              <div>
+                <div className="mtb-footer-title">Quick Links</div>
+                <div className="mtb-footer-links">
+                  {quickLinks.map((item) => (
+                    <Link key={item.label} href={item.href}>
+                      → {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="mtb-footer-title">Our Programs</div>
+                <div className="mtb-footer-links">
+                  {programLinks.map((item) => (
+                    <Link key={item.label} href={item.href}>
+                      → {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="mtb-footer-title">Contact Us</div>
+                <div className="mtb-footer-contact">
+                  <div className="mtb-footer-contact-item">
+                    <div>📞</div>
+                    <div>
+                      <div className="mtb-footer-contact-label">Call Us</div>
+                      <a href="tel:+16313526615">+1 (631) 352-6615</a>
+                    </div>
+                  </div>
+                  <div className="mtb-footer-contact-item">
+                    <div>✉️</div>
+                    <div>
+                      <div className="mtb-footer-contact-label">Email Us</div>
+                      <a href="mailto:info@destinyhelpersoutreach.org">info@destinyhelpersoutreach.org</a>
+                    </div>
+                  </div>
+                  <div className="mtb-footer-contact-item">
+                    <div>🌐</div>
+                    <div>
+                      <div className="mtb-footer-contact-label">Website</div>
+                      <a href="https://www.destinyhelpersoutreach.org" target="_blank" rel="noreferrer">
+                        www.destinyhelpersoutreach.org
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mtb-footer-mid">
+              <div>
+                <p className="mtb-footer-mid-title">Support Our Mission</p>
+                <p className="mtb-footer-mid-copy">
+                  Help us create more opportunities for teen girls through mentorship, scholarships, and community-centered leadership.
+                </p>
+              </div>
+              <Link href="/donate-now" className="mtb-button mtb-button-primary">
+                Donate Now
+              </Link>
             </div>
 
             <div className="mtb-footer-bottom">
               <span>A program of Destiny Helpers Outreach Inc.</span>
-              <Link href="/" style={{ color: "var(--mtb-gold-soft)", textDecoration: "none", fontWeight: 700 }}>
-                Return to the main DHOI site
-              </Link>
+              <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+                <Link href="/privacy-policy" style={{ color: "var(--mtb-gold-soft)", textDecoration: "none", fontWeight: 700 }}>
+                  Privacy Policy
+                </Link>
+                <Link href="/terms-of-service" style={{ color: "var(--mtb-gold-soft)", textDecoration: "none", fontWeight: 700 }}>
+                  Terms of Service
+                </Link>
+                <Link href="/" style={{ color: "var(--mtb-gold-soft)", textDecoration: "none", fontWeight: 700 }}>
+                  Return to DHOI Home
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
