@@ -18,7 +18,7 @@ const navLinks = [
     ],
   },
   { label: "Events", href: "/events" },
-  { label: "About Us", href: "/about" },
+  { label: "Our Story", href: "/about" },
   { label: "Blogs", href: "/blogs" },
   { label: "Help", href: "/help" },
   { label: "Donate Now!", href: "/donate-now" },
@@ -396,7 +396,7 @@ export default function Navbar() {
             </li>
 
             <li><Link href="/events" className="nav-link">Events</Link></li>
-            <li><Link href="/about" className="nav-link">About Us</Link></li>
+            <li><Link href="/about" className="nav-link">Our Story</Link></li>
             <li><Link href="/blogs" className="nav-link">Blogs</Link></li>
             <li><Link href="/help" className="nav-link">Help</Link></li>
             <li><Link href="/donate-now" className="nav-link donate">Donate Now!</Link></li>
@@ -463,7 +463,7 @@ export default function Navbar() {
           </div>
 
           <Link href="/events" className="mobile-link" onClick={() => setMobileOpen(false)}>Events</Link>
-          <Link href="/about" className="mobile-link" onClick={() => setMobileOpen(false)}>About Us</Link>
+          <Link href="/about" className="mobile-link" onClick={() => setMobileOpen(false)}>Our Story</Link>
           <Link href="/blogs" className="mobile-link" onClick={() => setMobileOpen(false)}>Blogs</Link>
           <Link href="/help" className="mobile-link" onClick={() => setMobileOpen(false)}>Help</Link>
           <Link

@@ -549,7 +549,7 @@ export default function HomePage() {
 
             <div className={`hero-label ${heroVisible ? "visible" : ""}`}><span>✦</span> Destiny Helpers Outreach Inc.</div>
             <h1 className={`hero-headline ${heroVisible ? "visible" : ""}`}>Breaking Barriers.<span>Building Brighter Futures.</span></h1>
-            <p className={`hero-sub ${heroVisible ? "visible" : ""}`}>Empowering underserved youth and their families to break barriers, discover purpose, and build brighter futures through mentorship, education, food security, and community-driven programs that transform lives.</p>
+            <p className={`hero-sub ${heroVisible ? "visible" : ""}`}>We create spaces where young people and their families can discover their purpose, strengthen their identity, and build brighter futures through mentorship, education, and compassionate community support.</p>
             <div className={`hero-buttons ${heroVisible ? "visible" : ""}`}>
               <Link href="/programs" className="btn-gold">Explore Programs ↗</Link>
               <Link href="/donate-now" className="btn-ghost">Donate Now</Link>
@@ -573,13 +573,13 @@ export default function HomePage() {
           <div>
             <div className="mission-quote">
               <span className="mission-quote-mark">"</span>
-              To empower underserved youth and their families to break barriers, discover purpose, and build brighter futures.
+              DHOI empowers youth and families to break barriers, discover their purpose, and build brighter futures.
             </div>
           </div>
           <div>
             <div className="section-label" style={{ color: "rgba(212,160,23,0.9)" }}>Our Mission</div>
-            <p className="mission-body">Destiny Helpers Outreach Inc. is a 501(c)(3) nonprofit rooted in Brooklyn, NY. We serve Black and brown youth, families, and underserved communities through mentorship, education, food security, creative expression, and community-driven programs that transform lives.</p>
-            <p className="mission-body" style={{ marginTop: "16px" }}>We believe every young person carries purpose within them — and our work is to help them discover it, nurture it, and share it with the world.</p>
+            <p className="mission-body">DHOI empowers youth and families to break barriers, discover their purpose, and build brighter futures through mentorship, education, creative expression, and compassionate community support, while creating safe spaces where their strengths, voices, and potential can thrive.</p>
+            <p className="mission-body" style={{ marginTop: "16px" }}>We create transformative spaces where young people can discover who they are and who they are becoming.</p>
             <div className="mission-pills">
               {["Mentorship", "Education", "Food Security", "Youth Leadership", "Community Care"].map(p => <span key={p} className="pill">{p}</span>)}
             </div>

@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Our Story | Destiny Helpers Outreach",
+};
 
 export default function AboutPage() {
   const team = [
@@ -7,7 +12,7 @@ export default function AboutPage() {
       name: "TrudyAnn Williams",
       title: "CEO",
       image: "/TrudyAnnWilliams.jpg",
-      bio: "TrudyAnn Williams is a visionary leader, devoted mother, and passionate community advocate. As the CEO of Destiny Helpers Outreach Inc., she is committed to uplifting individuals and families facing hardship, turning challenges into pathways for growth and restoration. With a professional background in Finance, TrudyAnn brings both compassion and strategic insight to her work, ensuring that outreach efforts are not only heartfelt, but sustainable and impactful. Her leadership is rooted in empathy, faith, and action, as she works hands-on to provide resources, mentorship, and hope to underserved communities. Above all, TrudyAnn believes in the power of purpose. Whether serving families through her organization or nurturing her own at home, she leads with integrity, resilience, and an unwavering commitment to helping others step fully into their destiny.",
+      bio: "TrudyAnn Williams is a visionary leader, devoted mother, and passionate community advocate. As the CEO of Destiny Helpers Outreach Inc., she is committed to uplifting individuals and families facing hardship, turning challenges into pathways for growth and restoration. With a professional background in Finance, TrudyAnn brings both compassion and strategic insight to her work, ensuring that outreach efforts are not only heartfelt, but sustainable and impactful. Her leadership is rooted in empathy, faith, and action, as she works hands-on to provide resources, mentorship, and hope to communities in need. Above all, TrudyAnn believes in the power of purpose. Whether serving families through her organization or nurturing her own at home, she leads with integrity, resilience, and an unwavering commitment to helping others step fully into their destiny.",
     },
     {
       name: "Ariel Trent",
@@ -704,12 +709,12 @@ export default function AboutPage() {
           <div className="hero-content">
             <div className="hero-eyebrow">Our Story</div>
             <h1 className="hero-title">
-              Changing Lives,<br />
-              <em>One Community</em><br />
-              at a Time.
+              Changing Lives!<br />
+              <em>One Individual,</em><br />
+              One Community at a Time.
             </h1>
             <p className="hero-subtitle">
-              Destiny Helpers Outreach Inc. is a 501(c)(3) nonprofit born from lived experience, rooted in Brooklyn, and dedicated to transforming youth and families through meaningful programs.
+              We create spaces where young people and their families can discover their purpose, strengthen their identity, and build brighter futures through mentorship, education, and compassionate community support.
             </p>
             <div className="hero-stat-row">
               <div className="hero-stat">
@@ -733,15 +738,21 @@ export default function AboutPage() {
           <div className="story-section">
             <div>
               <div className="section-label">Our Story</div>
-              <h2 className="section-heading">A Beacon for <em>Positive Change</em></h2>
+              <h2 className="section-heading">Creating <em>Pathways to Purpose</em></h2>
               <p className="body-text">
-                Destiny Helpers Outreach Inc. is a 501(c)(3) organization based in Brooklyn, NY that envisions itself as a beacon for positive change and transformation.
+                Across New York City, thousands of young people and families are navigating life in temporary housing, underserved communities, and environments filled with barriers such as limited educational opportunities, exposure to violence, lack of mentorship, and economic instability. Many of these young people have dreams, talents, and potential, but lack access to the opportunities, guidance, and safe spaces needed to turn those dreams into reality.
               </p>
               <p className="body-text">
-                After learning about the alarmingly high rates of teenage pregnancy, gang involvement, and homelessness across New York City communities, the need for a new type of leadership and meaningful youth and family programs became apparent.
+                Destiny Helpers Outreach Inc. (DHOI) was created in 2019 by TrudyAnn Williams to change that reality.
               </p>
               <p className="body-text" style={{ marginTop: 16 }}>
-                In 2019, while living in a homeless shelter, TrudyAnn Williams founded Destiny Helpers Outreach Inc. — officially incorporated on April 24th, 2024. Her story is not one of circumstance, but of conviction.
+                DHOI exists to unlock opportunities for youth and families who are often overlooked and underserved. We believe that every young person deserves access to mentorship, education, creative expression, and supportive environments that allow them to discover their purpose and build a brighter future. Our work focuses on meeting youth and families where they are, whether in shelters, schools, community centers, or neighborhoods, and providing programs and services that create hope, opportunity, and lasting transformation.
+              </p>
+              <p className="body-text" style={{ marginTop: 16 }}>
+                Through partnerships with schools, shelters, community organizations, and corporate supporters, DHOI is building a strong network of support that empowers youth, strengthens families, and uplifts entire communities.
+              </p>
+              <p className="body-text" style={{ marginTop: 16 }}>
+                We are not just providing programs. We are creating pathways to purpose, leadership, and generational impact.
               </p>
               <div style={{ marginTop: 40 }}>
                 <Link href="/blogs" className="btn-outline-navy">Read Our Blog →</Link>
@@ -762,7 +773,7 @@ export default function AboutPage() {
           <div className="vision-inner">
             <div className="vision-eyebrow">Our Vision</div>
             <p className="vision-text">
-              "To become the principal Not-For-Profit Community Based Organization providing meaningful youth and family programs that produce positive change and transformation in the lives and communities we serve."
+              "DHOI will become a leading nonprofit that unlocks opportunities and provides transformative programs and services that create equal access and opportunity for youth and families, regardless of their circumstances, ensuring they have the support, resources, and safe environments needed to reach their full potential, strengthen their communities, and become confident leaders who create lasting generational impact."
             </p>
             <Link href="/programs" className="vision-cta">
               Explore Our Programs →
@@ -861,7 +872,7 @@ export default function AboutPage() {
               Help Us Serve &amp; Empower <em>Future Generations</em>
             </h2>
             <p className="cta-sub">
-              Join us in changing lives — one individual, one community at a time. Every donation and volunteer hour makes a real difference in Brooklyn and beyond.
+              Join us in changing lives! One individual, one community at a time. Every donation and volunteer hour makes a real difference in Brooklyn and beyond.
             </p>
             <div className="cta-buttons">
               <Link href="/donate-now" className="btn-primary-gold">Donate Now</Link>

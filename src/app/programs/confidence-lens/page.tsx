@@ -855,8 +855,11 @@ export default function ConfidenceLensPage() {
                 they are becoming.
               </p>
               <div className="lens-tagline">
-                Changing lives. One individual, one community at a time.
+                Changing lives! One individual, one community at a time.
               </div>
+              <p className="lens-copy" style={{ marginTop: 18, maxWidth: 620, color: "rgba(255,255,255,0.82)" }}>
+                We nurture their voice.
+              </p>
               <div className="lens-button-row">
                 <Link href="/contact" className="lens-btn lens-btn-primary">
                   Bring This Program to Your School

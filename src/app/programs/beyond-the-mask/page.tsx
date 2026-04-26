@@ -1235,6 +1235,9 @@ export default function BeyondTheMaskPage() {
                 Helping individuals explore what they carry, express what they feel, and
                 step into who they&apos;re becoming.
               </p>
+              <p className="hero-copy" style={{ maxWidth: 640, opacity: 0.88 }}>
+                We walk alongside them.
+              </p>
               <div className="button-row hero-actions">
                 <a href="#programs" className="button button-outline-gold">
                   Explore Our Programs

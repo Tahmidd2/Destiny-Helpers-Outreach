@@ -168,7 +168,7 @@ export default function Footer() {
           <div>
             <img src="/Destiny-Helpers-Outreach-Inc.png" alt="Destiny Helpers Outreach Inc" className="footer-brand-logo" />
             <p className="footer-brand-desc">
-              Empowering young people and their families to break barriers, discover their purpose, and build brighter futures through mentorship, education, and compassionate community support
+              We create spaces where young people and their families can discover their purpose, strengthen their identity, and build brighter futures through mentorship, education, and compassionate community support.
             </p>
             <div className="footer-socials">
               <a href="https://x.com" target="_blank" rel="noreferrer" className="footer-social-btn" aria-label="X / Twitter">
@@ -194,7 +194,7 @@ export default function Footer() {
             <div className="footer-col-title">Quick Links</div>
             <div className="footer-col-links">
               <Link href="/" className="footer-col-link">→ Home</Link>
-              <Link href="/about" className="footer-col-link">→ About Us</Link>
+              <Link href="/about" className="footer-col-link">→ Our Story</Link>
               <Link href="/programs" className="footer-col-link">→ Programs</Link>
               <Link href="/events" className="footer-col-link">→ Events</Link>
               <Link href="/blogs" className="footer-col-link">→ Blogs</Link>
