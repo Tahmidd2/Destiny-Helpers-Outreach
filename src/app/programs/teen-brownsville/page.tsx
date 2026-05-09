@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "@/lib/components/footer";
+import Navbar from "@/lib/components/navbar";
 
 export const metadata: Metadata = {
   title: "Miss Teen Brownsville | Destiny Helpers Outreach",
@@ -84,6 +86,7 @@ export default function TeenBrownsvillePage() {
         @media (max-width: 620px) { .mtb-shell { width: min(1160px, calc(100% - 28px)); } .mtb-hero, .mtb-section { padding: 64px 0; } .mtb-stat-strip, .mtb-list, .mtb-focus-grid { grid-template-columns: 1fr; } .mtb-actions { flex-direction: column; } .mtb-btn { width: 100%; } }
       `}</style>
 
+      <Navbar />
       <main className="mtb-page">
         <section className="mtb-hero">
           <div className="mtb-shell">
@@ -202,6 +205,7 @@ export default function TeenBrownsvillePage() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
