@@ -11,8 +11,7 @@ type CloudinaryImage = {
 }
 
 const fallbackImages = {
-  hero:
-    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80&fit=crop&auto=format",
+  hero: "/ourstoryimage.jpeg",
   educators:
     "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80&fit=crop&auto=format",
   brotherhood:
@@ -28,7 +27,7 @@ const programCards = [
     buttonClass: "program-button-teal",
     title: "Emotional Awareness for Educators",
     tagline: "Restoring the heart of those who serve others.",
-    audience: ["Teachers", "School Staff", "Administrators", "Youth Workers"],
+    audience: ["Teachers", "School Staff", "Administrators", "Employees"],
     description:
       "Educators carry more than lesson plans — they carry the emotional weight of their students, classrooms, and communities. This experience creates a restorative space for staff to pause, reflect, and reconnect.",
     outcomes: [
@@ -37,7 +36,7 @@ const programCards = [
       "Stronger staff connection",
       "Improved school culture",
     ],
-    bestFor: ["PD Days", "Teacher Appreciation Month", "Wellness Initiatives"],
+    bestFor: ["PD Days", "Teacher Appreciation Month", "Company Wellness Initiatives"],
     cta: "Book for Your School",
     href: "#booking",
   },
@@ -47,7 +46,7 @@ const programCards = [
     buttonClass: "program-button-gold",
     title: "Beyond the Mask: Brotherhood Edition",
     tagline: "Helping young men express, connect, and rise beyond expectations.",
-    audience: ["Middle School", "High School", "Mentorship Programs", "Community Groups"],
+    audience: ["Middle School", "High School", "Mentorship Programs", "Community Members"],
     description:
       "Too often, young men are taught to hide what they feel. Brotherhood Edition creates a safe and empowering space where young men explore who they are beyond expectations and connect with mentors who see them.",
     outcomes: [
@@ -66,7 +65,7 @@ const programCards = [
     buttonClass: "program-button-brown",
     title: "Identity & Emotional Wellness Experience",
     tagline: "A space to be seen, heard, and understood.",
-    audience: ["Community Orgs", "Families", "Youth Programs", "Corporate Wellness"],
+    audience: ["Community Orgs", "Companies", "Families", "Corporate Wellness"],
     description:
       "We all wear masks — shaped by roles and expectations. This experience invites participants to explore the difference between how they show up and what they truly feel inside.",
     outcomes: [
@@ -541,7 +540,7 @@ export default function BeyondTheMaskPage() {
           content: "";
           position: absolute;
           inset: 0;
-          background: linear-gradient(rgba(28, 28, 28, 0.74), rgba(28, 28, 28, 0.74));
+            background: linear-gradient(rgba(28, 28, 28, 0.62), rgba(28, 28, 28, 0.72));
         }
 
         .hero-inner {
@@ -1461,7 +1460,7 @@ export default function BeyondTheMaskPage() {
                 Ready to Bring Beyond the Mask™ to Your Community?
               </h2>
               <p className="cta-copy">
-                Whether you&apos;re a school, organization, or community leader — we&apos;ll
+                Whether you&apos;re a school, company, organization, or community leader — we&apos;ll
                 meet you where you are with a grounded, elevated experience designed for the
                 people you serve.
               </p>

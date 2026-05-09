@@ -120,6 +120,24 @@ const communityEventCards = [
   { title: "Winter Wonderland", description: "Spreading holiday joy by distributing gifts, food, and winter essentials to families across our community.", icon: "🎁", gradient: "#D4A017, #7C3AED" },
 ];
 
+const localCommunityImages = [
+  "/collage.jpg",
+  "/collage2.jpg",
+  "/collage3.jpg",
+  "/collage4.jpg",
+  "/collage5.jpg",
+  "/collage6.jpg",
+  "/collage7.jpg",
+  "/collage8.png",
+  "/collage9.png",
+  "/collage10.png",
+  "/collage11.jpg",
+  "/collage12.jpg",
+  "/collage13.jpg",
+  "/collage14.jpg",
+  "/collage15.jpg",
+];
+
 // ─── Gallery Hook ─────────────────────────────────────────────────────────────
 function useProgramGalleryImages(galleryData: Record<string, GalleryProgramData>) {
   const [imagesByProgram, setImagesByProgram] = useState<Record<string, CloudinaryImage[]>>({});
@@ -191,6 +209,29 @@ export default function HomePage() {
   const galleryTabs = useMemo(() => ["All Programs", ...Object.keys(GALLERY_DATA)], []);
   const activeGalleryImages =
     activeGalleryTab === "All Programs" ? [] : imagesByProgram[activeGalleryTab] || [];
+  const carouselImages = useMemo(() => {
+    const cloudinaryCarouselImages = Object.entries(imagesByProgram)
+      .flatMap(([programName, images]) =>
+        images.map((image) => ({
+          id: image.public_id,
+          src: image.secure_url,
+          programName,
+          cloudinaryImage: image,
+        }))
+      )
+      .sort((a, b) => a.id.localeCompare(b.id))
+      .slice(0, 12);
+
+    return cloudinaryCarouselImages.length > 0
+      ? cloudinaryCarouselImages
+      : localCommunityImages.map((src, index) => ({
+          id: src,
+          src,
+          programName: `Community Moment ${index + 1}`,
+          cloudinaryImage: null,
+        }));
+  }, [imagesByProgram]);
+  const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
 
   useEffect(() => { setHeroVisible(true); }, []);
 
@@ -296,6 +337,16 @@ export default function HomePage() {
     };
   }, []);
 
+  useEffect(() => {
+    if (activeGalleryTab !== "All Programs" || carouselImages.length <= 1) return;
+
+    const interval = window.setInterval(() => {
+      setActiveCarouselIndex((current) => (current + 1) % carouselImages.length);
+    }, 3500);
+
+    return () => window.clearInterval(interval);
+  }, [activeGalleryTab, carouselImages.length]);
+
   const switchGalleryTab = (tab: string) => {
     if (tab === activeGalleryTab) return;
 
@@ -359,20 +410,20 @@ export default function HomePage() {
         @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-30px);}}
         .hero-bar{position:absolute;width:6px;height:180px;background:linear-gradient(to bottom,var(--gold),transparent);left:48px;top:50%;transform:translateY(-50%);border-radius:3px;}
         .hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;width:100%;}
-        .hero-label{display:inline-flex;align-items:center;gap:10px;background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.4);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:500;color:var(--gold-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .7s ease .2s;}
+        .hero-label{display:inline-flex;align-items:center;gap:10px;background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.4);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:500;color:var(--gold-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:28px;opacity:1;transform:translateY(0);transition:all .7s ease .2s;}
         .hero-label.visible{opacity:1;transform:translateY(0);}
-        .hero-headline{font-size:clamp(42px,5vw,72px);font-weight:900;color:#fff;line-height:1.05;margin-bottom:24px;opacity:0;transform:translateY(30px);transition:all .8s ease .4s;}
+        .hero-headline{font-size:clamp(42px,5vw,72px);font-weight:900;color:#fff;line-height:1.05;margin-bottom:24px;opacity:1;transform:translateY(0);transition:all .8s ease .4s;}
         .hero-headline.visible{opacity:1;transform:translateY(0);}
         .hero-headline span{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;}
-        .hero-sub{font-size:18px;color:rgba(255,255,255,.75);line-height:1.7;max-width:480px;margin-bottom:44px;font-weight:300;opacity:0;transform:translateY(20px);transition:all .8s ease .6s;}
+        .hero-sub{font-size:18px;color:rgba(255,255,255,.75);line-height:1.7;max-width:480px;margin-bottom:44px;font-weight:300;opacity:1;transform:translateY(0);transition:all .8s ease .6s;}
         .hero-sub.visible{opacity:1;transform:translateY(0);}
-        .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(20px);transition:all .8s ease .8s;}
+        .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;opacity:1;transform:translateY(0);transition:all .8s ease .8s;}
         .hero-buttons.visible{opacity:1;transform:translateY(0);}
         .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);font-weight:700;font-size:15px;padding:16px 32px;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 24px rgba(212,160,23,.4);}
         .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,160,23,.5);}
         .btn-ghost{border:2px solid rgba(255,255,255,.4);color:white;font-weight:600;font-size:15px;padding:14px 28px;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;transition:all .2s;backdrop-filter:blur(10px);}
         .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:white;transform:translateY(-2px);}
-        .hero-visual{position:relative;opacity:0;transform:scale(.95);transition:all 1s ease .5s;}
+        .hero-visual{position:relative;opacity:1;transform:scale(1);transition:all 1s ease .5s;}
         .hero-visual.visible{opacity:1;transform:scale(1);}
         .hero-image-frame{width:100%;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.1);}
         .hero-image-frame img{width:100%;height:100%;object-fit:cover;opacity:.85;}
@@ -434,6 +485,17 @@ export default function HomePage() {
         .program-mosaic-cta{margin-top:10px;font-size:13px;font-weight:700;color:#F5F1E8;opacity:0;transform:translateY(8px);transition:all .2s ease;}
         .program-mosaic-card:hover .program-mosaic-cta{opacity:1;transform:translateY(0);}
         .gallery-empty{display:flex;align-items:center;justify-content:center;border-radius:18px;border:1px dashed rgba(200,169,106,.35);background:rgba(255,255,255,.04);min-height:260px;color:rgba(255,255,255,.56);font-size:15px;text-align:center;padding:24px;}
+        .community-carousel{position:relative;margin-top:8px;border-radius:22px;overflow:hidden;min-height:560px;background:rgba(255,255,255,.05);box-shadow:0 20px 70px rgba(0,0,0,.35);}
+        .community-carousel-track{display:flex;height:560px;transform:translateX(calc(var(--active-slide) * -100%));transition:transform .55s ease;}
+        .community-slide{position:relative;flex:0 0 100%;height:100%;border:none;background:none;padding:0;cursor:pointer;text-align:left;}
+        .community-slide img{width:100%;height:100%;object-fit:cover;}
+        .community-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,31,77,.06),rgba(15,31,77,.78));}
+        .community-slide-caption{position:absolute;left:36px;right:36px;bottom:54px;z-index:1;color:white;}
+        .community-slide-kicker{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+        .community-slide-title{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,48px);font-weight:900;margin-top:8px;line-height:1.05;}
+        .community-carousel-controls{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:center;gap:10px;z-index:2;}
+        .community-dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.18);cursor:pointer;padding:0;transition:all .2s;}
+        .community-dot.active{width:28px;background:var(--gold);border-color:var(--gold);}
         .bento-gallery{display:grid;grid-template-columns:1.35fr .82fr .82fr;grid-template-rows:repeat(3,190px);gap:14px;}
         .bento-photo{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.4);background:rgba(255,255,255,.05);}
         .bento-photo-1{grid-column:1/3;grid-row:1/3;}
@@ -558,8 +620,7 @@ export default function HomePage() {
           </div>
           <div className={`hero-visual ${heroVisible ? "visible" : ""}`}>
             <div className="hero-image-frame">
-              {/* TODO: Replace with a real Cloudinary image from your dashboard */}
-              <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Community youth" />
+              <img src="/homepagetoppicture.png" alt="Destiny Helpers Outreach community youth" />
             </div>
             <div className="hero-badge"><div className="hero-badge-num">500+</div><div className="hero-badge-label">Youth Served</div></div>
             <div className="hero-badge-2"><div className="hero-badge-2-text">Brooklyn, NY</div><div className="hero-badge-2-sub">Serving since 2017</div></div>
@@ -573,15 +634,15 @@ export default function HomePage() {
           <div>
             <div className="mission-quote">
               <span className="mission-quote-mark">"</span>
-              DHOI empowers youth and families to break barriers, discover their purpose, and build brighter futures.
+              Destiny Helpers Outreach Inc. (DHOI) empowers youth and families to break barriers, discover their purpose, and build brighter futures.
             </div>
           </div>
           <div>
             <div className="section-label" style={{ color: "rgba(212,160,23,0.9)" }}>Our Mission</div>
-            <p className="mission-body">DHOI empowers youth and families to break barriers, discover their purpose, and build brighter futures through mentorship, education, creative expression, and compassionate community support, while creating safe spaces where their strengths, voices, and potential can thrive.</p>
+            <p className="mission-body">Destiny Helpers Outreach Inc. (DHOI) empowers youth and families to break barriers, discover their purpose, and build brighter futures through mentorship, education, creative expression, and compassionate community support, while creating safe spaces where their strengths, voices, and potential can thrive.</p>
             <p className="mission-body" style={{ marginTop: "16px" }}>We create transformative spaces where young people can discover who they are and who they are becoming.</p>
             <div className="mission-pills">
-              {["Mentorship", "Education", "Food Security", "Youth Leadership", "Community Care"].map(p => <span key={p} className="pill">{p}</span>)}
+              {["Mentorship", "Education", "Creative Expression", "Youth Leadership", "Community Care"].map(p => <span key={p} className="pill">{p}</span>)}
             </div>
           </div>
         </div>
@@ -643,8 +704,52 @@ export default function HomePage() {
             aria-labelledby={`gallery-tab-${gallerySlug(activeGalleryTab)}`}
           >
             {activeGalleryTab === "All Programs" ? (
-              galleryLoading && allProgramsCards.every((card) => !card.image) ? (
-                <div className="gallery-empty">Loading program collections...</div>
+              carouselImages.length > 0 ? (
+                <div className="community-carousel">
+                  <div
+                    className="community-carousel-track"
+                    style={{ ["--active-slide" as string]: activeCarouselIndex }}
+                  >
+                    {carouselImages.map((image, index) => (
+                      <button
+                        key={image.id}
+                        type="button"
+                        className="community-slide"
+                        onClick={() => {
+                          if (!image.cloudinaryImage) return;
+
+                          setLightboxProgram(image.programName);
+                          setLightboxActiveIndex(
+                            imagesByProgram[image.programName]?.findIndex(
+                              (item) => item.public_id === image.id
+                            ) ?? 0
+                          );
+                        }}
+                      >
+                        <img
+                          src={image.src}
+                          alt={`${image.programName} community moment ${index + 1}`}
+                          loading={index === 0 ? "eager" : "lazy"}
+                        />
+                        <div className="community-slide-caption">
+                          <div className="community-slide-kicker">Community in Action</div>
+                          <div className="community-slide-title">{image.programName}</div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="community-carousel-controls" aria-label="Community photo carousel controls">
+                    {carouselImages.map((image, index) => (
+                      <button
+                        key={image.id}
+                        type="button"
+                        className={`community-dot ${activeCarouselIndex === index ? "active" : ""}`}
+                        aria-label={`Show community photo ${index + 1}`}
+                        onClick={() => setActiveCarouselIndex(index)}
+                      />
+                    ))}
+                  </div>
+                </div>
               ) : (
                 <div className="gallery-all-grid">
                   {allProgramsCards.map((programCard, index) => (

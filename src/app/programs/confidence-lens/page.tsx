@@ -117,11 +117,11 @@ export default function ConfidenceLensPage() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
         :root {
-          --lens-blue: #1E3A8A;
-          --lens-gold: #D4A017;
-          --lens-purple: #A78BFA;
-          --lens-cream: #F9F6F1;
-          --lens-navy: #0F1F4D;
+          --lens-blue: #a94f1b;
+          --lens-gold: #d9792d;
+          --lens-purple: #f2a65a;
+          --lens-cream: #fff7ef;
+          --lens-navy: #4d2412;
           --lens-text: #334155;
           --lens-white: #FFFFFF;
         }
@@ -186,9 +186,9 @@ export default function ConfidenceLensPage() {
           overflow: hidden;
           min-height: 92vh;
           background:
-            radial-gradient(circle at top left, rgba(167,139,250,0.28), transparent 30%),
-            radial-gradient(circle at bottom right, rgba(212,160,23,0.22), transparent 26%),
-            linear-gradient(135deg, rgba(30,58,138,0.97), rgba(15,31,77,0.97));
+            radial-gradient(circle at top left, rgba(242,166,90,0.28), transparent 30%),
+            radial-gradient(circle at bottom right, rgba(217,121,45,0.22), transparent 26%),
+            linear-gradient(135deg, rgba(169,79,27,0.97), rgba(77,36,18,0.97));
           color: white;
           display: flex;
           align-items: center;
@@ -328,7 +328,7 @@ export default function ConfidenceLensPage() {
           margin-top: 16px;
           padding: 34px;
           color: white;
-          background: linear-gradient(135deg, var(--lens-blue), #3b82f6 58%, var(--lens-purple));
+          background: linear-gradient(135deg, var(--lens-blue), #c66528 58%, var(--lens-purple));
         }
 
         .lens-hero-card p {
@@ -434,12 +434,12 @@ export default function ConfidenceLensPage() {
 
         .lens-highlight-panel {
           background: white;
-          border: 1px solid rgba(167,139,250,0.22);
+          border: 1px solid rgba(217,121,45,0.22);
           padding: 34px;
         }
 
         .lens-soft-panel {
-          background: linear-gradient(135deg, #f9f6f1, #f3eeff);
+          background: linear-gradient(135deg, #fff7ef, #f9eadf);
           padding: 34px;
         }
 
@@ -477,7 +477,7 @@ export default function ConfidenceLensPage() {
 
         .lens-tier-card {
           background: white;
-          border: 1px solid rgba(167,139,250,0.18);
+          border: 1px solid rgba(217,121,45,0.18);
           padding: 30px;
           transition: transform 0.25s, box-shadow 0.25s;
         }
@@ -491,8 +491,8 @@ export default function ConfidenceLensPage() {
           display: inline-flex;
           padding: 8px 16px;
           border-radius: 999px;
-          background: #f3eeff;
-          color: #6d28d9;
+          background: #fff0e4;
+          color: #a94f1b;
           font-size: 11px;
           font-weight: 700;
           letter-spacing: 0.18em;
@@ -538,7 +538,7 @@ export default function ConfidenceLensPage() {
 
         .lens-tier-list li::before {
           content: '◉';
-          color: var(--lens-purple);
+          color: var(--tier-color, var(--lens-purple));
           margin-top: 1px;
         }
 
@@ -546,10 +546,40 @@ export default function ConfidenceLensPage() {
           margin-top: 24px;
           padding: 18px;
           border-radius: 20px;
-          background: linear-gradient(135deg, var(--lens-blue), var(--lens-purple));
+          background: linear-gradient(135deg, var(--tier-color, var(--lens-blue)), var(--tier-color-2, var(--lens-purple)));
           color: white;
           font-size: 15px;
           line-height: 1.7;
+        }
+
+        .lens-tier-card:nth-child(1) {
+          --tier-color: #a94f1b;
+          --tier-color-2: #d9792d;
+        }
+
+        .lens-tier-card:nth-child(2) {
+          --tier-color: #356859;
+          --tier-color-2: #62a388;
+        }
+
+        .lens-tier-card:nth-child(3) {
+          --tier-color: #6b4f3b;
+          --tier-color-2: #c8a96a;
+        }
+
+        .lens-tier-card:nth-child(1) .lens-tier-label,
+        .lens-tier-card:nth-child(1) .lens-tier-title {
+          color: #a94f1b;
+        }
+
+        .lens-tier-card:nth-child(2) .lens-tier-label,
+        .lens-tier-card:nth-child(2) .lens-tier-title {
+          color: #356859;
+        }
+
+        .lens-tier-card:nth-child(3) .lens-tier-label,
+        .lens-tier-card:nth-child(3) .lens-tier-title {
+          color: #6b4f3b;
         }
 
         .lens-band {
@@ -620,7 +650,7 @@ export default function ConfidenceLensPage() {
         }
 
         .lens-position-panel {
-          background: linear-gradient(135deg, #f3eeff, white, #fff7e6);
+          background: linear-gradient(135deg, #fff0e4, white, #fff7e6);
           padding: 34px;
         }
 
@@ -685,7 +715,7 @@ export default function ConfidenceLensPage() {
         }
 
         .lens-sponsor-panel {
-          background: linear-gradient(135deg, var(--lens-blue), #3b82f6);
+          background: linear-gradient(135deg, var(--lens-blue), #d9792d);
           color: white;
           padding: 34px;
         }
@@ -720,8 +750,8 @@ export default function ConfidenceLensPage() {
           position: relative;
           overflow: hidden;
           background:
-            radial-gradient(circle at center, rgba(167,139,250,0.2), transparent 30%),
-            linear-gradient(135deg, rgba(30,58,138,0.98), rgba(15,31,77,0.98));
+            radial-gradient(circle at center, rgba(242,166,90,0.2), transparent 30%),
+            linear-gradient(135deg, rgba(169,79,27,0.98), rgba(77,36,18,0.98));
           color: white;
           text-align: center;
         }
@@ -842,7 +872,7 @@ export default function ConfidenceLensPage() {
           <div className="lens-shell lens-hero-grid">
             <div>
               <div className="lens-pill">
-                <span style={{ color: "#D4A017" }}>◉</span>
+                <span style={{ color: "#f2a65a" }}>◉</span>
                 The Confidence Lens Project™
               </div>
               <h1 className="lens-hero-title">
@@ -877,7 +907,7 @@ export default function ConfidenceLensPage() {
               <div className="lens-visual-inner">
                 <div className="lens-focus-box">
                   <span>Lens Focus</span>
-                  <span style={{ color: "#A78BFA", fontSize: 24 }}>◌</span>
+                  <span style={{ color: "#d9792d", fontSize: 24 }}>◌</span>
                 </div>
                 <div className="lens-hero-card">
                   <p className="lens-hero-card-top">Reflection</p>

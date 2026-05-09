@@ -194,13 +194,12 @@ export default function Footer() {
             <div className="footer-col-title">Quick Links</div>
             <div className="footer-col-links">
               <Link href="/" className="footer-col-link">→ Home</Link>
-              <Link href="/about" className="footer-col-link">→ Our Story</Link>
+              <Link href="/about" className="footer-col-link">→ About Us</Link>
               <Link href="/programs" className="footer-col-link">→ Programs</Link>
               <Link href="/events" className="footer-col-link">→ Events</Link>
-              <Link href="/blogs" className="footer-col-link">→ Blogs</Link>
-              <Link href="/help" className="footer-col-link">→ Help</Link>
               <Link href="/volunteer-with-us" className="footer-col-link">→ Volunteer With Us</Link>
               <Link href="/donate-now" className="footer-col-link">→ Donate Now</Link>
+              <Link href="/contact" className="footer-col-link">→ Contact Us</Link>
             </div>
           </div>
 

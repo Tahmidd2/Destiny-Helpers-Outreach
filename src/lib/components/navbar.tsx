@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const navLinks = [
   { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
   {
     label: "Programs",
     href: "/programs",
@@ -18,11 +19,9 @@ const navLinks = [
     ],
   },
   { label: "Events", href: "/events" },
-  { label: "Our Story", href: "/about" },
-  { label: "Blogs", href: "/blogs" },
-  { label: "Help", href: "/help" },
-  { label: "Donate Now!", href: "/donate-now" },
-  { label: "Volunteer With Us!", href: "/volunteer-with-us" },
+  { label: "Donate Now", href: "/donate-now" },
+  { label: "Volunteer With Us", href: "/volunteer-with-us" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -342,7 +341,7 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
         {/* Top bar */}
         <div className="nav-top">
-          <a href="mailto:info@destinyhelpers.org">info@destinyhelpers.org</a>
+          <a href="mailto:info@destinyhelpersoutreach.org">info@destinyhelpersoutreach.org</a>
           <span>|</span>
           <a href="tel:+1234567890">Brooklyn, NY</a>
           <Link href="/sign-in">Sign In</Link>
@@ -358,6 +357,8 @@ export default function Navbar() {
             <li className="nav-link-item">
               <Link href="/" className="nav-link">Home</Link>
             </li>
+
+            <li><Link href="/about" className="nav-link">About Us</Link></li>
 
             {/* Programs: link is clickable, chevron toggles dropdown on hover */}
             <li
@@ -396,11 +397,8 @@ export default function Navbar() {
             </li>
 
             <li><Link href="/events" className="nav-link">Events</Link></li>
-            <li><Link href="/about" className="nav-link">Our Story</Link></li>
-            <li><Link href="/blogs" className="nav-link">Blogs</Link></li>
-            <li><Link href="/help" className="nav-link">Help</Link></li>
-            <li><Link href="/donate-now" className="nav-link donate">Donate Now!</Link></li>
-            <li><Link href="/volunteer-with-us" className="nav-link volunteer">Volunteer With Us!</Link></li>
+            <li><Link href="/donate-now" className="nav-link donate">Donate Now</Link></li>
+            <li><Link href="/volunteer-with-us" className="nav-link volunteer">Volunteer With Us</Link></li>
             <li>
               <Link href="/contact" className="nav-cta">Contact Us</Link>
             </li>
@@ -423,6 +421,7 @@ export default function Navbar() {
           <Link href="/" className="mobile-link" onClick={() => setMobileOpen(false)}>
             Home
           </Link>
+          <Link href="/about" className="mobile-link" onClick={() => setMobileOpen(false)}>About Us</Link>
 
           {/* Mobile Programs with separate link + toggle */}
           <div className="mobile-programs-header">
@@ -463,16 +462,13 @@ export default function Navbar() {
           </div>
 
           <Link href="/events" className="mobile-link" onClick={() => setMobileOpen(false)}>Events</Link>
-          <Link href="/about" className="mobile-link" onClick={() => setMobileOpen(false)}>Our Story</Link>
-          <Link href="/blogs" className="mobile-link" onClick={() => setMobileOpen(false)}>Blogs</Link>
-          <Link href="/help" className="mobile-link" onClick={() => setMobileOpen(false)}>Help</Link>
           <Link
             href="/donate-now"
             className="mobile-link"
             onClick={() => setMobileOpen(false)}
             style={{ color: "#1E3A8A", fontWeight: 700 }}
           >
-            Donate Now!
+            Donate Now
           </Link>
           <Link
             href="/volunteer-with-us"
@@ -480,7 +476,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             style={{ color: "#7C3AED", fontWeight: 600 }}
           >
-            Volunteer With Us!
+            Volunteer With Us
           </Link>
           <Link href="/contact" className="mobile-cta" onClick={() => setMobileOpen(false)}>
             Contact Us

@@ -24,7 +24,7 @@ export default function AboutPage() {
       name: "Gloria Seay",
       title: "Community Outreach Coordinator",
       image: "/GloriaSeay.jpeg",
-      bio: "Gloria connects DHOI with companies, organizations, and the community by building relationships, coordinating volunteer events, and ensuring programs reach those most in need. With a heart for service and experience in social work, she helps bring the mission to life.",
+      bio: "Gloria connects Destiny Helpers Outreach Inc. (DHOI) with companies, organizations, and the community by building relationships, coordinating volunteer events, and ensuring programs reach those most in need. With a heart for service and experience in social work, she helps bring the mission to life.",
     },
     {
       name: "DeVasha Lloyd",
@@ -36,7 +36,7 @@ export default function AboutPage() {
       name: "Cameron Thomas",
       title: "Chief Financial Officer",
       image: "/CameronThomas.png",
-      bio: "Cameron manages all financial operations, budgeting, and compliance for DHOI. With a background in accounting, he ensures the organization's resources are managed responsibly to maximize impact.",
+      bio: "Cameron manages all financial operations, budgeting, and compliance for Destiny Helpers Outreach Inc. (DHOI). With a background in accounting, he ensures the organization's resources are managed responsibly to maximize impact.",
     },
   ];
 
@@ -567,26 +567,26 @@ export default function AboutPage() {
         .partners-row {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 22px;
+          gap: 28px;
           max-width: 1100px;
           margin: 0 auto;
+          align-items: center;
         }
         .partner-pill {
           position: relative;
-          min-height: 150px;
-          background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-          border: 1px solid rgba(212,160,23,0.18);
-          border-radius: 24px;
+          min-height: 112px;
+          background: transparent;
+          border: 0;
+          border-radius: 0;
           overflow: hidden;
-          padding: 24px;
-          box-shadow: 0 18px 40px rgba(0,0,0,0.16);
-          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+          padding: 10px 18px;
+          box-shadow: none;
+          transition: transform 0.25s ease, opacity 0.25s ease;
+          opacity: 0.92;
         }
         .partner-pill:hover {
-          background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(212,160,23,0.08));
-          border-color: var(--gold);
           transform: translateY(-4px);
-          box-shadow: 0 24px 48px rgba(0,0,0,0.22);
+          opacity: 1;
         }
         .partner-logo {
           display: flex;
@@ -599,15 +599,6 @@ export default function AboutPage() {
         }
         .partner-logo img {
           transform-origin: center;
-        }
-        .partner-pill::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 4px;
-          background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
         /* ── CTA ── */
@@ -762,16 +753,16 @@ export default function AboutPage() {
                 Destiny Helpers Outreach Inc. (DHOI) was created in 2019 by TrudyAnn Williams to change that reality.
               </p>
               <p className="body-text" style={{ marginTop: 16 }}>
-                DHOI exists to unlock opportunities for youth and families who are often overlooked and underserved. We believe that every young person deserves access to mentorship, education, creative expression, and supportive environments that allow them to discover their purpose and build a brighter future. Our work focuses on meeting youth and families where they are, whether in shelters, schools, community centers, or neighborhoods, and providing programs and services that create hope, opportunity, and lasting transformation.
+                Destiny Helpers Outreach Inc. (DHOI) exists to unlock opportunities for youth and families who are often overlooked and underserved. We believe that every young person deserves access to mentorship, education, creative expression, and supportive environments that allow them to discover their purpose and build a brighter future. Our work focuses on meeting youth and families where they are, whether in shelters, schools, community centers, or neighborhoods, and providing programs and services that create hope, opportunity, and lasting transformation.
               </p>
               <p className="body-text" style={{ marginTop: 16 }}>
-                Through partnerships with schools, shelters, community organizations, and corporate supporters, DHOI is building a strong network of support that empowers youth, strengthens families, and uplifts entire communities.
+                Through partnerships with schools, shelters, community organizations, and corporate supporters, Destiny Helpers Outreach Inc. (DHOI) is building a strong network of support that empowers youth, strengthens families, and uplifts entire communities.
               </p>
               <p className="body-text" style={{ marginTop: 16 }}>
                 We are not just providing programs. We are creating pathways to purpose, leadership, and generational impact.
               </p>
               <div style={{ marginTop: 40 }}>
-                <Link href="/blogs" className="btn-outline-navy">Read Our Blog →</Link>
+                <Link href="/contact" className="btn-outline-navy">Connect With Us →</Link>
               </div>
             </div>
             <div className="story-image-wrap">
@@ -795,7 +786,7 @@ export default function AboutPage() {
           <div className="vision-inner">
             <div className="vision-eyebrow">Our Vision</div>
             <p className="vision-text">
-              "DHOI will become a leading nonprofit that unlocks opportunities and provides transformative programs and services that create equal access and opportunity for youth and families, regardless of their circumstances, ensuring they have the support, resources, and safe environments needed to reach their full potential, strengthen their communities, and become confident leaders who create lasting generational impact."
+              "Destiny Helpers Outreach Inc. (DHOI) will become a leading nonprofit that unlocks opportunities and provides transformative programs and services that create equal access and opportunity for youth and families, regardless of their circumstances, ensuring they have the support, resources, and safe environments needed to reach their full potential, strengthen their communities, and become confident leaders who create lasting generational impact."
             </p>
             <Link href="/programs" className="vision-cta">
               Explore Our Programs →
