@@ -1,9 +1,34 @@
 import Link from "next/link";
 
 const givingTiers = [
-  { amount: "$25", label: "Supplies", text: "Helps provide workshop materials and care items." },
-  { amount: "$100", label: "Programs", text: "Supports youth-centered activities and facilitation." },
-  { amount: "$500", label: "Community", text: "Helps fund events, resources, and family support." },
+  { amount: "$10", label: "Shelter Support", text: "Support families living in shelters." },
+  { amount: "$25", label: "Holiday Wishes", text: "Make a child's holiday wish come true." },
+  { amount: "$50", label: "School Supplies", text: "Provide school supplies for children." },
+  { amount: "$100", label: "Scholarships", text: "Support our college scholarship fund." },
+];
+
+const paymentMethods = [
+  {
+    name: "Cash App",
+    handle: "$destinyhelpers1",
+    href: "https://cash.app/$destinyhelpers1",
+    description:
+      "Donate through Cash App to help provide meals, clothing, and vital resources to families in need.",
+  },
+  {
+    name: "Venmo",
+    handle: "@destinyhelpers",
+    href: "https://venmo.com/destinyhelpers",
+    description:
+      "Support Destiny Helpers Outreach Inc. through Venmo and help provide school supplies and life-changing resources.",
+  },
+  {
+    name: "PayPal",
+    handle: "@destinyhelpersinc",
+    href: "https://www.paypal.com/paypalme/destinyhelpersinc",
+    description:
+      "Give through PayPal to help create brighter futures for youth, families, and underserved communities.",
+  },
 ];
 
 export default function DonateNowPage() {
@@ -19,12 +44,22 @@ export default function DonateNowPage() {
         .donate-card { background: #0f1f4d; color: white; border-radius: 8px; padding: 34px; box-shadow: 0 22px 62px rgba(15,31,77,.22); }
         .donate-card p { color: rgba(255,255,255,.78); line-height: 1.75; }
         .donate-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 24px; border-radius: 999px; padding: 16px 28px; background: #d4a017; color: #0f1f4d; font-weight: 900; text-decoration: none; }
-        .donate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 58px; }
+        .donate-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 58px; }
         .donate-tier { background: white; border: 1px solid rgba(15,31,77,.08); border-radius: 8px; padding: 28px; }
         .donate-tier-amount { font-family: 'Playfair Display', serif; font-size: 46px; color: #d4a017; line-height: 1; }
         .donate-tier h2 { margin: 12px 0 8px; font-family: 'Playfair Display', serif; font-size: 28px; }
         .donate-tier p { margin: 0; color: #687087; line-height: 1.7; }
+        .payment-section { margin-top: 66px; }
+        .payment-header { max-width: 720px; }
+        .payment-title { margin: 10px 0 0; font-family: 'Playfair Display', serif; font-size: clamp(34px, 4vw, 52px); line-height: 1.05; color: #0f1f4d; }
+        .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+        .payment-card { background: white; border: 1px solid rgba(15,31,77,.08); border-radius: 8px; padding: 28px; box-shadow: 0 16px 42px rgba(15,31,77,.06); }
+        .payment-card h2 { margin: 0; font-family: 'Playfair Display', serif; font-size: 30px; color: #0f1f4d; }
+        .payment-handle { display: inline-flex; margin-top: 12px; border-radius: 999px; background: #f5e6b8; color: #0f1f4d; padding: 8px 14px; font-weight: 900; }
+        .payment-card p { margin: 16px 0 0; color: #687087; line-height: 1.7; }
+        .payment-link { display: inline-flex; margin-top: 20px; color: #0f1f4d; font-weight: 900; text-decoration: none; }
         .donate-note { margin-top: 46px; padding: 24px; background: white; border-left: 4px solid #d4a017; color: #596277; line-height: 1.7; }
+        @media (max-width: 1000px) { .donate-grid { grid-template-columns: repeat(2, 1fr); } .payment-grid { grid-template-columns: 1fr; } }
         @media (max-width: 860px) { .donate-shell { padding: 64px 24px 88px; } .donate-hero, .donate-grid { grid-template-columns: 1fr; } }
       `}</style>
       <main className="donate-page">
@@ -46,7 +81,7 @@ export default function DonateNowPage() {
                 Donations support program materials, community events, scholarships,
                 outreach resources, and the everyday work of showing up for families.
               </p>
-              <Link href="/contact" className="donate-btn">Contact Us to Donate</Link>
+              <a href="#ways-to-give" className="donate-btn">View Payment Options</a>
             </aside>
           </section>
           <section className="donate-grid" aria-label="Suggested giving tiers">
@@ -58,9 +93,30 @@ export default function DonateNowPage() {
               </article>
             ))}
           </section>
+          <section id="ways-to-give" className="payment-section">
+            <div className="payment-header">
+              <div className="donate-kicker">Ways to Give</div>
+              <h2 className="payment-title">Choose the Payment Method That Works for You</h2>
+              <p className="donate-copy" style={{ marginTop: 16 }}>
+                Give securely through Cash App, Venmo, or PayPal using the official Destiny Helpers Outreach Inc. handles below.
+              </p>
+            </div>
+            <div className="payment-grid">
+              {paymentMethods.map((method) => (
+                <article key={method.name} className="payment-card">
+                  <h2>{method.name}</h2>
+                  <div className="payment-handle">{method.handle}</div>
+                  <p>{method.description}</p>
+                  <a href={method.href} target="_blank" rel="noreferrer" className="payment-link">
+                    Continue to {method.name} →
+                  </a>
+                </article>
+              ))}
+            </div>
+          </section>
           <div className="donate-note">
             Destiny Helpers Outreach Inc. is listed as a 501(c)(3) nonprofit on the site footer.
-            For sponsorships, in-kind donations, or program-specific giving, contact the team directly.
+            Tax ID: 84-283753. For sponsorships, in-kind donations, or program-specific giving, contact the team directly.
           </div>
         </div>
       </main>
