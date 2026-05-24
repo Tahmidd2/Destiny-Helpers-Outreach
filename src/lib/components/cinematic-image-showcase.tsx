@@ -35,11 +35,8 @@ const showcaseImages: ShowcaseImage[] = [
   { src: "/collage7.jpg", alt: "Destiny Helpers Outreach community moment 7" },
   { src: "/collage8.png", alt: "Destiny Helpers Outreach community moment 8" },
   { src: "/collage9.png", alt: "Destiny Helpers Outreach community moment 9" },
-  { src: "/collage10.png", alt: "Destiny Helpers Outreach community moment 10" },
-  { src: "/collage12.jpg", alt: "Destiny Helpers Outreach community moment 12" },
   { src: "/collage13.jpg", alt: "Destiny Helpers Outreach community moment 13" },
   { src: "/collage14.jpg", alt: "Destiny Helpers Outreach community moment 14" },
-  { src: "/collage15.jpg", alt: "Destiny Helpers Outreach community moment 15" },
 ];
 
 function ImageRail({ reverse = false }: { reverse?: boolean }) {

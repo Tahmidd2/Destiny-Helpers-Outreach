@@ -721,7 +721,7 @@ export default function AboutPage() {
               One Community at a Time.
             </h1>
             <p className="hero-subtitle">
-              We create spaces where young people and their families can discover their purpose, strengthen their identity, and build brighter futures through mentorship, education, and compassionate community support.
+              Destiny Helpers Outreach Inc. turns compassion into action through youth programs, family support, creative expression, and community-centered service.
             </p>
             <div className="hero-stat-row">
               <div className="hero-stat">

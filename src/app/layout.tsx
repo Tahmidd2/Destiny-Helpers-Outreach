@@ -5,7 +5,7 @@ import AppShell from "@/lib/components/app-shell"
 export const metadata: Metadata = {
   title: "Destiny Helpers Outreach",
   description:
-    "Destiny Helpers Outreach empowers youth and families through mentorship, education, and compassionate community support.",
+    "Destiny Helpers Outreach supports Brooklyn youth and families through leadership programs, creative expression, outreach, and community care.",
 }
 
 export default function RootLayout({

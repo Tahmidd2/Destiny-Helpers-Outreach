@@ -1,27 +1,29 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import {
-  addMonths,
-  endOfMonth,
-  endOfWeek,
-  format,
-  isSameDay,
-  isSameMonth,
-  startOfMonth,
-  startOfWeek,
-  subMonths,
-} from "date-fns"
+import { format } from "date-fns"
 
 import type { CalendarEvent } from "@/lib/types/event"
 
 type CalendarProps = {
   events: CalendarEvent[]
+  year?: number
 }
 
-function dateKey(date: Date) {
-  return format(date, "yyyy-MM-dd")
-}
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]
 
 function parseEventDate(date: string) {
   return new Date(`${date}T00:00:00`)
@@ -32,194 +34,475 @@ function formatEventDate(date: string) {
 }
 
 function formatEventTime(time?: string, endTime?: string) {
-  if (!time) {
-    return "Time TBD"
-  }
+  if (!time) return "TBD"
 
   const startLabel = format(new Date(`2026-01-01T${time}`), "h:mm a")
-
-  if (!endTime) {
-    return startLabel
-  }
-
-  return `${startLabel} to ${format(new Date(`2026-01-01T${endTime}`), "h:mm a")}`
+  return endTime
+    ? `${startLabel} to ${format(new Date(`2026-01-01T${endTime}`), "h:mm a")}`
+    : startLabel
 }
 
-function buildMonthDays(currentDate: Date) {
-  const start = startOfWeek(startOfMonth(currentDate))
-  const end = endOfWeek(endOfMonth(currentDate))
-  const days: Date[] = []
-  const cursor = new Date(start)
-
-  while (cursor <= end) {
-    days.push(new Date(cursor))
-    cursor.setDate(cursor.getDate() + 1)
-  }
-
-  return days
+function getEventMonth(event: CalendarEvent) {
+  return parseEventDate(event.date).getMonth()
 }
 
-export default function Calendar({ events }: CalendarProps) {
-  const [currentDate, setCurrentDate] = useState(new Date(2026, 4, 1))
+function getEventStatus(event: CalendarEvent) {
+  return event.time && event.location ? "Confirmed" : "Details TBD"
+}
+
+export default function Calendar({ events, year = 2026 }: CalendarProps) {
   const [viewingEvent, setViewingEvent] = useState<CalendarEvent | null>(null)
+  const [activeMonth, setActiveMonth] = useState<number | "all">("all")
 
-  const eventsByDate = useMemo(() => {
-    return events.reduce<Record<string, CalendarEvent[]>>((grouped, event) => {
-      grouped[event.date] = [...(grouped[event.date] ?? []), event]
+  const eventsByMonth = useMemo(() => {
+    return events.reduce<Record<number, CalendarEvent[]>>((grouped, event) => {
+      const month = getEventMonth(event)
+      grouped[month] = [...(grouped[month] ?? []), event].sort((left, right) =>
+        `${left.date}-${left.time ?? ""}`.localeCompare(`${right.date}-${right.time ?? ""}`)
+      )
       return grouped
     }, {})
   }, [events])
 
-  const monthDays = useMemo(() => buildMonthDays(currentDate), [currentDate])
-  const today = new Date()
+  const visibleMonths =
+    activeMonth === "all" ? monthNames.map((_, index) => index) : [activeMonth]
 
   return (
-    <div className="mx-auto w-full max-w-6xl rounded-lg border border-[#0f1f4d]/10 bg-white p-4 shadow-sm md:p-6">
-      <div className="mb-6 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            aria-label="Previous month"
-            onClick={() => setCurrentDate((date) => subMonths(date, 1))}
-            className="min-h-[44px] min-w-[44px] rounded-full p-2 text-gray-600 transition hover:bg-gray-100"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            aria-label="Next month"
-            onClick={() => setCurrentDate((date) => addMonths(date, 1))}
-            className="min-h-[44px] min-w-[44px] rounded-full p-2 text-gray-600 transition hover:bg-gray-100"
-          >
-            →
-          </button>
+    <>
+      <style>{`
+        .community-calendar {
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(15, 31, 77, 0.12);
+          border-radius: 8px;
+          background: #fff8d8;
+          padding: clamp(24px, 4vw, 44px);
+          box-shadow: 0 18px 48px rgba(15, 31, 77, 0.08);
+          font-family: 'DM Sans', Arial, sans-serif;
+        }
+
+        .calendar-dot-field {
+          position: absolute;
+          right: 0;
+          top: 0;
+          display: grid;
+          grid-template-columns: repeat(5, 10px);
+          gap: 22px;
+          padding: 28px;
+          opacity: 0.18;
+          pointer-events: none;
+        }
+
+        .calendar-dot-field span {
+          width: 10px;
+          height: 10px;
+          border-radius: 999px;
+          background: #000;
+        }
+
+        .calendar-heading {
+          position: relative;
+          z-index: 1;
+          text-align: center;
+          color: #000;
+        }
+
+        .calendar-year {
+          margin: 0;
+          font-size: clamp(48px, 7vw, 72px);
+          line-height: 0.9;
+          font-weight: 900;
+          letter-spacing: 0;
+        }
+
+        .calendar-title {
+          margin: 8px 0 0;
+          font-size: clamp(38px, 6vw, 68px);
+          line-height: 1;
+          font-weight: 900;
+          letter-spacing: 0;
+        }
+
+        .calendar-filters {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding: 34px 0 8px;
+        }
+
+        .calendar-filter {
+          flex: 0 0 auto;
+          border: 1px solid rgba(15, 31, 77, 0.14);
+          border-radius: 999px;
+          background: #fff;
+          color: #0f1f4d;
+          cursor: pointer;
+          font: inherit;
+          font-size: 14px;
+          font-weight: 800;
+          padding: 10px 16px;
+          transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .calendar-filter:hover {
+          transform: translateY(-1px);
+          background: rgba(15, 31, 77, 0.08);
+        }
+
+        .calendar-filter.active {
+          background: #0f1f4d;
+          color: #fff;
+        }
+
+        .calendar-grid {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 28px;
+          margin-top: 30px;
+        }
+
+        .calendar-month {
+          border: 1px solid rgba(15, 31, 77, 0.22);
+          border-radius: 8px;
+          background: #fff;
+          box-shadow: 4px 4px 0 rgba(15, 31, 77, 0.25);
+        }
+
+        .calendar-month-label {
+          width: 76%;
+          margin: -16px auto 0;
+          border: 1px solid rgba(15, 31, 77, 0.16);
+          border-radius: 8px;
+          background: #ffd400;
+          color: #000;
+          padding: 10px 14px;
+          text-align: center;
+          font-size: 24px;
+          font-weight: 900;
+          line-height: 1;
+          box-shadow: 3px 3px 0 rgba(15, 31, 77, 0.25);
+        }
+
+        .calendar-month-body {
+          min-height: 286px;
+          padding: 22px 16px 18px;
+        }
+
+        .calendar-events {
+          display: grid;
+          gap: 14px;
+        }
+
+        .calendar-event {
+          display: block;
+          width: 100%;
+          border: 1px solid rgba(15, 31, 77, 0.1);
+          border-radius: 8px;
+          background: #f9f6f1;
+          color: #000;
+          cursor: pointer;
+          font: inherit;
+          padding: 16px;
+          text-align: left;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .calendar-event:hover {
+          border-color: #d4a017;
+          box-shadow: 0 12px 28px rgba(15, 31, 77, 0.12);
+          transform: translateY(-2px);
+        }
+
+        .calendar-event-top {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        .calendar-event-title {
+          margin: 0;
+          font-size: 20px;
+          font-weight: 900;
+          line-height: 1.12;
+        }
+
+        .calendar-status {
+          flex: 0 0 auto;
+          border-radius: 999px;
+          background: #0f1f4d;
+          color: #fff;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          padding: 6px 8px;
+          text-transform: uppercase;
+        }
+
+        .calendar-event-meta {
+          display: grid;
+          gap: 8px;
+          margin-top: 14px;
+          color: #111;
+          font-size: 16px;
+          line-height: 1.45;
+        }
+
+        .calendar-event-meta p {
+          display: grid;
+          grid-template-columns: 24px minmax(0, 1fr);
+          gap: 8px;
+          margin: 0;
+        }
+
+        .calendar-description {
+          margin: 12px 0 0;
+          color: #5f6470;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+
+        .calendar-empty {
+          display: flex;
+          min-height: 210px;
+          align-items: center;
+          justify-content: center;
+          border: 1px dashed #c9c9c9;
+          border-radius: 8px;
+          background: #fafafa;
+          color: #8a8f9b;
+          font-size: 14px;
+          font-weight: 800;
+          text-align: center;
+        }
+
+        .calendar-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 2000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.5);
+          padding: 20px;
+          backdrop-filter: blur(5px);
+        }
+
+        .calendar-modal {
+          width: min(100%, 520px);
+          border-radius: 8px;
+          background: #fff;
+          box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+          padding: 28px;
+        }
+
+        .calendar-modal-date {
+          margin: 0;
+          color: #d4a017;
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+
+        .calendar-modal h2 {
+          margin: 10px 0 0;
+          color: #0f1f4d;
+          font-size: 34px;
+          line-height: 1;
+          font-weight: 900;
+        }
+
+        .calendar-modal-details {
+          display: grid;
+          gap: 12px;
+          margin-top: 24px;
+          color: #4b5563;
+          font-size: 16px;
+          line-height: 1.7;
+        }
+
+        .calendar-modal-details p {
+          margin: 0;
+        }
+
+        .calendar-modal-details strong {
+          color: #111827;
+        }
+
+        .calendar-close-row {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 28px;
+        }
+
+        .calendar-close {
+          border: 0;
+          border-radius: 8px;
+          background: #0f1f4d;
+          color: #fff;
+          cursor: pointer;
+          font: inherit;
+          font-weight: 800;
+          padding: 12px 20px;
+        }
+
+        @media (max-width: 1060px) {
+          .calendar-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 680px) {
+          .community-calendar {
+            padding: 22px 14px;
+          }
+
+          .calendar-grid {
+            grid-template-columns: 1fr;
+            gap: 26px;
+          }
+
+          .calendar-month-body {
+            min-height: 220px;
+          }
+
+          .calendar-dot-field {
+            display: none;
+          }
+        }
+      `}</style>
+
+      <section className="community-calendar">
+        <div className="calendar-dot-field" aria-hidden="true">
+          {Array.from({ length: 25 }).map((_, index) => (
+            <span key={index} />
+          ))}
         </div>
 
-        <h2 className="text-center text-2xl font-semibold text-[#0f1f4d]">
-          {format(currentDate, "MMMM yyyy")}
-        </h2>
+        <div className="calendar-heading">
+          <p className="calendar-year">{year}</p>
+          <h2 className="calendar-title">Community Calendar</h2>
+        </div>
 
-        <div className="flex min-w-[88px] justify-end">
-          {!isSameMonth(currentDate, today) ? (
+        <div className="calendar-filters" aria-label="Calendar month filters">
+          <button
+            type="button"
+            onClick={() => setActiveMonth("all")}
+            className={`calendar-filter ${activeMonth === "all" ? "active" : ""}`}
+          >
+            Full Year
+          </button>
+          {monthNames.map((month, index) => (
             <button
+              key={month}
               type="button"
-              aria-label="Go to today"
-              onClick={() => setCurrentDate(new Date())}
-              className="min-h-[44px] rounded-md bg-[#0f1f4d] px-4 py-2 text-white transition hover:opacity-90"
+              onClick={() => setActiveMonth(index)}
+              className={`calendar-filter ${activeMonth === index ? "active" : ""}`}
             >
-              Today
+              {month}
             </button>
-          ) : null}
+          ))}
         </div>
-      </div>
 
-      <div className="grid grid-cols-7 border-l border-t border-gray-200">
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+        <div className="calendar-grid">
+          {visibleMonths.map((monthIndex) => {
+            const monthEvents = eventsByMonth[monthIndex] ?? []
+
+            return (
+              <article
+                key={monthNames[monthIndex]}
+                id={`calendar-${monthNames[monthIndex].toLowerCase()}`}
+                className="calendar-month"
+              >
+                <div className="calendar-month-label">{monthNames[monthIndex]}</div>
+                <div className="calendar-month-body">
+                  {monthEvents.length > 0 ? (
+                    <div className="calendar-events">
+                      {monthEvents.map((event) => (
+                        <button
+                          key={event.id}
+                          type="button"
+                          onClick={() => setViewingEvent(event)}
+                          className="calendar-event"
+                        >
+                          <div className="calendar-event-top">
+                            <h3 className="calendar-event-title">{event.name}</h3>
+                            <span className="calendar-status">{getEventStatus(event)}</span>
+                          </div>
+                          <div className="calendar-event-meta">
+                            <p>
+                              <span aria-hidden="true">📅</span>
+                              <span>{formatEventDate(event.date)}</span>
+                            </p>
+                            <p>
+                              <span aria-hidden="true">📍</span>
+                              <span>{event.location ?? "TBD"}</span>
+                            </p>
+                            <p>
+                              <span aria-hidden="true">🕒</span>
+                              <span>{formatEventTime(event.time, event.endTime)}</span>
+                            </p>
+                          </div>
+                          {event.description ? (
+                            <p className="calendar-description">{event.description}</p>
+                          ) : null}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="calendar-empty">No events scheduled yet</div>
+                  )}
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        {viewingEvent ? (
           <div
-            key={day}
-            className="border-b border-r border-gray-200 bg-gray-50 px-2 py-3 text-center text-xs font-bold uppercase tracking-[0.08em] text-gray-500"
+            className="calendar-modal-backdrop"
+            onClick={() => setViewingEvent(null)}
           >
-            {day}
-          </div>
-        ))}
-
-        {monthDays.map((day) => {
-          const key = dateKey(day)
-          const dayEvents = eventsByDate[key] ?? []
-          const muted = !isSameMonth(day, currentDate)
-          const isToday = isSameDay(day, today)
-
-          return (
             <div
-              key={key}
-              aria-label={format(day, "MMMM d, yyyy")}
-              className={`min-h-28 border-b border-r border-gray-200 p-2 transition hover:bg-gray-50 ${
-                muted ? "bg-gray-50/70 text-gray-400" : "bg-white text-gray-900"
-              }`}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="calendar-event-title"
+              className="calendar-modal"
+              onClick={(event) => event.stopPropagation()}
             >
-              <div className="flex justify-end">
-                <span
-                  className={`flex h-7 w-7 items-center justify-center rounded-full text-sm font-semibold ${
-                    isToday ? "bg-[#0f1f4d] text-white" : ""
-                  }`}
-                >
-                  {format(day, "d")}
-                </span>
-              </div>
-
-              <div className="mt-2 space-y-1">
-                {dayEvents.slice(0, 3).map((event) => (
-                  <button
-                    key={event.id}
-                    type="button"
-                    onClick={() => setViewingEvent(event)}
-                    className="block w-full truncate rounded-full bg-[#d4a017]/20 px-2 py-1 text-left text-xs font-semibold text-[#0f1f4d] transition hover:bg-[#d4a017]/30"
-                  >
-                    {event.time ? `${format(new Date(`2026-01-01T${event.time}`), "h:mm a")} · ` : ""}
-                    {event.name}
-                  </button>
-                ))}
-                {dayEvents.length > 3 ? (
-                  <button
-                    type="button"
-                    onClick={() => setViewingEvent(dayEvents[3])}
-                    className="text-xs font-semibold text-[#1e3a8a]"
-                  >
-                    +{dayEvents.length - 3} more
-                  </button>
+              <p className="calendar-modal-date">{formatEventDate(viewingEvent.date)}</p>
+              <h2 id="calendar-event-title">{viewingEvent.name}</h2>
+              <div className="calendar-modal-details">
+                <p>
+                  <strong>Time:</strong> {formatEventTime(viewingEvent.time, viewingEvent.endTime)}
+                </p>
+                <p>
+                  <strong>Location:</strong> {viewingEvent.location ?? "TBD"}
+                </p>
+                {viewingEvent.description ? (
+                  <p>
+                    <strong>Details:</strong> {viewingEvent.description}
+                  </p>
                 ) : null}
               </div>
-            </div>
-          )
-        })}
-      </div>
-
-      {viewingEvent ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
-          onClick={() => setViewingEvent(null)}
-        >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="calendar-event-title"
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d4a017]">
-              {formatEventDate(viewingEvent.date)}
-            </p>
-            <h2 id="calendar-event-title" className="mt-2 text-2xl font-bold text-[#0f1f4d]">
-              {viewingEvent.name}
-            </h2>
-            <div className="mt-5 space-y-3 text-sm leading-6 text-gray-700">
-              <p>
-                <span className="font-semibold text-gray-950">Time:</span>{" "}
-                {formatEventTime(viewingEvent.time, viewingEvent.endTime)}
-              </p>
-              <p>
-                <span className="font-semibold text-gray-950">Location:</span>{" "}
-                {viewingEvent.location ?? "TBD"}
-              </p>
-              {viewingEvent.description ? (
-                <p>
-                  <span className="font-semibold text-gray-950">Details:</span>{" "}
-                  {viewingEvent.description}
-                </p>
-              ) : null}
-            </div>
-            <div className="mt-6 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setViewingEvent(null)}
-                className="rounded-md bg-[#0f1f4d] px-4 py-2 text-white transition hover:opacity-90"
-              >
-                Close
-              </button>
+              <div className="calendar-close-row">
+                <button
+                  type="button"
+                  onClick={() => setViewingEvent(null)}
+                  className="calendar-close"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ) : null}
-    </div>
+        ) : null}
+      </section>
+    </>
   )
 }

@@ -169,7 +169,7 @@ export default function Footer() {
           <div>
             <img src="/Destiny-Helpers-Outreach-Inc.png" alt="Destiny Helpers Outreach Inc" className="footer-brand-logo" />
             <p className="footer-brand-desc">
-              We create spaces where young people and their families can discover their purpose, strengthen their identity, and build brighter futures through mentorship, education, and compassionate community support.
+              Supporting Brooklyn youth and families with programs rooted in care, creativity, leadership, and real community connection.
             </p>
             <div className="footer-socials">
               <a href="https://x.com" target="_blank" rel="noreferrer" className="footer-social-btn" aria-label="X / Twitter">
