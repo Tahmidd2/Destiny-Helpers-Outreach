@@ -37,10 +37,10 @@ const impactStats: ImpactStat[] = [
 ];
 
 const communityEventCards = [
-  { title: "Crowned In Her Story", description: "Empowering women through storytelling and transformation experiences, celebrating every chapter of her journey.", icon: "👑", gradient: "#7C3AED, #1E3A8A" },
-  { title: "Back to School Resource Fair", description: "Distributing backpacks filled with school supplies alongside food, music, activities, and resources for families.", icon: "🎒", gradient: "#1E3A8A, #D4A017" },
-  { title: "Nourish Your Community", description: "Distributing warm Thanksgiving meals to migrant families and the broader community at key Brooklyn intersections.", icon: "🍽️", gradient: "#6B4F3B, #1E3A8A" },
-  { title: "Winter Wonderland", description: "Spreading holiday joy by distributing gifts, food, and winter essentials to families across our community.", icon: "🎁", gradient: "#D4A017, #7C3AED" },
+  { title: "Crowned In Her Story", description: "Empowering women through storytelling and transformation experiences, celebrating every chapter of her journey.", image: "/HP-Crownedinherstory.png" },
+  { title: "Back to School Resource Fair", description: "Distributing backpacks filled with school supplies alongside food, music, activities, and resources for families.", image: "/HP-Backtoschoolresourcefair.png" },
+  { title: "Nourish Your Community", description: "Distributing warm Thanksgiving meals to migrant families and the broader community at key Brooklyn intersections.", image: "/HP-Nourishyourcommunity.png" },
+  { title: "Winter Wonderland", description: "Spreading holiday joy by distributing gifts, food, and winter essentials to families across our community.", image: "/HP-Winterwonderland.png" },
 ];
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -125,7 +125,10 @@ export default function HomePage() {
         .events-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:60px;}
         .event-card{background:white;border-radius:24px;overflow:hidden;border:1px solid rgba(0,0,0,.06);transition:transform .3s,box-shadow .3s;}
         .event-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.1);}
-        .event-card-img{height:220px;display:flex;align-items:center;justify-content:center;}
+        .event-card-img{height:240px;position:relative;overflow:hidden;background:#e8edf7;}
+        .event-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease,filter .55s ease;}
+        .event-card:hover .event-card-img img{transform:scale(1.045);filter:saturate(1.08) contrast(1.02);}
+        .event-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,31,77,0.04),rgba(15,31,77,0.32));pointer-events:none;}
         .event-card-body{padding:28px;}
         .event-card-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);margin-bottom:10px;}
         .event-card-desc{font-size:14px;color:#777;line-height:1.7;}
@@ -258,8 +261,8 @@ export default function HomePage() {
         <div className="events-grid">
           {communityEventCards.map((event) => (
             <div className="event-card" key={event.title}>
-              <div className="event-card-img" style={{ background: `linear-gradient(135deg, ${event.gradient})` }}>
-                <span style={{ fontSize: "64px" }}>{event.icon}</span>
+              <div className="event-card-img">
+                <img src={event.image} alt={`${event.title} event moment`} loading="lazy" />
               </div>
               <div className="event-card-body">
                 <div className="event-card-title">{event.title}</div>
