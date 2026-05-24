@@ -116,7 +116,7 @@ export default function DonateNowPage() {
           </section>
           <div className="donate-note">
             Destiny Helpers Outreach Inc. is listed as a 501(c)(3) nonprofit on the site footer.
-            Tax ID: 84-283753. For sponsorships, in-kind donations, or program-specific giving, contact the team directly.
+            Tax ID: 84-283753. Monetary donations may be tax deductible to the extent allowed by law. For sponsorships, in-kind donations, or program-specific giving, contact the team directly.
           </div>
         </div>
       </main>

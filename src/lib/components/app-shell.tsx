@@ -8,6 +8,7 @@ import Navbar from "@/lib/components/navbar"
 
 const STANDALONE_ROUTES = new Set([
   "/programs/teen-brownsville",
+  "/programs/teen-destiny-changer",
 ])
 
 export default function AppShell({ children }: { children: ReactNode }) {

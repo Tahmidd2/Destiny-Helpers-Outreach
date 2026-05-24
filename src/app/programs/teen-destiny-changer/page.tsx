@@ -119,10 +119,10 @@ export default function TeenDestinyChangerPage() {
             </div>
             <div className="tdc-photo-grid" aria-label="Mr. and Ms. Teen Destiny Changer moments">
               <div className="tdc-photo">
-                <Image src="/Mr and Ms Teen.png" alt="Mr. and Ms. Teen Destiny Changer participant moment" fill sizes="(max-width: 940px) 45vw, 22vw" style={{ objectFit: "cover" }} unoptimized />
+                <Image src="/Mr and Ms Teen.png" alt="Mr. and Ms. Teen Destiny Changer participant moment" fill sizes="(max-width: 940px) 45vw, 22vw" style={{ objectFit: "cover" }} unoptimized priority loading="eager" />
               </div>
               <div className="tdc-photo">
-                <Image src="/Mr. and Ms. Teen Destiny.png" alt="Mr. and Ms. Teen Destiny Changer pageant moment" fill sizes="(max-width: 940px) 55vw, 30vw" style={{ objectFit: "cover" }} unoptimized />
+                <Image src="/Mr. and Ms. Teen Destiny.png" alt="Mr. and Ms. Teen Destiny Changer pageant moment" fill sizes="(max-width: 940px) 55vw, 30vw" style={{ objectFit: "cover" }} unoptimized priority loading="eager" />
               </div>
             </div>
           </div>
