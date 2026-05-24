@@ -7,7 +7,27 @@ type ShowcaseImage = {
 
 const showcaseImages: ShowcaseImage[] = [
   { src: "/collage.jpg", alt: "Destiny Helpers Outreach community moment 1" },
-  { src: "/collage2.jpg", alt: "Destiny Helpers Outreach community moment 2" },
+  { src: "/HP:Collage.jpeg", alt: "Destiny Helpers Outreach homepage collage moment" },
+  { src: "/Collage16.png", alt: "Destiny Helpers Outreach community moment 16" },
+  { src: "/Collage18.png", alt: "Destiny Helpers Outreach community moment 18" },
+  { src: "/collage19.png", alt: "Destiny Helpers Outreach community moment 19" },
+  { src: "/collage20.png", alt: "Destiny Helpers Outreach community moment 20" },
+  { src: "/collage21.png", alt: "Destiny Helpers Outreach community moment 21" },
+  { src: "/collage22.png", alt: "Destiny Helpers Outreach community moment 22" },
+  { src: "/collage23.png", alt: "Destiny Helpers Outreach community moment 23" },
+  { src: "/collage24.png", alt: "Destiny Helpers Outreach community moment 24" },
+  { src: "/collage25.png", alt: "Destiny Helpers Outreach community moment 25" },
+  { src: "/collage26.JPG", alt: "Destiny Helpers Outreach community moment 26" },
+  { src: "/collage27.png", alt: "Destiny Helpers Outreach community moment 27" },
+  { src: "/collage28.png", alt: "Destiny Helpers Outreach community moment 28" },
+  { src: "/collage29.png", alt: "Destiny Helpers Outreach community moment 29" },
+  { src: "/collage30.png", alt: "Destiny Helpers Outreach community moment 30" },
+  { src: "/collage31.png", alt: "Destiny Helpers Outreach community moment 31" },
+  { src: "/Collage32.png", alt: "Destiny Helpers Outreach community moment 32" },
+  { src: "/collage34.JPG", alt: "Destiny Helpers Outreach community moment 34" },
+  { src: "/collage35.JPG", alt: "Destiny Helpers Outreach community moment 35" },
+  { src: "/collage36.png", alt: "Destiny Helpers Outreach community moment 36" },
+  { src: "/collage38.JPG", alt: "Destiny Helpers Outreach community moment 38" },
   { src: "/collage3.jpg", alt: "Destiny Helpers Outreach community moment 3" },
   { src: "/collage4.jpg", alt: "Destiny Helpers Outreach community moment 4" },
   { src: "/collage5.jpg", alt: "Destiny Helpers Outreach community moment 5" },
@@ -30,7 +50,7 @@ function ImageRail({ reverse = false }: { reverse?: boolean }) {
     <div className={`showcase-rail ${reverse ? "showcase-rail-reverse" : ""}`} aria-hidden={reverse}>
       {loopImages.map((image, index) => (
         <figure key={`${image.src}-${index}-${reverse ? "reverse" : "forward"}`} className={`showcase-frame showcase-frame-${(index % 5) + 1}`}>
-          <img src={image.src} alt={reverse ? "" : image.alt} loading={index < 4 && !reverse ? "eager" : "lazy"} />
+          <img src={image.src} alt={reverse ? "" : image.alt} loading="eager" />
           <span className="showcase-shade" aria-hidden="true" />
         </figure>
       ))}

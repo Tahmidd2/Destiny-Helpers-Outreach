@@ -11,13 +11,10 @@ type CloudinaryImage = {
 }
 
 const fallbackImages = {
-  hero: "/ourstoryimage.jpeg",
-  educators:
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80&fit=crop&auto=format",
-  brotherhood:
-    "https://images.unsplash.com/photo-1607748862156-7c548e7e98f4?w=1200&q=80&fit=crop&auto=format",
-  community:
-    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80&fit=crop&auto=format",
+  hero: "/Beyond The Mask.png",
+  educators: "/BTM.png",
+  student: "/BTM2.png",
+  community: "/Beyond The Mask.png",
 }
 
 const programCards = [
@@ -29,7 +26,7 @@ const programCards = [
     tagline: "Restoring the heart of those who serve others.",
     audience: ["Teachers", "School Staff", "Administrators", "Employees"],
     description:
-      "Educators carry more than lesson plans — they carry the emotional weight of their students, classrooms, and communities. This experience creates a restorative space for staff to pause, reflect, and reconnect.",
+      "Educators carry more than lesson plans. They carry the emotional weight of their students, classrooms, and communities. This experience creates a restorative space for staff to pause, reflect, and reconnect.",
     outcomes: [
       "Increased emotional awareness",
       "Reduced stress through reflection",
@@ -44,11 +41,11 @@ const programCards = [
     icon: "🖤",
     accentClass: "program-card-gold",
     buttonClass: "program-button-gold",
-    title: "Beyond the Mask: Brotherhood Edition",
-    tagline: "Helping young men express, connect, and rise beyond expectations.",
-    audience: ["Middle School", "High School", "Mentorship Programs", "Community Members"],
+    title: "Beyond the Mask: Student Experience",
+    tagline: "Helping students express, connect, and rise beyond expectations.",
+    audience: ["Middle School", "High School", "Mentorship Programs", "Student Groups"],
     description:
-      "Too often, young men are taught to hide what they feel. Brotherhood Edition creates a safe and empowering space where young men explore who they are beyond expectations and connect with mentors who see them.",
+      "Too often, students are taught to hide what they feel. This student experience creates a safe and empowering space where participants explore who they are beyond expectations and connect with mentors who see them.",
     outcomes: [
       "Increased self-expression",
       "Strengthened mentor relationships",
@@ -67,7 +64,7 @@ const programCards = [
     tagline: "A space to be seen, heard, and understood.",
     audience: ["Community Orgs", "Companies", "Families", "Corporate Wellness"],
     description:
-      "We all wear masks — shaped by roles and expectations. This experience invites participants to explore the difference between how they show up and what they truly feel inside.",
+      "We all wear masks, shaped by roles and expectations. This experience invites participants to explore the difference between how they show up and what they truly feel inside.",
     outcomes: [
       "Increased self-awareness",
       "Stronger communication",
@@ -114,7 +111,7 @@ const testimonials = [
     quote:
       "I didn’t feel judged. I felt heard. It helped me realize I can talk about what I feel and still be strong.",
     name: "Student Participant",
-    role: "Brotherhood Edition",
+    role: "Student Experience",
   },
   {
     quote:
@@ -242,7 +239,7 @@ export default function BeyondTheMaskPage() {
     () => ({
       hero: getImageUrl(cloudinaryImages, 0, fallbackImages.hero),
       educators: getImageUrl(cloudinaryImages, 1, fallbackImages.educators),
-      brotherhood: getImageUrl(cloudinaryImages, 2, fallbackImages.brotherhood),
+      student: getImageUrl(cloudinaryImages, 2, fallbackImages.student),
       community: getImageUrl(cloudinaryImages, 3, fallbackImages.community),
     }),
     [cloudinaryImages]
@@ -1255,7 +1252,7 @@ export default function BeyondTheMaskPage() {
           <section id="power-statement" className="quote-banner">
             <div className="quote-rule" />
             <div className="quote-text">
-              Beyond the Mask is not just a workshop — it is a transformative experience
+              Beyond the Mask is more than a workshop. It is a transformative experience
               designed to create safe spaces for reflection, emotional awareness, and
               connection across diverse communities.
             </div>
@@ -1376,7 +1373,7 @@ export default function BeyondTheMaskPage() {
                     reconnect with themselves and one another.
                   </p>
                   <p className="section-copy">
-                    Whether the room is filled with educators, young men, or community
+                    Whether the room is filled with educators, students, or community
                     members, the experience is designed to honor lived reality while making
                     room for clarity, emotional literacy, and real belonging.
                   </p>
@@ -1387,7 +1384,7 @@ export default function BeyondTheMaskPage() {
                       <div className="stat-label">Unique Pathways</div>
                     </div>
                     <div className="impact-stat">
-                      <p className="stat-value">{stats.ageRange > 0 ? `K–${stats.ageRange}` : "K–12"}</p>
+                      <p className="stat-value">{stats.ageRange > 0 ? `K-${stats.ageRange}` : "K-12"}</p>
                       <div className="stat-label">All Ages Welcome</div>
                     </div>
                     <div className="impact-stat">
@@ -1460,7 +1457,7 @@ export default function BeyondTheMaskPage() {
                 Ready to Bring Beyond the Mask™ to Your Community?
               </h2>
               <p className="cta-copy">
-                Whether you&apos;re a school, company, organization, or community leader — we&apos;ll
+                Whether you&apos;re a school, company, organization, or community leader, we&apos;ll
                 meet you where you are with a grounded, elevated experience designed for the
                 people you serve.
               </p>

@@ -20,7 +20,7 @@ export default function Footer() {
           gap: 48px;
         }
 
-        .footer-brand-logo { height: 64px; width: auto; margin-bottom: 20px; }
+        .footer-brand-logo { height: 92px; width: auto; margin-bottom: 20px; }
         .footer-brand-desc {
           font-size: 14px;
           color: rgba(255,255,255,0.55);
@@ -154,6 +154,7 @@ export default function Footer() {
         }
         @media (max-width: 640px) {
           .footer-top { grid-template-columns: 1fr; padding: 40px 24px; }
+          .footer-brand-logo { height: 82px; }
           .footer-mid { flex-direction: column; align-items: flex-start; }
           .footer-bottom { flex-direction: column; align-items: flex-start; }
           .footer-legal { flex-wrap: wrap; gap: 12px; }

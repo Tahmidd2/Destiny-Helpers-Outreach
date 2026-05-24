@@ -26,7 +26,7 @@ const outcomes = [
 ];
 
 const stats = [
-  { value: "13-19", label: "Teen girls served" },
+  { value: "13 to 19", label: "Teen girls served" },
   { value: "6", label: "Month experience" },
   { value: "2019", label: "Program launch" },
   { value: "19", label: "Tracked success stories" },
@@ -77,12 +77,18 @@ export default function TeenBrownsvillePage() {
         .mtb-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; list-style: none; margin: 0; padding: 0; }
         .mtb-list li { background: #fbf7ef; border-radius: 8px; padding: 18px; color: #4f463f; line-height: 1.65; }
         .mtb-list li::before { content: "✓"; color: #9f6f35; font-weight: 900; margin-right: 8px; }
+        .mtb-media-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        .mtb-media-card { background: #fffdf8; border: 1px solid rgba(122,90,58,.12); border-radius: 8px; overflow: hidden; }
+        .mtb-media-image { position: relative; min-height: 260px; background: #e6dccd; }
+        .mtb-media-body { padding: 24px; }
+        .mtb-media-body h3 { margin: 0; color: #7a5a3a; font-size: 30px; line-height: 1; }
+        .mtb-media-body p { margin: 12px 0 0; color: #665d54; line-height: 1.75; }
         .mtb-quote { background: #7a5a3a; color: white; border-radius: 8px; padding: 34px; font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 4vw, 46px); line-height: 1.08; }
         .mtb-cta { background: #201a16; color: white; padding: 78px 0; }
         .mtb-cta-grid { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; }
         .mtb-cta h2 { margin: 0; color: white; font-size: clamp(36px, 5vw, 58px); line-height: 1; }
         .mtb-cta p { color: rgba(255,255,255,.76); line-height: 1.8; max-width: 720px; }
-        @media (max-width: 920px) { .mtb-hero-grid, .mtb-two-col, .mtb-image-band, .mtb-cta-grid { grid-template-columns: 1fr; } .mtb-stat-strip { grid-template-columns: repeat(2, 1fr); } .mtb-focus-grid { grid-template-columns: repeat(2, 1fr); } .mtb-photo-stack { min-height: 420px; } }
+        @media (max-width: 920px) { .mtb-hero-grid, .mtb-two-col, .mtb-image-band, .mtb-media-grid, .mtb-cta-grid { grid-template-columns: 1fr; } .mtb-stat-strip { grid-template-columns: repeat(2, 1fr); } .mtb-focus-grid { grid-template-columns: repeat(2, 1fr); } .mtb-photo-stack { min-height: 420px; } }
         @media (max-width: 620px) { .mtb-shell { width: min(1160px, calc(100% - 28px)); } .mtb-hero, .mtb-section { padding: 64px 0; } .mtb-stat-strip, .mtb-list, .mtb-focus-grid { grid-template-columns: 1fr; } .mtb-actions { flex-direction: column; } .mtb-btn { width: 100%; } }
       `}</style>
 
@@ -99,7 +105,7 @@ export default function TeenBrownsvillePage() {
                 </h1>
                 <p className="mtb-lede">
                   A six-month confidence, leadership, and prevention experience for teen
-                  girls ages 13-19 in Brownsville and East New York. Through pageantry,
+                  girls ages 13 to 19 in Brownsville and East New York. Through pageantry,
                   workshops, mentorship, scholarships, and service, participants are
                   encouraged to see beauty as self-worth, wisdom, and purpose.
                 </p>
@@ -110,10 +116,10 @@ export default function TeenBrownsvillePage() {
               </div>
               <div className="mtb-photo-stack" aria-label="Miss Teen Brownsville community imagery">
                 <div className="mtb-photo-main">
-                  <Image src="/homepagetoppicture.png" alt="Destiny Helpers Outreach youth program moment" fill sizes="(max-width: 920px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+                  <Image src="/MTB:Collage17.png" alt="Miss Teen Brownsville pageant participant moment" fill sizes="(max-width: 920px) 100vw, 50vw" style={{ objectFit: "cover" }} />
                 </div>
                 <div className="mtb-photo-small">
-                  <Image src="/ourstoryimage.jpeg" alt="Destiny Helpers Outreach community gathering" fill sizes="(max-width: 920px) 50vw, 24vw" style={{ objectFit: "cover" }} />
+                  <Image src="/Collage33:MTB.JPG" alt="Miss Teen Brownsville pageant celebration" fill sizes="(max-width: 920px) 50vw, 24vw" style={{ objectFit: "cover" }} />
                 </div>
               </div>
             </div>
@@ -162,7 +168,7 @@ export default function TeenBrownsvillePage() {
             </div>
             <div className="mtb-image-band">
               <div className="mtb-band-photo">
-                <Image src="/ourstoryimage.jpeg" alt="Community-centered Destiny Helpers Outreach gathering" fill sizes="(max-width: 920px) 100vw, 58vw" style={{ objectFit: "cover" }} />
+                <Image src="/collage37:MTB.JPEG" alt="Miss Teen Brownsville community-centered gathering" fill sizes="(max-width: 920px) 100vw, 58vw" style={{ objectFit: "cover" }} />
               </div>
               <div className="mtb-band-copy">
                 <h3>Rooted in Brownsville</h3>
@@ -185,6 +191,35 @@ export default function TeenBrownsvillePage() {
             <ul className="mtb-list">
               {outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
             </ul>
+          </div>
+        </section>
+
+        <section className="mtb-section">
+          <div className="mtb-shell">
+            <div className="mtb-section-header">
+              <div className="mtb-kicker">Media Highlights</div>
+              <h2 className="mtb-section-title">Coverage, Celebration, and Recap Moments</h2>
+            </div>
+            <div className="mtb-media-grid">
+              <article className="mtb-media-card">
+                <div className="mtb-media-image">
+                  <Image src="/Collage33:MTB.JPG" alt="Miss Teen Brownsville media highlight" fill sizes="(max-width: 920px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+                </div>
+                <div className="mtb-media-body">
+                  <h3>PIX11 Clip</h3>
+                  <p>Featured media moments from the Miss Teen Brownsville platform and its community-centered work.</p>
+                </div>
+              </article>
+              <article className="mtb-media-card">
+                <div className="mtb-media-image">
+                  <Image src="/MTB:Collage17.png" alt="Miss Teen Brownsville event recap" fill sizes="(max-width: 920px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+                </div>
+                <div className="mtb-media-body">
+                  <h3>Event Recap Video</h3>
+                  <p>A celebration of the workshops, service, pageant moments, and the confidence participants built along the way.</p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
 

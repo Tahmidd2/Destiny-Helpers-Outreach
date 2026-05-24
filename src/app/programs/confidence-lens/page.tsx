@@ -3,7 +3,7 @@ import Link from "next/link"
 const tiers = [
   {
     label: "Tier 1",
-    title: "Elementary School (Grades 3–5)",
+    title: "Elementary School (Grades 3 to 5)",
     focus: "Self-awareness, feelings, confidence building",
     experiences: [
       "Fun reflection activities",
@@ -15,7 +15,7 @@ const tiers = [
   },
   {
     label: "Tier 2",
-    title: "Middle School (Grades 6–8)",
+    title: "Middle School (Grades 6 to 8)",
     focus: "Identity, peer dynamics, self-expression",
     experiences: [
       "Guided group discussions",
@@ -27,7 +27,7 @@ const tiers = [
   },
   {
     label: "Tier 3",
-    title: "High School (Grades 9–12)",
+    title: "High School (Grades 9 to 12)",
     focus: "Voice, purpose, personal agency",
     experiences: [
       "Deep reflection sessions",
@@ -117,11 +117,11 @@ export default function ConfidenceLensPage() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
         :root {
-          --lens-blue: #a94f1b;
+          --lens-blue: #1e3a8a;
           --lens-gold: #d9792d;
           --lens-purple: #f2a65a;
-          --lens-cream: #fff7ef;
-          --lens-navy: #4d2412;
+          --lens-cream: #f8fafc;
+          --lens-navy: #0f1f4d;
           --lens-text: #334155;
           --lens-white: #FFFFFF;
         }
@@ -186,9 +186,9 @@ export default function ConfidenceLensPage() {
           overflow: hidden;
           min-height: 92vh;
           background:
-            radial-gradient(circle at top left, rgba(242,166,90,0.28), transparent 30%),
-            radial-gradient(circle at bottom right, rgba(217,121,45,0.22), transparent 26%),
-            linear-gradient(135deg, rgba(169,79,27,0.97), rgba(77,36,18,0.97));
+            radial-gradient(circle at top left, rgba(217,121,45,0.22), transparent 30%),
+            radial-gradient(circle at bottom right, rgba(30,58,138,0.26), transparent 28%),
+            linear-gradient(135deg, rgba(30,58,138,0.98), rgba(15,31,77,0.98));
           color: white;
           display: flex;
           align-items: center;
@@ -300,8 +300,60 @@ export default function ConfidenceLensPage() {
           overflow: hidden;
           border-radius: 28px;
           background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(249,246,241,0.98));
-          padding: 24px;
+          min-height: 560px;
           color: var(--lens-text);
+        }
+
+        .lens-photo-main {
+          width: 100%;
+          height: 100%;
+          min-height: 560px;
+          display: block;
+          object-fit: cover;
+        }
+
+        .lens-photo-caption {
+          position: absolute;
+          left: 22px;
+          right: 22px;
+          bottom: 22px;
+          border-radius: 22px;
+          background: rgba(15,31,77,0.86);
+          color: white;
+          padding: 22px;
+          backdrop-filter: blur(10px);
+        }
+
+        .lens-photo-caption strong {
+          display: block;
+          color: #f5c842;
+          font-size: 12px;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          margin-bottom: 8px;
+        }
+
+        .lens-photo-caption span {
+          display: block;
+          font-family: 'Playfair Display', serif;
+          font-size: 28px;
+          line-height: 1.15;
+        }
+
+        .lens-inline-photo {
+          position: relative;
+          min-height: 390px;
+          border-radius: 30px;
+          overflow: hidden;
+          box-shadow: 0 18px 46px rgba(15,31,77,0.12);
+        }
+
+        .lens-inline-photo img {
+          width: 100%;
+          height: 100%;
+          min-height: 390px;
+          display: block;
+          object-fit: cover;
         }
 
         .lens-focus-box,
@@ -328,7 +380,7 @@ export default function ConfidenceLensPage() {
           margin-top: 16px;
           padding: 34px;
           color: white;
-          background: linear-gradient(135deg, var(--lens-blue), #c66528 58%, var(--lens-purple));
+          background: linear-gradient(135deg, var(--lens-blue), #163172 56%, var(--lens-gold));
         }
 
         .lens-hero-card p {
@@ -434,12 +486,12 @@ export default function ConfidenceLensPage() {
 
         .lens-highlight-panel {
           background: white;
-          border: 1px solid rgba(217,121,45,0.22);
+          border: 1px solid rgba(30,58,138,0.12);
           padding: 34px;
         }
 
         .lens-soft-panel {
-          background: linear-gradient(135deg, #fff7ef, #f9eadf);
+          background: linear-gradient(135deg, #eef4ff, #fff7ef);
           padding: 34px;
         }
 
@@ -477,7 +529,7 @@ export default function ConfidenceLensPage() {
 
         .lens-tier-card {
           background: white;
-          border: 1px solid rgba(217,121,45,0.18);
+          border: 1px solid rgba(30,58,138,0.12);
           padding: 30px;
           transition: transform 0.25s, box-shadow 0.25s;
         }
@@ -553,7 +605,7 @@ export default function ConfidenceLensPage() {
         }
 
         .lens-tier-card:nth-child(1) {
-          --tier-color: #a94f1b;
+          --tier-color: #1e3a8a;
           --tier-color-2: #d9792d;
         }
 
@@ -569,7 +621,7 @@ export default function ConfidenceLensPage() {
 
         .lens-tier-card:nth-child(1) .lens-tier-label,
         .lens-tier-card:nth-child(1) .lens-tier-title {
-          color: #a94f1b;
+          color: #1e3a8a;
         }
 
         .lens-tier-card:nth-child(2) .lens-tier-label,
@@ -650,7 +702,7 @@ export default function ConfidenceLensPage() {
         }
 
         .lens-position-panel {
-          background: linear-gradient(135deg, #fff0e4, white, #fff7e6);
+          background: linear-gradient(135deg, #eef4ff, white, #fff7e6);
           padding: 34px;
         }
 
@@ -715,7 +767,7 @@ export default function ConfidenceLensPage() {
         }
 
         .lens-sponsor-panel {
-          background: linear-gradient(135deg, var(--lens-blue), #d9792d);
+          background: linear-gradient(135deg, var(--lens-blue), #12265f 62%, #d9792d);
           color: white;
           padding: 34px;
         }
@@ -750,8 +802,8 @@ export default function ConfidenceLensPage() {
           position: relative;
           overflow: hidden;
           background:
-            radial-gradient(circle at center, rgba(242,166,90,0.2), transparent 30%),
-            linear-gradient(135deg, rgba(169,79,27,0.98), rgba(77,36,18,0.98));
+            radial-gradient(circle at center, rgba(217,121,45,0.2), transparent 30%),
+            linear-gradient(135deg, rgba(30,58,138,0.98), rgba(15,31,77,0.98));
           color: white;
           text-align: center;
         }
@@ -905,35 +957,10 @@ export default function ConfidenceLensPage() {
 
             <div className="lens-visual-frame">
               <div className="lens-visual-inner">
-                <div className="lens-focus-box">
-                  <span>Lens Focus</span>
-                  <span style={{ color: "#d9792d", fontSize: 24 }}>◌</span>
-                </div>
-                <div className="lens-hero-card">
-                  <p className="lens-hero-card-top">Reflection</p>
-                  <p className="lens-hero-quote">“Let me see myself clearly.”</p>
-                  <div className="lens-mini-grid">
-                    <div className="lens-mini-card">
-                      <div className="lens-mini-label">Safe</div>
-                      <div className="lens-mini-copy">
-                        Reflection moments, guided journaling, and supportive processing.
-                      </div>
-                    </div>
-                    <div className="lens-mini-card">
-                      <div className="lens-mini-label">Transformational</div>
-                      <div className="lens-mini-copy">
-                        Voice-building experiences that move students from uncertainty to confidence.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="lens-token-grid">
-                  {["Reflection", "Connection", "Confidence"].map((item) => (
-                    <div key={item} className="lens-token">
-                      <div className="lens-token-icon">👓</div>
-                      <div className="lens-token-title">{item}</div>
-                    </div>
-                  ))}
+                <img src="/CLP.png" alt="Confidence Lens Project participant experience" className="lens-photo-main" />
+                <div className="lens-photo-caption">
+                  <strong>Lens Focus</strong>
+                  <span>Reflection, connection, and confidence in action.</span>
                 </div>
               </div>
             </div>
@@ -946,20 +973,25 @@ export default function ConfidenceLensPage() {
               <div className="lens-eyebrow">What It Is</div>
               <h2 className="lens-title">A Transformative, Youth-Centered Experience</h2>
             </div>
-            <div className="lens-copy">
-              <p>
-                The Confidence Lens Project™ is an interactive workshop experience designed
-                to help young people strengthen confidence, self-awareness, and voice.
-              </p>
-              <p>
-                Through guided reflection, meaningful conversation, and intentional choice,
-                participants explore how they see themselves and how they show up in their
-                communities.
-              </p>
-              <p>
-                Using eyewear as a symbolic tool, students engage in identity exploration in
-                a way that is engaging, affirming, and developmentally appropriate.
-              </p>
+            <div>
+              <div className="lens-inline-photo">
+                <img src="/CLP2.png" alt="Confidence Lens Project group moment" />
+              </div>
+              <div className="lens-copy" style={{ marginTop: 24 }}>
+                <p>
+                  The Confidence Lens Project™ is an interactive workshop experience designed
+                  to help young people strengthen confidence, self-awareness, and voice.
+                </p>
+                <p>
+                  Through guided reflection, meaningful conversation, and intentional choice,
+                  participants explore how they see themselves and how they show up in their
+                  communities.
+                </p>
+                <p>
+                  Using eyewear as a symbolic tool, students engage in identity exploration in
+                  a way that is engaging, affirming, and developmentally appropriate.
+                </p>
+              </div>
             </div>
           </div>
         </section>

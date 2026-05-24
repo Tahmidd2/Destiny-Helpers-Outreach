@@ -76,7 +76,7 @@ export default function Navbar() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 72px;
+          height: 84px;
         }
         .nav-logo {
           display: flex;
@@ -85,7 +85,7 @@ export default function Navbar() {
           text-decoration: none;
         }
         .nav-logo img {
-          height: 48px;
+          height: 64px;
           width: auto;
         }
         .nav-logo-text {
@@ -334,7 +334,8 @@ export default function Navbar() {
           .nav-links { display: none; }
           .nav-top { display: none; }
           .hamburger { display: flex; }
-          .nav-main { padding: 0 24px; }
+          .nav-main { padding: 0 24px; height: 78px; }
+          .nav-logo img { height: 58px; }
         }
       `}</style>
 

@@ -36,8 +36,9 @@ export default function VolunteerWithUsPage() {
         .volunteer-field input:focus, .volunteer-field textarea:focus { border-color: #d4a017; box-shadow: 0 0 0 4px rgba(212,160,23,.14); }
         .volunteer-check-field { border: 0; padding: 0; margin: 0; align-items: start; }
         .volunteer-options { display: grid; gap: 10px; padding-top: 2px; }
-        .volunteer-check { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; color: #27375f; font-weight: 700; line-height: 1.35; }
-        .volunteer-check input { appearance: none; width: 18px; height: 18px; margin: 1px 0 0; border: 1px solid rgba(16,32,79,.22); border-radius: 3px; background: #fff; display: grid; place-items: center; }
+        .volunteer-check { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; align-items: start; color: #27375f; font-weight: 700; line-height: 1.35; min-height: 24px; }
+        .volunteer-check input { appearance: none; width: 20px; height: 20px; min-width: 20px; margin: 0; border: 1px solid rgba(16,32,79,.22); border-radius: 3px; background: #fff; display: grid; place-items: center; padding: 0; }
+        .volunteer-check span { padding-top: 1px; }
         .volunteer-check input::after { content: ""; width: 9px; height: 9px; border-radius: 2px; background: #d4a017; transform: scale(0); transition: transform .16s ease; }
         .volunteer-check input:checked::after { transform: scale(1); }
         .volunteer-submit-row { display: flex; justify-content: flex-end; padding-top: 8px; }

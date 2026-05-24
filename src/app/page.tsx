@@ -10,6 +10,7 @@ interface Program {
   description: string;
   icon: string;
   color: string;
+  href: string;
 }
 
 interface ImpactStat {
@@ -20,12 +21,12 @@ interface ImpactStat {
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const programs: Program[] = [
-  { title: "Beyond The Mask", description: "Helping youth explore identity, emotional awareness, and self-expression in a safe and nurturing environment.", icon: "🎭", color: "#7C3AED" },
-  { title: "The Confidence Lens Project", description: "Building confidence and self-image through reflection and storytelling — empowering youth to see their own brilliance.", icon: "📸", color: "#1E3A8A" },
-  { title: "Project ICON", description: "Leadership and identity development for youth, cultivating the next generation of community changemakers.", icon: "⭐", color: "#D4A017" },
-  { title: "Mr & Ms Teen Destiny Changer NYC", description: "Youth leadership and empowerment initiative celebrating the brilliance of young men and women across New York City.", icon: "👑", color: "#6B4F3B" },
-  { title: "Ms. Teen Brownsville", description: "Community-based youth empowerment and leadership program rooted in the heart of Brownsville, Brooklyn.", icon: "🌟", color: "#1E3A8A" },
-  { title: "Let's Get Artsy", description: "Creative arts and self-expression program where youth discover their voices through art, music, and creativity.", icon: "🎨", color: "#7C3AED" },
+  { title: "Beyond The Mask", description: "Helping youth explore identity, emotional awareness, and self-expression in a safe and nurturing environment.", icon: "🎭", color: "#7C3AED", href: "/programs/beyond-the-mask" },
+  { title: "The Confidence Lens Project", description: "Building confidence and self-image through reflection and storytelling, empowering youth to see their own brilliance.", icon: "📸", color: "#1E3A8A", href: "/programs/confidence-lens" },
+  { title: "Project ICON", description: "Leadership and identity development for youth, cultivating the next generation of community changemakers.", icon: "⭐", color: "#D4A017", href: "/programs/project-icon" },
+  { title: "Mr & Ms Teen Destiny Changer NYC", description: "Youth leadership and empowerment initiative celebrating the brilliance of students across New York City.", icon: "👑", color: "#6B4F3B", href: "/programs/teen-destiny-changer" },
+  { title: "Ms. Teen Brownsville", description: "Community-based youth empowerment and leadership program rooted in the heart of Brownsville, Brooklyn.", icon: "🌟", color: "#1E3A8A", href: "/programs/teen-brownsville" },
+  { title: "Let's Get Artsy", description: "Creative arts and self-expression program where youth discover their voices through art, music, and creativity.", icon: "🎨", color: "#7C3AED", href: "/programs/lets-get-artsy" },
 ];
 
 const impactStats: ImpactStat[] = [
@@ -36,7 +37,7 @@ const impactStats: ImpactStat[] = [
 ];
 
 const communityEventCards = [
-  { title: "Crowned In Her Story", description: "Empowering women through storytelling and transformation experiences — celebrating every chapter of her journey.", icon: "👑", gradient: "#7C3AED, #1E3A8A" },
+  { title: "Crowned In Her Story", description: "Empowering women through storytelling and transformation experiences, celebrating every chapter of her journey.", icon: "👑", gradient: "#7C3AED, #1E3A8A" },
   { title: "Back to School Resource Fair", description: "Distributing backpacks filled with school supplies alongside food, music, activities, and resources for families.", icon: "🎒", gradient: "#1E3A8A, #D4A017" },
   { title: "Nourish Your Community", description: "Distributing warm Thanksgiving meals to migrant families and the broader community at key Brooklyn intersections.", icon: "🍽️", gradient: "#6B4F3B, #1E3A8A" },
   { title: "Winter Wonderland", description: "Spreading holiday joy by distributing gifts, food, and winter essentials to families across our community.", icon: "🎁", gradient: "#D4A017, #7C3AED" },
@@ -89,7 +90,7 @@ export default function HomePage() {
         .hero-visual{position:relative;opacity:1;transform:scale(1);transition:all 1s ease .5s;}
         .hero-visual.visible{opacity:1;transform:scale(1);}
         .hero-image-frame{width:100%;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.1);}
-        .hero-image-frame img{width:100%;height:100%;object-fit:cover;opacity:.85;}
+        .hero-image-frame img{width:100%;height:100%;object-fit:cover;opacity:.88;}
         .hero-badge{position:absolute;bottom:-24px;left:-24px;background:white;border-radius:16px;padding:20px 24px;box-shadow:0 20px 60px rgba(0,0,0,.3);min-width:180px;}
         .hero-badge-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--royal);}
         .hero-badge-label{font-size:13px;color:#666;font-weight:500;margin-top:2px;}
@@ -195,7 +196,7 @@ export default function HomePage() {
           </div>
           <div className={`hero-visual ${heroVisible ? "visible" : ""}`}>
             <div className="hero-image-frame">
-              <img src="/homepagetoppicture.png" alt="Destiny Helpers Outreach community youth" />
+              <img src="/HP.png" alt="Destiny Helpers Outreach community youth" />
             </div>
             <div className="hero-badge"><div className="hero-badge-num">500+</div><div className="hero-badge-label">Youth Served</div></div>
             <div className="hero-badge-2"><div className="hero-badge-2-text">Brooklyn, NY</div><div className="hero-badge-2-sub">Serving since 2017</div></div>
@@ -230,7 +231,7 @@ export default function HomePage() {
           <h2 className="section-title">Our Programs</h2>
           <Link href="/programs" className="btn-gold">View All Programs</Link>
         </div>
-        <p className="section-subtitle" style={{ marginTop: "16px" }}>Each program is designed to meet youth where they are — and help them grow into who they&apos;re meant to be.</p>
+        <p className="section-subtitle" style={{ marginTop: "16px" }}>Each program is designed to meet youth where they are and help them grow into who they&apos;re meant to be.</p>
         <div className="programs-grid">
           {programs.map((p) => (
             <div className="program-card" key={p.title}>
@@ -238,7 +239,7 @@ export default function HomePage() {
               <span className="program-icon">{p.icon}</span>
               <div className="program-title">{p.title}</div>
               <p className="program-desc">{p.description}</p>
-              <Link href="/programs" className="program-link" style={{ color: p.color }}>Learn More →</Link>
+              <Link href={p.href} className="program-link" style={{ color: p.color }}>Learn More →</Link>
             </div>
           ))}
         </div>

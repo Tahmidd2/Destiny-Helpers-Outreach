@@ -32,7 +32,7 @@ const programs = [
     color: "#1E3A8A",
     colorLight: "rgba(30,58,138,0.08)",
     description:
-      "Building confidence and self-image through reflection and storytelling — empowering youth to see their own brilliance. Participants use photography and visual storytelling to document their journeys and celebrate who they are.",
+      "Building confidence and self-image through reflection and storytelling, empowering youth to see their own brilliance. Participants use photography and visual storytelling to document their journeys and celebrate who they are.",
     highlights: ["Photography", "Storytelling", "Self-Image", "Confidence Building"],
   },
   {
@@ -54,7 +54,7 @@ const programs = [
     color: "#6B4F3B",
     colorLight: "rgba(107,79,59,0.08)",
     description:
-      "Youth leadership and empowerment initiative celebrating the brilliance of young men and women across New York City. This program honors excellence, character, and community service.",
+      "Youth leadership and empowerment initiative celebrating the brilliance of students across New York City. This program honors excellence, character, and community service.",
     highlights: ["Youth Leadership", "Recognition", "Community Service", "Excellence"],
   },
   {
@@ -346,7 +346,7 @@ export default function ProgramsPage() {
           <div className="prog-hero-label">✦ What We Do</div>
           <h1>Programs That <span>Transform Lives</span></h1>
           <p className="prog-hero-sub">
-            Six powerful programs designed to meet youth where they are — and help them grow into who they're meant to be.
+            Six powerful programs designed to meet youth where they are and help them grow into who they&apos;re meant to be.
           </p>
           <div className="prog-hero-stats">
             {[

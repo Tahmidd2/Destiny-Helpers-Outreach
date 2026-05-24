@@ -50,7 +50,7 @@ export default function AboutPage() {
 
   const testimonials = [
     {
-      quote: "I was moved. What I thought was just a task turned out to be so much more fulfilling. To see the contestants supporting each other was beautiful — some realized talents they never imagined showing the world.",
+      quote: "I was moved. What I thought was just a task turned out to be so much more fulfilling. To see the contestants supporting each other was beautiful. Some realized talents they never imagined showing the world.",
       author: "Event Judge",
       org: "Miss Teen Brownsville Pageant",
     },
@@ -60,21 +60,21 @@ export default function AboutPage() {
       org: "Sponsor, Miss Teen Brownsville",
     },
     {
-      quote: "I did not move until the show ended. To see young ladies supporting each other, displaying talents they never imagined — and being presented with a scholarship for college — I was blown away.",
+      quote: "I did not move until the show ended. To see young ladies supporting each other, displaying talents they never imagined and being presented with a scholarship for college, I was blown away.",
       author: "Sobro Talks",
       org: "Community Observer",
     },
   ];
 
   const partners = [
-    { src: "/sponsor1.jpeg", scale: 1, height: 70, offsetY: 0 },
-    { src: "/sponsor2.png", scale: 1, height: 126, offsetY: 10 },
-    { src: "/sponsor3.jpeg", scale: 1, height: 70, offsetY: 0 },
-    { src: "/sponsor4.png", scale: 1.12, height: 70, offsetY: 0 },
-    { src: "/sponsor5.png", scale: 1.1, height: 70, offsetY: 0 },
-    { src: "/sponsor6.jpeg", scale: 1, height: 70, offsetY: 0 },
-    { src: "/sponsor6.png", scale: 1.18, height: 70, offsetY: 0 },
-    { src: "/sponsor7.png", scale: 1, height: 118, offsetY: 6 },
+    { src: "/sponsor1.jpeg", scale: 1.22, height: 96, offsetY: 0 },
+    { src: "/sponsor2.png", scale: 1.12, height: 154, offsetY: 8 },
+    { src: "/sponsor3.jpeg", scale: 1.22, height: 96, offsetY: 0 },
+    { src: "/sponsor4.png", scale: 1.34, height: 96, offsetY: 0 },
+    { src: "/sponsor5.png", scale: 1.32, height: 96, offsetY: 0 },
+    { src: "/sponsor6.jpeg", scale: 1.22, height: 96, offsetY: 0 },
+    { src: "/sponsor6.png", scale: 1.42, height: 96, offsetY: 0 },
+    { src: "/sponsor7.png", scale: 1.12, height: 146, offsetY: 4 },
   ];
 
   return (
@@ -574,12 +574,12 @@ export default function AboutPage() {
         }
         .partner-pill {
           position: relative;
-          min-height: 112px;
+          min-height: 152px;
           background: transparent;
           border: 0;
           border-radius: 0;
           overflow: hidden;
-          padding: 10px 18px;
+          padding: 8px 14px;
           box-shadow: none;
           transition: transform 0.25s ease, opacity 0.25s ease;
           opacity: 0.92;
@@ -593,7 +593,7 @@ export default function AboutPage() {
           align-items: center;
           justify-content: center;
           width: 100%;
-          height: 100px;
+          height: 142px;
           overflow: hidden;
           filter: saturate(1.05);
         }
