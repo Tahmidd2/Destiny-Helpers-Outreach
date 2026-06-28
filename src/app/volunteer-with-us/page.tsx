@@ -48,7 +48,14 @@ export default function VolunteerWithUsPage() {
         .volunteer-card { background: white; border: 1px solid rgba(16,32,79,.08); border-radius: 8px; padding: 26px; }
         .volunteer-card h2 { margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 28px; }
         .volunteer-card p { margin: 0; color: #687087; line-height: 1.75; }
-        @media (max-width: 860px) { .volunteer-shell { padding: 64px 24px 88px; } .volunteer-grid { grid-template-columns: 1fr; } .volunteer-actions { flex-direction: column; } .volunteer-field { grid-template-columns: 1fr; gap: 8px; } .volunteer-form-card { margin-top: 42px; padding: 30px 22px; } .volunteer-submit-row { justify-content: stretch; } .volunteer-submit { width: 100%; } }
+        .volunteer-collage { margin-top: 52px; display: grid; grid-template-columns: 1fr 280px; gap: 8px; height: 340px; }
+        .volunteer-collage-main { border-radius: 16px 0 0 16px; overflow: hidden; }
+        .volunteer-collage-main img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+        .volunteer-collage-side { display: grid; grid-template-rows: 1fr 1fr; gap: 8px; }
+        .volunteer-collage-side img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+        .volunteer-collage-side img:first-child { border-radius: 0 16px 0 0; overflow: hidden; }
+        .volunteer-collage-side img:last-child { border-radius: 0 0 16px 0; overflow: hidden; }
+        @media (max-width: 860px) { .volunteer-shell { padding: 64px 24px 88px; } .volunteer-grid { grid-template-columns: 1fr; } .volunteer-actions { flex-direction: column; } .volunteer-field { grid-template-columns: 1fr; gap: 8px; } .volunteer-form-card { margin-top: 42px; padding: 30px 22px; } .volunteer-submit-row { justify-content: stretch; } .volunteer-submit { width: 100%; } .volunteer-collage { grid-template-columns: 1fr; height: auto; } .volunteer-collage-main { border-radius: 16px 16px 0 0; height: 220px; } .volunteer-collage-side { grid-template-rows: unset; grid-template-columns: 1fr 1fr; height: 140px; } .volunteer-collage-side img:first-child { border-radius: 0; } .volunteer-collage-side img:last-child { border-radius: 0 0 16px 0; } .volunteer-collage-side img:first-child { border-radius: 0 0 0 16px; } }
       `}</style>
       <main className="volunteer-page">
         <div className="volunteer-shell">
@@ -66,6 +73,15 @@ export default function VolunteerWithUsPage() {
               </div>
             </div>
           </section>
+          <div className="volunteer-collage" aria-hidden="true">
+            <div className="volunteer-collage-main">
+              <img src="/collage36.png" alt="Volunteers serving at a community event" loading="lazy" />
+            </div>
+            <div className="volunteer-collage-side">
+              <img src="/collage24.png" alt="Youth at a Destiny Helpers Outreach program" loading="lazy" />
+              <img src="/collage31.png" alt="Community gathering at Destiny Helpers Outreach" loading="lazy" />
+            </div>
+          </div>
           <section className="volunteer-form-card" aria-labelledby="volunteer-form-title">
             <h2 className="volunteer-form-heading" id="volunteer-form-title">Become a Destiny Helper</h2>
             <p className="volunteer-form-subtitle">Get involved and create meaningful impact!</p>

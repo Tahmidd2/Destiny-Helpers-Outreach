@@ -244,6 +244,13 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Tax disclaimer */}
+        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "18px 48px", maxWidth: "1300px", margin: "0 auto" }}>
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", lineHeight: 1.7, margin: 0 }}>
+            Destiny Helpers Outreach Inc. is a registered 501(c)(3) nonprofit organization. Tax ID: 84-283753. Monetary donations may be tax deductible to the extent allowed by law. For sponsorships, in-kind donations, or program-specific giving, contact the team directly.
+          </p>
+        </div>
+
         {/* Donate CTA strip */}
         <div className="footer-mid">
           <div>

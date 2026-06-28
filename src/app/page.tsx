@@ -202,7 +202,7 @@ export default function HomePage() {
               <img src="/HP.png" alt="Destiny Helpers Outreach community youth" />
             </div>
             <div className="hero-badge"><div className="hero-badge-num">500+</div><div className="hero-badge-label">Youth Served</div></div>
-            <div className="hero-badge-2"><div className="hero-badge-2-text">Brooklyn, NY</div><div className="hero-badge-2-sub">Serving since 2017</div></div>
+            <div className="hero-badge-2"><div className="hero-badge-2-text">Brooklyn, NY</div><div className="hero-badge-2-sub">Serving since 2019</div></div>
           </div>
         </div>
       </section>

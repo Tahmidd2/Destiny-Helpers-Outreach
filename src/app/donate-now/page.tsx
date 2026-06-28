@@ -58,9 +58,12 @@ export default function DonateNowPage() {
         .payment-handle { display: inline-flex; margin-top: 12px; border-radius: 999px; background: #f5e6b8; color: #0f1f4d; padding: 8px 14px; font-weight: 900; }
         .payment-card p { margin: 16px 0 0; color: #687087; line-height: 1.7; }
         .payment-link { display: inline-flex; margin-top: 20px; color: #0f1f4d; font-weight: 900; text-decoration: none; }
-        .donate-note { margin-top: 46px; padding: 24px; background: white; border-left: 4px solid #d4a017; color: #596277; line-height: 1.7; }
+        .donate-collage { margin-top: 58px; border-radius: 16px; overflow: hidden; height: 380px; position: relative; }
+        .donate-collage img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
+        .donate-collage-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(15,31,77,0.55) 0%, rgba(15,31,77,0.1) 65%, transparent 100%); display: flex; align-items: center; padding: 48px; }
+        .donate-collage-label { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 36px); color: white; font-weight: 700; max-width: 360px; line-height: 1.25; }
         @media (max-width: 1000px) { .donate-grid { grid-template-columns: repeat(2, 1fr); } .payment-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 860px) { .donate-shell { padding: 64px 24px 88px; } .donate-hero, .donate-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 860px) { .donate-shell { padding: 64px 24px 88px; } .donate-hero, .donate-grid { grid-template-columns: 1fr; } .donate-collage { height: 240px; } }
       `}</style>
       <main className="donate-page">
         <div className="donate-shell">
@@ -93,6 +96,12 @@ export default function DonateNowPage() {
               </article>
             ))}
           </section>
+          <div className="donate-collage">
+            <img src="/collage28.png" alt="Community members coming together at a Destiny Helpers Outreach event" loading="lazy" />
+            <div className="donate-collage-overlay">
+              <div className="donate-collage-label">Your generosity changes lives every day.</div>
+            </div>
+          </div>
           <section id="ways-to-give" className="payment-section">
             <div className="payment-header">
               <div className="donate-kicker">Ways to Give</div>
@@ -114,10 +123,6 @@ export default function DonateNowPage() {
               ))}
             </div>
           </section>
-          <div className="donate-note">
-            Destiny Helpers Outreach Inc. is listed as a 501(c)(3) nonprofit on the site footer.
-            Tax ID: 84-283753. Monetary donations may be tax deductible to the extent allowed by law. For sponsorships, in-kind donations, or program-specific giving, contact the team directly.
-          </div>
         </div>
       </main>
     </>

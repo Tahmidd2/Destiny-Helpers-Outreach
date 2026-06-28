@@ -67,14 +67,14 @@ export default function AboutPage() {
   ];
 
   const partners = [
-    { src: "/sponsor1.jpeg", scale: 1.22, height: 96, offsetY: 0 },
-    { src: "/sponsor2.png", scale: 1.12, height: 154, offsetY: 8 },
-    { src: "/sponsor3.jpeg", scale: 1.22, height: 96, offsetY: 0 },
-    { src: "/sponsor4.png", scale: 1.34, height: 96, offsetY: 0 },
-    { src: "/sponsor5.png", scale: 1.32, height: 96, offsetY: 0 },
-    { src: "/sponsor6.jpeg", scale: 1.22, height: 96, offsetY: 0 },
-    { src: "/sponsor6.png", scale: 1.42, height: 96, offsetY: 0 },
-    { src: "/sponsor7.png", scale: 1.12, height: 146, offsetY: 4 },
+    { src: "/sponsor1.png" },
+    { src: "/sponsor2.png" },
+    { src: "/sponsor3.png" },
+    { src: "/sponsor4.png" },
+    { src: "/sponsor5.png" },
+    { src: "/sponsor6.png" },
+    { src: "/sponsor7.png" },
+    { src: "/sponsor8.png" },
   ];
 
   return (
@@ -574,7 +574,7 @@ export default function AboutPage() {
         }
         .partner-pill {
           position: relative;
-          min-height: 152px;
+          min-height: 130px;
           background: transparent;
           border: 0;
           border-radius: 0;
@@ -593,7 +593,7 @@ export default function AboutPage() {
           align-items: center;
           justify-content: center;
           width: 100%;
-          height: 142px;
+          height: 110px;
           overflow: hidden;
           filter: saturate(1.05);
         }
@@ -878,13 +878,13 @@ export default function AboutPage() {
                     src={partner.src}
                     alt={`Sponsor logo ${partner.src.replace("/sponsor", "").replace(/\.[^.]+$/, "")}`}
                     width={176}
-                    height={72}
+                    height={110}
                     sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
                     style={{
-                      height: `${partner.height}px`,
+                      height: "110px",
                       width: "auto",
+                      maxWidth: "100%",
                       objectFit: "contain",
-                      transform: `translateY(${partner.offsetY}px) scale(${partner.scale})`,
                     }}
                   />
                 </div>

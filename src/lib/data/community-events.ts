@@ -15,8 +15,9 @@ export const communityEvents: CalendarEvent[] = [
     id: "2026-mothers-day-event",
     date: "2026-05-07",
     name: "Mother's Day Event",
+    time: "12:00",
+    endTime: "15:00",
     location: "Kensington Family Shelter, 385 McDonald Ave, Brooklyn, NY",
-    description: "Time to be confirmed.",
   },
   {
     id: "2026-fathers-day-bbq",
@@ -28,7 +29,7 @@ export const communityEvents: CalendarEvent[] = [
   },
   {
     id: "2026-hilltop-community-event",
-    date: "2026-06-27",
+    date: "2026-07-25",
     name: "Community Event at Hilltop Playground",
     time: "10:00",
     endTime: "14:00",
