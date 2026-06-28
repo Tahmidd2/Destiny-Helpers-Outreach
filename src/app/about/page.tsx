@@ -39,7 +39,9 @@ export default function AboutPage() {
       bio: "Cameron manages all financial operations, budgeting, and compliance for Destiny Helpers Outreach Inc. (DHOI). With a background in accounting, he ensures the organization's resources are managed responsibly to maximize impact.",
     },
   ];
-
+// const values = accountability, icon, desc "we hold ourselves to the high4est stnadard in all that we do "
+// const values = integrity, we lead with ohnesty 
+//  trrasnaprecny we operate openly so that this is actually possible
   const values = [
     { label: "Accountability", icon: "⚖️", desc: "We hold ourselves to the highest standard in all that we do." },
     { label: "Integrity", icon: "🌿", desc: "We lead with honesty and transparency in every interaction." },
@@ -567,38 +569,37 @@ export default function AboutPage() {
         .partners-row {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 28px;
+          gap: 16px;
           max-width: 1100px;
           margin: 0 auto;
-          align-items: center;
         }
         .partner-pill {
-          position: relative;
-          min-height: 130px;
-          background: transparent;
-          border: 0;
-          border-radius: 0;
-          overflow: hidden;
-          padding: 8px 14px;
-          box-shadow: none;
-          transition: transform 0.25s ease, opacity 0.25s ease;
-          opacity: 0.92;
-        }
-        .partner-pill:hover {
-          transform: translateY(-4px);
-          opacity: 1;
-        }
-        .partner-logo {
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          padding: 20px 24px;
           display: flex;
           align-items: center;
           justify-content: center;
+          height: 130px;
+          transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+        }
+        .partner-pill:hover {
+          transform: translateY(-4px);
+          background: rgba(255,255,255,0.12);
+          border-color: rgba(212,160,23,0.35);
+        }
+        .partner-logo {
           width: 100%;
-          height: 110px;
-          overflow: hidden;
-          filter: saturate(1.05);
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .partner-logo img {
-          transform-origin: center;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         /* ── CTA ── */
@@ -874,18 +875,11 @@ export default function AboutPage() {
             {partners.map((partner) => (
               <div key={partner.src} className="partner-pill">
                 <div className="partner-logo">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={partner.src}
-                    alt={`Sponsor logo ${partner.src.replace("/sponsor", "").replace(/\.[^.]+$/, "")}`}
-                    width={176}
-                    height={110}
-                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
-                    style={{
-                      height: "110px",
-                      width: "auto",
-                      maxWidth: "100%",
-                      objectFit: "contain",
-                    }}
+                    alt={`Partner logo ${partner.src.replace("/sponsor", "").replace(/\.[^.]+$/, "")}`}
+                    loading="lazy"
                   />
                 </div>
               </div>
