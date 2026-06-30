@@ -8,7 +8,6 @@ import CinematicImageShowcase from "@/lib/components/cinematic-image-showcase";
 interface Program {
   title: string;
   description: string;
-  icon: string;
   color: string;
   href: string;
 }
@@ -21,12 +20,12 @@ interface ImpactStat {
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const programs: Program[] = [
-  { title: "Beyond The Mask", description: "Helping youth explore identity, emotional awareness, and self-expression in a safe and nurturing environment.", icon: "🎭", color: "#7C3AED", href: "/programs/beyond-the-mask" },
-  { title: "The Confidence Lens Project", description: "Building confidence and self-image through reflection and storytelling, empowering youth to see their own brilliance.", icon: "📸", color: "#1E3A8A", href: "/programs/confidence-lens" },
-  { title: "Project ICON", description: "Leadership and identity development for youth, cultivating the next generation of community changemakers.", icon: "⭐", color: "#D4A017", href: "/programs/project-icon" },
-  { title: "Mr & Ms Teen Destiny Changer NYC", description: "Youth leadership and empowerment initiative celebrating the brilliance of students across New York City.", icon: "👑", color: "#6B4F3B", href: "/programs/teen-destiny-changer" },
-  { title: "Ms. Teen Brownsville", description: "Community-based youth empowerment and leadership program rooted in the heart of Brownsville, Brooklyn.", icon: "🌟", color: "#1E3A8A", href: "/programs/teen-brownsville" },
-  { title: "Let's Get Artsy", description: "Creative arts and self-expression program where youth discover their voices through art, music, and creativity.", icon: "🎨", color: "#7C3AED", href: "/programs/lets-get-artsy" },
+  { title: "Beyond The Mask", description: "Helping youth explore identity, emotional awareness, and self-expression in a safe and nurturing environment.", color: "#7C3AED", href: "/programs/beyond-the-mask" },
+  { title: "The Confidence Lens Project", description: "Building confidence and self-image through reflection and storytelling, empowering youth to see their own brilliance.", color: "#1E3A8A", href: "/programs/confidence-lens" },
+  { title: "Project ICON", description: "Leadership and identity development for youth, cultivating the next generation of community changemakers.", color: "#D4A017", href: "/programs/project-icon" },
+  { title: "Mr & Ms Teen Destiny Changer NYC", description: "Youth leadership and empowerment initiative celebrating the brilliance of students across New York City.", color: "#6B4F3B", href: "/programs/teen-destiny-changer" },
+  { title: "Ms. Teen Brownsville", description: "Community-based youth empowerment and leadership program rooted in the heart of Brownsville, Brooklyn.", color: "#1E3A8A", href: "/programs/teen-brownsville" },
+  { title: "Let's Get Artsy", description: "Creative arts and self-expression program where youth discover their voices through art, music, and creativity.", color: "#7C3AED", href: "/programs/lets-get-artsy" },
 ];
 
 const impactStats: ImpactStat[] = [
@@ -66,7 +65,7 @@ export default function HomePage() {
         body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;}
         h1,h2,h3{font-family:'Playfair Display',serif;}
 
-        .hero{min-height:100vh;background:linear-gradient(135deg,var(--royal) 0%,#0F1F4D 50%,#2D1B69 100%);position:relative;display:flex;align-items:center;overflow:hidden;}
+        .hero{min-height:100vh;background:linear-gradient(135deg,var(--royal) 0%,#0F1F4D 50%,#2D1B69 100%);position:relative;display:flex;align-items:center;overflow:hidden;padding-top:56px;}
         .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(212,160,23,.15) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(124,58,237,.2) 0%,transparent 50%);}
         .orb{position:absolute;border-radius:50%;filter:blur(80px);animation:float 8s ease-in-out infinite;pointer-events:none;}
         .orb-1{width:400px;height:400px;background:rgba(212,160,23,.12);top:-100px;right:-100px;}
@@ -116,7 +115,6 @@ export default function HomePage() {
         .program-card{background:white;border-radius:20px;padding:36px 32px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;border:1px solid rgba(0,0,0,.06);}
         .program-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.12);}
         .program-card-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;}
-        .program-icon{font-size:36px;margin-bottom:20px;display:block;}
         .program-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.25;}
         .program-desc{font-size:14px;color:#777;line-height:1.7;}
         .program-link{margin-top:24px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;text-decoration:none;transition:gap .2s;}
@@ -168,6 +166,7 @@ export default function HomePage() {
         .btn-white-outline:hover{background:rgba(255,255,255,.1);border-color:white;}
 
         @media(max-width:1024px){
+          .hero{padding-top:40px;}
           .hero-content{grid-template-columns:1fr;}
           .hero-visual{display:none;}
           .mission-inner{grid-template-columns:1fr;gap:40px;}
@@ -239,7 +238,6 @@ export default function HomePage() {
           {programs.map((p) => (
             <div className="program-card" key={p.title}>
               <div className="program-card-accent" style={{ background: p.color }} />
-              <span className="program-icon">{p.icon}</span>
               <div className="program-title">{p.title}</div>
               <p className="program-desc">{p.description}</p>
               <Link href={p.href} className="program-link" style={{ color: p.color }}>Learn More →</Link>

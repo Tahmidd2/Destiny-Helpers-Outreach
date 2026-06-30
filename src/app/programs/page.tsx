@@ -142,7 +142,7 @@ export default function ProgramsPage() {
         /* ── Hero ── */
         .prog-hero {
           background: linear-gradient(135deg, #1E3A8A 0%, #0F1F4D 60%, #2D1B69 100%);
-          padding: 100px 48px 80px;
+          padding: 124px 48px 80px;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -330,7 +330,7 @@ export default function ProgramsPage() {
             grid-template-columns: 1fr; direction: ltr; gap: 40px;
           }
           .prog-section { padding: 60px 24px; }
-          .prog-hero { padding: 80px 24px 60px; }
+          .prog-hero { padding: 96px 24px 60px; }
           .prog-nav { padding: 0 24px; }
           .prog-cta { padding: 60px 24px; }
         }

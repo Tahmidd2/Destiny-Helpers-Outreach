@@ -106,6 +106,7 @@ export default function AboutPage() {
           min-height: 92vh;
           display: flex;
           align-items: flex-end;
+          padding-top: 96px;
           padding-bottom: 80px;
           background: var(--navy);
           overflow: hidden;
@@ -687,6 +688,7 @@ export default function AboutPage() {
           .testimonials-grid { grid-template-columns: 1fr; }
           .partners-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .hero-content { padding: 0 24px; }
+          .hero { padding-top: 72px; }
           .vision-band,
           .values-section,
           .team-section,

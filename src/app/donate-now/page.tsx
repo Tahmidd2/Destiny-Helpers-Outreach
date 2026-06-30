@@ -36,7 +36,7 @@ export default function DonateNowPage() {
     <>
       <style>{`
         .donate-page { background: #f9f6f1; color: #0f1f4d; font-family: 'DM Sans', sans-serif; }
-        .donate-shell { max-width: 1120px; margin: 0 auto; padding: 88px 48px 112px; }
+        .donate-shell { max-width: 1120px; margin: 0 auto; padding: 124px 48px 112px; }
         .donate-hero { display: grid; grid-template-columns: 1fr .9fr; gap: 42px; align-items: center; }
         .donate-kicker { color: #d4a017; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
         .donate-title { margin: 18px 0; font-family: 'Playfair Display', serif; font-size: clamp(44px, 6vw, 74px); line-height: 1; }
@@ -63,7 +63,7 @@ export default function DonateNowPage() {
         .donate-collage-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(15,31,77,0.55) 0%, rgba(15,31,77,0.1) 65%, transparent 100%); display: flex; align-items: center; padding: 48px; }
         .donate-collage-label { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 36px); color: white; font-weight: 700; max-width: 360px; line-height: 1.25; }
         @media (max-width: 1000px) { .donate-grid { grid-template-columns: repeat(2, 1fr); } .payment-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 860px) { .donate-shell { padding: 64px 24px 88px; } .donate-hero, .donate-grid { grid-template-columns: 1fr; } .donate-collage { height: 240px; } }
+        @media (max-width: 860px) { .donate-shell { padding: 96px 24px 88px; } .donate-hero, .donate-grid { grid-template-columns: 1fr; } .donate-collage { height: 240px; } }
       `}</style>
       <main className="donate-page">
         <div className="donate-shell">

@@ -168,10 +168,6 @@ export default function CinematicImageShowcase() {
           animation-duration: 64s;
         }
 
-        .showcase-stage:hover .showcase-rail {
-          animation-play-state: paused;
-        }
-
         .showcase-frame {
           position: relative;
           flex: 0 0 auto;

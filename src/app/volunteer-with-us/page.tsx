@@ -15,7 +15,7 @@ export default function VolunteerWithUsPage() {
     <>
       <style>{`
         .volunteer-page { background: #fffaf0; color: #10204f; font-family: 'DM Sans', sans-serif; }
-        .volunteer-shell { max-width: 1120px; margin: 0 auto; padding: 88px 48px 112px; }
+        .volunteer-shell { max-width: 1120px; margin: 0 auto; padding: 124px 48px 112px; }
         .volunteer-hero { max-width: 820px; }
         .volunteer-kicker { color: #d4a017; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
         .volunteer-title { margin: 18px 0; font-family: 'Playfair Display', serif; font-size: clamp(44px, 6vw, 72px); line-height: 1; }
@@ -55,7 +55,7 @@ export default function VolunteerWithUsPage() {
         .volunteer-collage-side img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
         .volunteer-collage-side img:first-child { border-radius: 0 16px 0 0; overflow: hidden; }
         .volunteer-collage-side img:last-child { border-radius: 0 0 16px 0; overflow: hidden; }
-        @media (max-width: 860px) { .volunteer-shell { padding: 64px 24px 88px; } .volunteer-grid { grid-template-columns: 1fr; } .volunteer-actions { flex-direction: column; } .volunteer-field { grid-template-columns: 1fr; gap: 8px; } .volunteer-form-card { margin-top: 42px; padding: 30px 22px; } .volunteer-submit-row { justify-content: stretch; } .volunteer-submit { width: 100%; } .volunteer-collage { grid-template-columns: 1fr; height: auto; } .volunteer-collage-main { border-radius: 16px 16px 0 0; height: 220px; } .volunteer-collage-side { grid-template-rows: unset; grid-template-columns: 1fr 1fr; height: 140px; } .volunteer-collage-side img:first-child { border-radius: 0; } .volunteer-collage-side img:last-child { border-radius: 0 0 16px 0; } .volunteer-collage-side img:first-child { border-radius: 0 0 0 16px; } }
+        @media (max-width: 860px) { .volunteer-shell { padding: 96px 24px 88px; } .volunteer-grid { grid-template-columns: 1fr; } .volunteer-actions { flex-direction: column; } .volunteer-field { grid-template-columns: 1fr; gap: 8px; } .volunteer-form-card { margin-top: 42px; padding: 30px 22px; } .volunteer-submit-row { justify-content: stretch; } .volunteer-submit { width: 100%; } .volunteer-collage { grid-template-columns: 1fr; height: auto; } .volunteer-collage-main { border-radius: 16px 16px 0 0; height: 220px; } .volunteer-collage-side { grid-template-rows: unset; grid-template-columns: 1fr 1fr; height: 140px; } .volunteer-collage-side img:first-child { border-radius: 0; } .volunteer-collage-side img:last-child { border-radius: 0 0 16px 0; } .volunteer-collage-side img:first-child { border-radius: 0 0 0 16px; } }
       `}</style>
       <main className="volunteer-page">
         <div className="volunteer-shell">

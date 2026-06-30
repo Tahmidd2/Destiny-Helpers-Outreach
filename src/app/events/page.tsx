@@ -21,7 +21,7 @@ export default function EventsPage() {
         .events-page {
           width: min(1280px, calc(100% - 32px));
           margin: 0 auto;
-          padding: 44px 0 84px;
+          padding: 124px 0 84px;
           background: #f9f6f1;
           font-family: 'DM Sans', Arial, sans-serif;
         }
@@ -53,6 +53,12 @@ export default function EventsPage() {
           color: #5f6470;
           font-size: 17px;
           line-height: 1.75;
+        }
+
+        @media (max-width: 860px) {
+          .events-page {
+            padding-top: 96px;
+          }
         }
       `}</style>
 

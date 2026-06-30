@@ -5,7 +5,7 @@ export default function ContactPage() {
     <>
       <style>{`
         .contact-page { background: #f9f6f1; color: #0f1f4d; font-family: 'DM Sans', sans-serif; }
-        .contact-shell { max-width: 1120px; margin: 0 auto; padding: 86px 48px 110px; }
+        .contact-shell { max-width: 1120px; margin: 0 auto; padding: 124px 48px 110px; }
         .contact-hero { display: grid; grid-template-columns: 1fr 0.85fr; gap: 48px; align-items: center; }
         .contact-kicker { color: #d4a017; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
         .contact-title { margin: 18px 0 20px; font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 70px); line-height: 1; color: #0f1f4d; }
@@ -24,7 +24,7 @@ export default function ContactPage() {
         .contact-small { background: white; border-radius: 8px; padding: 24px; border: 1px solid rgba(15,31,77,.08); }
         .contact-small h2 { margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 26px; }
         .contact-small p { margin: 0; color: #687087; line-height: 1.7; }
-        @media (max-width: 860px) { .contact-shell { padding: 64px 24px 86px; } .contact-hero, .contact-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 860px) { .contact-shell { padding: 96px 24px 86px; } .contact-hero, .contact-grid { grid-template-columns: 1fr; } }
       `}</style>
       <main className="contact-page">
         <div className="contact-shell">
