@@ -1,6 +1,7 @@
 import "./globals.css"
 import type { Metadata } from "next"
 import AppShell from "@/lib/components/app-shell"
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Destiny Helpers Outreach",
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <AppShell>{children}</AppShell>
+        <Analytics />
       </body>
     </html>
   )
